@@ -1,0 +1,83 @@
+[
+    {
+        "id": 1,
+        "imageSrc": "/imgNoticias/proyecto1.jpg",
+        "newsTitle": "Lanzamiento de la Nueva Intranet",
+        "date": "01/10/2024",
+        "time": "09:00 AM",
+        "description": "Anunciamos con entusiasmo el lanzamiento de la nueva Intranet corporativa.",
+        "fullContent": "Anunciamos con entusiasmo el lanzamiento de la nueva Intranet corporativa el 1 de octubre de 2024 a las 09:00 AM. Esta plataforma ha sido diseñada para mejorar la colaboración y la eficiencia en toda la empresa, proporcionando un acceso centralizado a documentos clave, herramientas de trabajo esenciales, y canales de comunicación directa entre departamentos. La nueva Intranet ofrece funcionalidades avanzadas como foros de discusión, integración de calendarios, y seguimiento de proyectos en tiempo real. A partir de hoy, todos los empleados deberán acceder a la plataforma con sus credenciales corporativas para obtener toda la información relevante de la empresa y comunicarse de manera más eficiente. Se ha organizado una sesión de capacitación a las 02:00 PM para familiarizar a todos con las nuevas características."
+    },
+    {
+        "id": 2,
+        "imageSrc": "/imgNoticias/proyecto2.jpg",
+        "newsTitle": "Actualización del Sistema ERP",
+        "date": "15/10/2024",
+        "time": "08:00 AM",
+        "description": "La actualización del sistema ERP se completará el próximo lunes.",
+        "fullContent": "El próximo lunes 15 de octubre de 2024, a partir de las 08:00 AM, se llevará a cabo una actualización importante del sistema ERP de la empresa. Esta actualización incluirá mejoras significativas en la velocidad de procesamiento, nuevas funcionalidades para la gestión de inventarios y un sistema de reportes más eficiente. Durante la actualización, se espera un tiempo de inactividad mínimo de aproximadamente 2 horas. Pedimos a todos los usuarios que guarden su trabajo antes de las 07:30 AM y se abstengan de acceder al sistema durante el período de actualización. El equipo de TI estará disponible para soporte técnico a partir de las 10:00 AM una vez finalizada la actualización."
+    },
+    {
+        "id": 3,
+        "imageSrc": "/imgNoticias/proyecto3.jpg",
+        "newsTitle": "Participación en Evento Tecnológico",
+        "date": "01/11/2024",
+        "time": "11:30 AM",
+        "description": "Nuestra empresa participará en el evento de tecnología 'Tech Innovations 2024'.",
+        "fullContent": "Nuestra empresa participará en el prestigioso evento 'Tech Innovations 2024', que se llevará a cabo el 1 de noviembre de 2024 a las 11:30 AM. Estaremos presentes en el stand 42, donde mostraremos nuestras últimas innovaciones tecnológicas, incluyendo soluciones de inteligencia artificial, sistemas de automatización y plataformas de colaboración. Invitamos a todos los interesados a visitarnos y descubrir cómo estamos impulsando la transformación digital en nuestra industria. Además, se realizará una presentación especial a las 02:00 PM sobre nuestro enfoque estratégico hacia la innovación en los próximos años."
+    },
+    {
+        "id": 4,
+        "imageSrc": "/imgNoticias/proyecto4.jpg",
+        "newsTitle": "Nueva Política de Seguridad Cibernética",
+        "date": "10/11/2024",
+        "time": "10:15 AM",
+        "description": "Se ha implementado una nueva política de seguridad cibernética.",
+        "fullContent": "A partir del 10 de noviembre de 2024, a las 10:15 AM, se ha implementado una nueva política de seguridad cibernética para proteger los datos y recursos de la empresa. Esta política incluye medidas estrictas sobre el manejo de contraseñas, el uso de dispositivos externos, y la gestión de accesos remotos. Todos los empleados deberán completar una sesión de formación en seguridad cibernética antes del 20 de noviembre de 2024. Las violaciones de esta política serán tratadas con seriedad y pueden resultar en sanciones disciplinarias. Visita la Intranet para obtener más información y familiarizarte con las nuevas directrices."
+    },
+    {
+        "id": 5,
+        "imageSrc": "/imgNoticias/proyecto2.jpg",
+        "newsTitle": "Taller de Formación en Herramientas DevOps",
+        "date": "20/11/2024",
+        "time": "03:00 PM",
+        "description": "Se invita a todos los empleados a participar en el taller de formación sobre herramientas DevOps.",
+        "fullContent": "El 20 de noviembre de 2024, a las 03:00 PM, se llevará a cabo un taller de formación sobre herramientas DevOps, dirigido a todos los empleados interesados en mejorar sus habilidades en gestión de desarrollo y operaciones. Este taller cubrirá temas como integración continua, despliegue automatizado, y monitoreo de aplicaciones. Los asistentes recibirán una certificación al finalizar el taller. Las inscripciones están abiertas hasta el 18 de noviembre a través de la Intranet. ¡No pierdas esta oportunidad de desarrollar tus habilidades técnicas y colaborar más eficazmente en tus proyectos!"
+    },
+    {
+        "id": 6,
+        "imageSrc": "/imgNoticias/proyecto3.jpg",
+        "newsTitle": "Mantenimiento Programado de Servicios",
+        "date": "01/12/2024",
+        "time": "01:00 AM",
+        "description": "Habrá un mantenimiento programado de nuestros servidores el 5 de diciembre.",
+        "fullContent": "Se llevará a cabo un mantenimiento programado de nuestros servidores el 1 de diciembre de 2024, comenzando a la 01:00 AM. Este mantenimiento es crucial para actualizar la infraestructura de red y mejorar la seguridad de nuestros sistemas. Durante este tiempo, los servicios en línea estarán temporalmente inactivos. Asegúrate de guardar tu trabajo y cerrar todas las sesiones activas antes de la medianoche del 30 de noviembre. El mantenimiento se espera que concluya a las 06:00 AM. Gracias por tu comprensión y paciencia durante este proceso esencial."
+    },
+    {
+        "id": 7,
+        "imageSrc": "/imgNoticias/proyecto1.jpg",
+        "newsTitle": "Fiesta de Fin de Año",
+        "date": "15/12/2024",
+        "time": "06:00 PM",
+        "description": "La fiesta de fin de año de la empresa se celebrará el 20 de diciembre.",
+        "fullContent": "La fiesta de fin de año de la empresa se celebrará el 15 de diciembre de 2024 a las 06:00 PM en el salón principal de eventos. Todos los empleados están cordialmente invitados a disfrutar de una noche de diversión, comida y música en vivo. Habrá un concurso de disfraces temáticos y premios para los mejores atuendos. Además, se anunciarán los ganadores de los premios anuales de reconocimiento al desempeño. Confirma tu asistencia a través de la Intranet antes del 10 de diciembre para asegurar tu lugar."
+    },
+    {
+        "id": 8,
+        "imageSrc": "/imgNoticias/proyecto2.jpg",
+        "newsTitle": "Nuevas Herramientas para Colaboración Remota",
+        "date": "25/12/2024",
+        "time": "02:00 PM",
+        "description": "Se han implementado nuevas herramientas para facilitar la colaboración remota.",
+        "fullContent": "El 25 de diciembre de 2024, a las 02:00 PM, se han lanzado nuevas herramientas para mejorar la colaboración remota entre equipos. Estas herramientas incluyen plataformas de videoconferencia más seguras, aplicaciones de mensajería instantánea integradas y software de gestión de proyectos en tiempo real. Todas estas soluciones están diseñadas para aumentar la productividad y mejorar la comunicación, especialmente para aquellos que trabajan desde casa o en oficinas remotas. Los tutoriales y guías de usuario ya están disponibles en la sección de ayuda de la Intranet."
+    },
+    {
+        "id": 9,
+        "imageSrc": "/imgNoticias/proyecto3.jpg",
+        "newsTitle": "Inicio de Proyectos Clave en 2025",
+        "date": "10/01/2025",
+        "time": "09:30 AM",
+        "description": "Estamos emocionados de comenzar varios proyectos importantes este año.",
+        "fullContent": "El 10 de enero de 2025, a las 09:30 AM, iniciaremos varios proyectos clave que marcarán el rumbo de la empresa durante el próximo año. Estos proyectos incluyen la implementación de un nuevo sistema de gestión de clientes (CRM), la actualización de nuestras plataformas de ventas en línea, y el lanzamiento de un programa de innovación interna para fomentar nuevas ideas. Todos los departamentos están convocados a una reunión inicial para discutir los detalles de cada proyecto y asignar responsabilidades. Consulta la Intranet para más información sobre cada iniciativa y cómo puedes participar."
+    }
+]

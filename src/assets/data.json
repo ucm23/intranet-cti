@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "titulo": "Director General",
+    "educacion": "* Licenciatura en Ingeniería en Sistemas, Administración de Empresas, Informática o afines.\n* Maestría en Administración de Negocios (MBA) o especialización en tecnología (deseable).",
+    "experiencia": "Mínimo 10 años de experiencia en roles directivos en empresas de tecnología, consultoría en sistemas o desarrollo de software.\n Experiencia en la creación y gestión de marcas de software propias, así como en proyectos de desarrollo y consultoría de soluciones tecnológicas ",
+    "capacitacion": "Proactividad y capacidad de Innovación y de adaptación a los cambios tecnológicos.\nLa capacitación puede ajustarse según las tecnologías específicas que utilice Grupo CTI y las necesidades cambiantes de sus proyectos.",
+    "detallepuesto": "DGeneral.pdf"
+  },
+  {
+    "id": 2,
+    "titulo": "Jefe Jurídico",
+    "educacion": "* Licenciatura en Derecho. Cédula profesional para el ejercicio de la abogacía en México.\n* Maestría en Derecho Corporativo, Derecho Empresarial o áreas relacionadas (deseable).",
+    "experiencia": "Mínimo 8-10 años de experiencia en el área jurídica, con al menos 5 años en posiciones de liderazgo dentro de departamentos jurídicos de empresas tecnológicas, consultoría o similares.\nConocimiento en derecho corporativo, comercial, propiedad intelectual, protección de datos y cumplimiento normativo.Experiencia en gestión de litigios y relaciones con despachos externos",
+    "capacitacion": "Proactividad y capacidad  para el conocimiento . \nLa capacitación puede ajustarse de acuerdo a los intereses legales de la empresa en sus operaciones nacionales e internacionales, gestionando contratos, litigios, temas de propiedad intelectual y cumplimiento normativo.",
+    "detallepuesto": "GJuridico.pdf"
+  },
+  {
+    "id": 3,
+    "titulo": "Partner de Desarrollo y Clima Organizacional",
+    "educacion": "* Profesionista titulado, en Licenciatura en Psicología, Administración de Empresas, Recursos Humanos o áreas relacionadas.\n* Maestría en Recursos Humanos o Psicología Organizacional.\n* Coaching Ejecutivo y Organizacional",
+    "experiencia": "> Mínimo 5 años de experiencia en desarrollo organizacional, clima laboral o recursos humanos.\n> Experiencia en la creación y gestión de programas de desarrollo de talento, liderazgo y bienestar.\n> Conocimiento en herramientas y metodologías de medición del clima organizacional.\n> Experiencia en resolución de conflictos y gestión de relaciones laborales.",
+    "capacitacion": "Proactividad y capacidad de adaptación a un entorno de trabajo dinámico y en constante cambio.Visión estratégica orientada a la mejora\n continua del entorno laboral.\nAl ser partners la capacitación es en relación a políticas propias.",
+    "detallepuesto": "GDesarrolloH.pdf"
+  },
+  {
+    "id": 4,
+    "titulo": "Representante de Calidad",
+    "educacion": "* Formación en Ingeniería o áreas relacionadas (Ingeniería Industrial, Ingeniería de Procesos, Química, etc.)\n* Certificación en Normas de Calidad (ISO 9001, Six Sigma, Lean Manufacturing).",
+    "experiencia": "Experiencia de 3 a 5 años en roles similares dentro del ámbito de control y gestión de calidad. \nEsto incluiría experiencia en la implementación de normas de calidad, auditorías, control de procesos y resolución de problemas relacionados\n con la calidad en el sector industrial o en áreas específicas de la empresa.",
+    "capacitacion": "Evidencia de haber recibido capacitación de las Normas correspondientes.\n",
+    "detallepuesto": "GCalidad.pdf"
+  },
+  {
+    "id": 5,
+    "titulo": "Licenciado en Contabilidad",
+    "educacion": "* Licenciatura en Contabilidad o Finanzas de una universidad acreditada.\n* Certificaciones profesionales como Contador Público Certificado (CPA),\n* Certificación en Normas Internacionales de Información Financiera (IFRS),\n* o Certificación en Auditoría Interna (CIA).",
+    "experiencia": "2 a 5 años de experiencia en roles contables, preferiblemente en empresas medianas o grandes, o en firmas de auditoría.\n",
+    "capacitacion": "La capacitación va de acuerdo a las necesidades de la empresa principalmente en Cursos de actualización fiscal y contable en instituciones \nespecializadas o plataformas en línea (Coursera, edX, etc.).Conferencias y seminarios sobre tendencias contables, fiscales y de auditoría.\nFormación en software de contabilidad y ERP.",
+    "detallepuesto": "GContabilidadyF.pdf"
+  },
+  {
+    "id": 6,
+    "titulo": "Auxiliar de Cuentas por Cobrar y Marketing Digital",
+    "educacion": "Profesionista titulado, en Licenciatura en Administración, Contabilidad, Finanzas, Marketing o carreras afines (en curso o recién egresado).\n",
+    "experiencia": "* Experiencia previa en cuentas por cobrar y/o marketing digital (deseable).\n* Conocimientos básicos en herramientas contables y de facturación electrónica.\n* Familiaridad con herramientas de marketing digital, redes sociales y plataformas publicitarias.",
+    "capacitacion": "Proactividad y capacidad  para el conocimiento de herramientas de marketing digital, redes sociales y plataformas publicitarias.\nEste rol es multifuncional, combinando tareas administrativas-financieras con actividades de apoyo en marketing digital, la capacitación\n se realiza de acordé a las funciones actuales de la empresa.",
+    "detallepuesto": "AuxAdmonyCob.pdf"
+  },
+  {
+    "id": 7,
+    "titulo": "Consultor SAP MM / FI / SD",
+    "educacion": "Licenciatura en Ingeniería en Sistemas, Administración de Empresas, Finanzas o carreras afines.\n",
+    "experiencia": "> Mínimo 3 a 5 años de experiencia en la implementación y soporte de SAP MM, FI y SD.\n> Conocimiento profundo en la configuración de SAP MM (gestión de compras, inventarios), FI (contabilidad financiera, cuentas por pagar, cuentas por cobrar) y SD (procesos de ventas, distribución y facturación).\n> Experiencia en la integración de módulos SAP MM, FI y SD con otros módulos como PP (Planificación de la Producción) y CO (Control de Costos).\n> Familiaridad con el proceso de implementación de SAP y metodologías de gestión de proyectos (ASAP, Activate).",
+    "capacitacion": "Proactividad y capacidad de adaptación a un entorno de trabajo dinámico y en constante cambio. Capacidad para analizar procesos \n de negocio complejos y proponer soluciones tecnológicas eficientes.\n Al ser partners la capacitación es en relación a políticas propias.",
+    "detallepuesto": "ESAP.pdf"
+  },
+  {
+    "id": 8,
+    "titulo": "Consultor SAP-ABAP",
+    "educacion": "Licenciatura en Ingeniería en Sistemas, Informática, o áreas afines.\n",
+    "experiencia": "> Experiencia mínima de 3 a 5 años en desarrollo ABAP en proyectos SAP.\n> Conocimiento avanzado en ABAP, ABAP Objects, SmartForms, SAPScript, ALV y reportes.\n> Experiencia en el desarrollo de interfaces, BAPIs, RFCs, IDocs y Web Services.\n> Familiaridad con módulos SAP como FI, CO, MM, SD, PP, HR, entre otros.\n> Conocimiento en metodologías de desarrollo ágil (deseable).",
+    "capacitacion": "Proactividad y capacidad de adaptación a un entorno de trabajo dinámico y en constante cambio. Capacidad para analizar procesos \n de negocio complejos y proponer soluciones tecnológicas eficientes.\n Al ser partners la capacitación es en relación a políticas propias.",
+    "detallepuesto": "ESAP.pdf"
+  },
+  {
+    "id": 9,
+    "titulo": "Desarrollador Web Senior",
+    "educacion": "Profesionista titulado, en Ingeniería en Sistemas, Informática o carrera afín.\n",
+    "experiencia": "> Mínimo 5 años de experiencia en desarrollo de aplicaciones web.\n> Experiencia avanzada con frameworks frontend (React, Angular, Vue.js).\n> Conocimiento en desarrollo backend con tecnologías como Node.js, Python, Ruby o PHP.\n> Experiencia en el uso de bases de datos relacionales y no relacionales (SQL, NoSQL, MongoDB, etc.).\n> Experiencia en control de versiones con Git.\n> Familiaridad con metodologías ágiles (Scrum, Kanban).",
+    "capacitacion": "Proactividad y capacidad para proponer mejoras continuas en los procesos de desarrollo.\nLa capacitación puede ajustarse según las tecnologías específicas que utilice Grupo CTI y las necesidades cambiantes de sus proyectos de desarrollo web.",
+    "detallepuesto": "DevWebSenior.pdf"
+  },
+  {
+    "id": 10,
+    "titulo": "Desarrollador de Aplicativos Móviles iOS y Android Senior",
+    "educacion": "Profesionista titulado, en Ingeniería en Sistemas, Informática o carrera afín.\n",
+    "experiencia": "> Mínimo 5 años de experiencia en desarrollo de aplicaciones móviles nativas (iOS y Android) o híbridas (React Native, Flutter).\n> Dominio de Swift (iOS) y Kotlin (Android).\n> Experiencia con tecnologías híbridas como React Native, Flutter o Xamarin (deseable).\n> Experiencia en la publicación y gestión de aplicaciones móviles en App Store y Google Play.\n> Familiaridad con el uso de herramientas de control de versiones como Git",
+    "capacitacion": "Proactividad y capacidad para proponer mejoras continuas en los procesos de desarrollo.\nLa capacitación puede ajustarse según las tecnologías específicas que utilice Grupo CTI y las necesidades cambiantes de sus proyectos de desarrollo web.",
+    "detallepuesto": "DevMovilSenior.pdf"
+  },
+  {
+    "id": 11,
+    "titulo": "Desarrollador Senior de Aplicativos Cliente-Servidor",
+    "educacion": "Profesionista titulado, en Ingeniería en Sistemas, Informática o carrera afín.\n",
+    "experiencia": "> Mínimo 5 años de experiencia en desarrollo de sistemas cliente-servidor, preferentemente en soluciones de backoffice relacionadas con peaje, telepeaje o puntos de venta.\n> Experiencia en desarrollo con tecnologías como .NET, Java, C#, SQL Server, Oracle o tecnologías similares.\n> Conocimiento avanzado en bases de datos relacionales y no relacionales, incluyendo el manejo de grandes volúmenes de datos transaccionales.\n> Familiaridad con protocolos de comunicación y seguridad aplicables a sistemas financieros y de peaje.\n> Experiencia en la integración de sistemas de pago y conciliación financiera. ",
+    "capacitacion": "Proactividad y capacidad de adaptación a un entorno de trabajo dinámico y en constante cambio.\nLa capacitación puede ajustarse según las tecnologías específicas que utilice Grupo CTI y las mejoras tecnológicas para optimizar el rendimiento,la \nescalabilidad y la seguridad de las soluciones existentes.",
+    "detallepuesto": "DevClienteServSenior.pdf"
+  },
+  {
+    "id": 12,
+    "titulo": "Desarrollador Junior de Aplicativos Web",
+    "educacion": "Licenciatura en Ingeniería en Sistemas, Informática o carrera afín (en curso o recién egresado).\n",
+    "experiencia": "> Experiencia previa (prácticas o proyectos) en desarrollo web utilizando tecnologías como HTML, CSS, JavaScript.\n> Conocimientos básicos de frameworks de JavaScript (React, Angular o Vue.js).\n> Conocimiento en el uso de sistemas de control de versiones (Git).\n> Familiaridad con metodologías ágiles de desarrollo (Scrum, Kanban).",
+    "capacitacion": "Al estar bajo el resguardo del Desarrollador Senior o Líder de Proyecto, se encuentra en constante aprendizaje y actualización sobre nuevas tecnologías y herramientas relevantes para el desarrollo web.\nDeberá tener habilidad para aprender nuevas tecnologías y adaptarse rápidamente a las herramientas utilizadas por el equipo.",
+    "detallepuesto": "DevWebJunior.pdf"
+  },
+  {
+    "id": 13,
+    "titulo": "Partner de Desarrollo de Inteligencia Artificial",
+    "educacion": "Profesionista titulado, en Licenciatura en Ciencias de la Computación, Ingeniería en Sistemas, Matemáticas, Estadística o áreas relacionadas.\nMaestría o doctorado en Inteligencia Artificial, Machine Learning o Ciencia de Datos (deseable).",
+    "experiencia": "> Experiencia mínima de 5 años en desarrollo de soluciones de IA y machine learning.\n> Experiencia en el liderazgo de proyectos de inteligencia artificial a nivel empresarial.\n> Conocimientos avanzados en técnicas de aprendizaje automático, procesamiento de lenguaje natural, redes neuronales profundas y análisis predictivo.\n> Experiencia en el uso de plataformas y frameworks de IA como TensorFlow, PyTorch, Keras, Scikit-learn, entre otros.\n> Conocimientos en big data, manejo de bases de datos y técnicas de procesamiento de datos en grandes volúmenes.",
+    "capacitacion": "Proactividad y capacidad de adaptación a un entorno de trabajo dinámico y en constante cambio.\n Investigar y mantenerse al tanto de las últimas tendencias, herramientas y metodologías en el campo de la inteligencia artificial para asegurar que \nGrupo CTI esté a la vanguardia tecnológica. Al ser partners la capacitación es en relación a políticas propias.",
+    "detallepuesto": "PartnerDevIA.pdf"
+  },
+  {
+    "id": 14,
+    "titulo": "Ingeniero de Infraestructura de Sistemas de Peaje y Telepeaje e ITS (Sistemas Inteligentes de Transporte)",
+    "educacion": "Profesionista titulado en Licenciatura en Ingeniería en Sistemas, Ingeniería Electrónica, Ingeniería en Telecomunicaciones o carrera afín.\n",
+    "experiencia": "> Experiencia mínima de 3 a 5 años en la instalación y mantenimiento de infraestructura de sistemas de peaje, telepeaje o ITS.\n> Conocimientos en redes y telecomunicaciones aplicadas a sistemas de transporte y cobro.\n> Familiaridad con sistemas de peaje electrónicos y tecnologías RFID, así como con sistemas de videovigilancia y sensores aplicados al control vehicular.\n> Conocimiento en normativas ITS y seguridad en infraestructura tecnológica aplicada al transporte.",
+    "capacitacion": "La capacitación puede ajustarse según las tecnologías específicas que utilice Grupo CTI y las necesidades cambiantes de sus proyectos.\n ",
+    "detallepuesto": "GInfraestructuraITS.pdf"
+  },
+  {
+    "id": 15,
+    "titulo": "Ingeniero de Soporte Técnico en Sitio",
+    "educacion": "Profesionista titulado, en Licenciatura en Ingeniería en Sistemas, Informática, Tecnologías de la Información o carrera afín.\n",
+    "experiencia": "> Experiencia mínima de 2 a 3 años en soporte técnico en sitio.\n> Conocimientos avanzados en hardware, sistemas operativos (Windows, macOS, Linux) y redes.\n> Experiencia en la instalación, configuración y mantenimiento de equipos de TI y redes locales.\n> Conocimiento en protocolos de redes y telecomunicaciones (TCP/IP, DHCP, DNS, etc.).",
+    "capacitacion": "Proactividad y disposición para aprender y adaptarse a nuevas tecnologías, la capacitación puede ajustarse según las tecnologías específicas que \n utilice Grupo CTI y las necesidades cambiantes de sus proyectos. ",
+    "detallepuesto": "IngSoporteSitio.pdf"
+  },
+  {
+    "id": 16,
+    "titulo": "Capacitacion",
+    "educacion": "Pendiente\n",
+    "experiencia": "\n>pendiente ",
+    "capacitacion": "\nPendiente",
+    "detallepuesto": "GCapacitacion.pdf"
+  },
+  {
+    "id": 17,
+    "titulo": "Ingeniero de ITS (Sistemas Inteligentes de Transporte) e Infraestructura de Sistemas de Peaje y Telepeaje",
+    "educacion": "Ingeniería de Telecomunicaciones, Ingeniería Electrónica, Ingeniería Informática o afines.\n Certificaciones en ITS, redes de telecomunicaciones o ciberseguridad.",
+    "experiencia": "> Experiencia mínima de 3 a 5 años en la instalación y mantenimiento de infraestructura de sistemas de peaje, telepeaje o ITS.\n> Conocimientos en redes y telecomunicaciones aplicadas a sistemas de transporte y cobro.\n> Experiencia en la configuración de redes y sistemas de comunicación (TCP/IP, switches, routers, etc.).\n> Conocimientos en sistemas RFID, lectores de tarjetas, sensores de control vehicular y cámaras de vigilancia.\n> Familiaridad con el software de gestión de peaje y telepeaje.\n> Conocimiento en ciberseguridad aplicada a sistemas de transporte y protección de datos.",
+    "capacitacion": "Actualización en tecnologías ITS (sensores, sistemas de gestión del tráfico, plataformas de monitoreo).\nCapacitación en integración de APIs y herramientas para el análisis de datos de tráfico.\nLa capacitación puede ajustarse según las tecnologías específicas que utilice Grupo CTI y las necesidades cambiantes de sus proyectos.\n ",
+    "detallepuesto": "GITSTelepeaje.pdf"
+  },
+  {
+    "id": 18,
+    "titulo": "Integración",
+    "educacion": "Pendiente\n",
+    "experiencia": "\n>pendiente ",
+    "capacitacion": "\nPendiente",
+    "detallepuesto": "GIntegracion.pdf"
+  },
+  {
+    "id": 19,
+    "titulo": "Desarrollador Junior de Aplicativos Móvil",
+    "educacion": "Licenciatura en Ingeniería en Sistemas, Informática o carrera afín (en curso o recién egresado).\n",
+    "experiencia": "> Experiencia previa (prácticas o proyectos) en desarrollo web utilizando tecnologías como HTML, CSS, JavaScript.\n> Conocimientos básicos de frameworks de JavaScript (React, Angular o Vue.js).\n> Conocimiento en el uso de sistemas de control de versiones (Git).\n> Familiaridad con metodologías ágiles de desarrollo (Scrum, Kanban).",
+    "capacitacion": "Al estar bajo el resguardo del Desarrollador Senior o Líder de Proyecto, se encuentra en constante aprendizaje y actualización sobre nuevas tecnologías y herramientas relevantes para el desarrollo web.\nDeberá tener habilidad para aprender nuevas tecnologías y adaptarse rápidamente a las herramientas utilizadas por el equipo.",
+    "detallepuesto": "DevMovilJunior.pdf"
+  },
+  {
+    "id": 20,
+    "titulo": "Desarrollador Junior de Aplicativos CS",
+    "educacion": "Licenciatura en Ingeniería en Sistemas, Informática o carrera afín (en curso o recién egresado).\n",
+    "experiencia": "> Experiencia previa (prácticas o proyectos) en desarrollo web utilizando tecnologías como HTML, CSS, JavaScript.\n> Conocimientos básicos de frameworks de JavaScript (React, Angular o Vue.js).\n> Conocimiento en el uso de sistemas de control de versiones (Git).\n> Familiaridad con metodologías ágiles de desarrollo (Scrum, Kanban).",
+    "capacitacion": "Al estar bajo el resguardo del Desarrollador Senior o Líder de Proyecto, se encuentra en constante aprendizaje y actualización sobre nuevas tecnologías y herramientas relevantes para el desarrollo web.\nDeberá tener habilidad para aprender nuevas tecnologías y adaptarse rápidamente a las herramientas utilizadas por el equipo.",
+    "detallepuesto": "DevClienteServJunior.pdf"
+  }
+]

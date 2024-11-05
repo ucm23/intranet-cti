@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "titulo": "Desarrollador Frontend",
+    "descripcion": "Responsable del desarrollo de interfaces de usuario.",
+    "habilidades": ["HTML", "CSS", "JavaScript", "React"],
+    "experiencia": "2-3 años",
+    "ubicacion": "Remoto"
+  },
+  {
+    "id": 2,
+    "titulo": "Desarrollador Backend",
+    "descripcion": "Encargado del desarrollo de la lógica de servidor.",
+    "habilidades": ["Node.js", "Express", "Bases de datos"],
+    "experiencia": "3-5 años",
+    "ubicacion": "Presencial"
+  }
+]

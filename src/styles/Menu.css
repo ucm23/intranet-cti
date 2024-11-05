@@ -1,0 +1,30 @@
+/* Menu.css */
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu > ul > li {
+    margin: 5px 0;
+  }
+  
+  .menu button {
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .submenu {
+    margin-left: 20px; /* Indentación para los submenús */
+  }
+  
+  .submenu li {
+    margin: 5px 0;
+  }
+  
+  .submenu button {
+    background-color: #ddd;
+  }
+  

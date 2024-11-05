@@ -1,0 +1,94 @@
+html, body {
+  margin: 0; /* Elimina márgenes predeterminados */
+  padding: 0; /* Elimina padding predeterminado */
+  width: 100%;
+  height: 100%;
+}
+* {
+  box-sizing: border-box; /* Asegura que el ancho incluya padding y bordes */
+}
+.container_ {
+  display: flex;
+  min-height: 100vh;
+  min-width: 100%;
+  /*width: 100vw; /* Ancho completo de la ventana */
+  /*height: 100vh; /* Altura completa de la ventana */
+  margin: 0; /* Elimina cualquier margen que pueda estar alrededor del contenedor */
+  padding: 0; /* Asegúrate de que no haya padding */
+  justify-content: center; /* Centra horizontalmente */
+  
+}
+
+.leftContainer {
+  /*flex: 1; /* Ocupa el 50% del ancho disponible */
+  background-color: #001529;
+  padding: 0px;
+  margin: 0;
+  /* width: 10; */
+  width: 200px; /* Anchura fija para el contenedor pegado al margen */
+  border: 2px solid white; /* Borde del contenedor principal */
+  justify-content: center; /* Centra la imagen horizontalmente */
+  align-items: center; /* Centra la imagen verticalmente */
+}
+
+.rightContainer {
+  flex: 1; /* Ocupa el 50% del ancho disponible */
+  background-color: white;
+  padding: 0px;
+  margin: 0;
+  width:60px; 
+  /* min-width: 350%; */
+  /*flex-grow: 1; /* Permite que crezca según el contenido */
+}
+.textContainer {
+  padding: 20px;
+}
+
+.coloredUnderline {
+  display: inline; /* Asegura que el subrayado se ajuste al texto */
+  border-bottom: 1px solid yellow; /* Color y grosor del subrayado */
+  padding-bottom: 2px; /* Ajusta el espacio entre el texto y el subrayado */
+  text-align: center;
+  font-size: 14px;
+  color:white;
+}
+.coloredUnderlinex {
+  display: inline; /* Asegura que el subrayado se ajuste al texto */
+  border-bottom: 1px solid rgb(108, 3, 199); /* Color y grosor del subrayado */
+  padding-bottom: 2px; /* Ajusta el espacio entre el texto y el subrayado */
+  text-align: center;
+  font-size: 14px;
+  color:white;
+}
+.icon-text-container {
+  display: flex; /* Alinea el ícono y el texto en una fila */
+  align-items: center; /* Centra verticalmente el ícono y el texto */
+}
+
+.icon-text-container i {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+  font-size: 24px; /* Tamaño del ícono */
+}
+
+.icon-text-container span {
+  font-size: 16px; /* Tamaño del texto */
+}
+.download-button button {
+  display: inline-flex; /* Alinea el contenido del botón en fila */
+  align-items: center; /* Centra verticalmente el ícono y el texto */
+  padding: 8px 12px; /* Añade algo de espacio interno */
+  font-size: 16px; /* Tamaño del texto */
+  background-color: #007bff; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin bordes */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+.download-button button:hover {
+  background-color: #0056b3; /* Color de fondo al hacer hover */
+}
+.download-button svg {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}

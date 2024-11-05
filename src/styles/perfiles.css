@@ -1,0 +1,54 @@
+.title {
+    font-size: 1.5rem; /* Tamaño de la fuente */
+    color: #001529    ;    /* Color del texto */
+    margin: 5px 0;   /* Espaciado arriba y abajo */
+    /* border-bottom: 2px solid blue;  */
+    /* Línea blanca debajo */
+    padding-bottom: 10px; /* Espaciado entre el texto y la línea */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra del texto */
+    text-align: center; 
+    /* Alinear el texto a la izquierda */
+    /* display: inline-block;  */
+    /* Asegura que la línea se ajuste al tamaño del texto */
+  }
+  .titlex {
+    font-size: 1rem; /* Tamaño de la fuente */
+    color: #001529    ;    /* Color del texto */
+    margin: 20px 0;   /* Espaciado arriba y abajo */
+    border-bottom: 2px solid blue; /* Línea blanca debajo */
+    padding-bottom: 10px; /* Espaciado entre el texto y la línea */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra del texto */
+    /* text-align: left;  */
+    /* Alinear el texto a la izquierda */
+    display: inline-block; /* Asegura que la línea se ajuste al tamaño del texto */
+  }
+  
+
+  .title2 {
+    font-size: 1.5rem; 
+    color: #001529 ;  
+    margin: 0;  
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra del texto */
+    text-align: left;
+  }  
+
+
+  .title3 {
+    font-size: 2.5rem; 
+    color: #ffffff;  
+    margin: 20px 0;  
+    text-align: right; 
+    transition: color 0.3s ease; /* Transición suave */
+  }
+  
+  .title:hover {
+    color: #ffcc00; /* Cambiar color al pasar el mouse */
+  }
+
+  .cuerpo {
+    font-size: 0.9rem; 
+    color: #001529 ;  
+    margin: 0;  
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra del texto */
+    text-align: justify; /* Justificar el texto */
+  }  

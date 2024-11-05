@@ -1,0 +1,107 @@
+[
+    {
+        "id": "1",
+        "name": "SGA",
+        "activities": [
+            {
+                "name": "Login",
+                "responsable": "Ulises Cano Mtz",
+                "advance": 50
+            },
+            {
+                "name": "Dashboard",
+                "responsable": "Maria Lopez",
+                "advance": 75
+            },
+            {
+                "name": "Reportes",
+                "responsable": "Juan Perez",
+                "advance": 20
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Gestión de Proyectos",
+        "activities": [
+            {
+                "name": "Planificación",
+                "responsable": "Laura Torres",
+                "advance": 90
+            },
+            {
+                "name": "Ejecución",
+                "responsable": "Carlos Ruiz",
+                "advance": 60
+            },
+            {
+                "name": "Cierre",
+                "responsable": "Ana Sanchez",
+                "advance": 0
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "name": "Sistema de Inventario",
+        "activities": [
+            {
+                "name": "Recepción de Productos",
+                "responsable": "Roberto Gomez",
+                "advance": 80
+            },
+            {
+                "name": "Control de Stock",
+                "responsable": "Silvia Martinez",
+                "advance": 70
+            },
+            {
+                "name": "Generación de Reportes",
+                "responsable": "Diego Castro",
+                "advance": 30
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "name": "Portal de Clientes",
+        "activities": [
+            {
+                "name": "Registro de Clientes",
+                "responsable": "Fernanda Ortiz",
+                "advance": 100
+            },
+            {
+                "name": "Gestión de Solicitudes",
+                "responsable": "Victor Hugo",
+                "advance": 40
+            },
+            {
+                "name": "Integración con CRM",
+                "responsable": "Sofia Ruiz",
+                "advance": 10
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "name": "Aplicación Móvil",
+        "activities": [
+            {
+                "name": "Diseño de Interfaz",
+                "responsable": "Isabel Flores",
+                "advance": 85
+            },
+            {
+                "name": "Desarrollo de Funcionalidades",
+                "responsable": "Alejandro Silva",
+                "advance": 50
+            },
+            {
+                "name": "Pruebas y Validación",
+                "responsable": "Martín Herrera",
+                "advance": 20
+            }
+        ]
+    }
+]

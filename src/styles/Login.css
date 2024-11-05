@@ -1,0 +1,43 @@
+.login-form-forgot {
+    float: right;
+    color: #fff;
+}
+
+.rememberme {
+   color: #fff;
+}
+.login-form-button {
+    width: 100%;
+}
+
+.login-form-container {
+    background-image: url('../images/login.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-form {
+    width: 90%;
+    /* Utilizamos porcentaje para que el formulario se adapte al ancho de la pantalla */
+    max-width: 400px;
+    /* Establecemos un ancho máximo para evitar que el formulario se vuelva demasiado ancho en pantallas grandes */
+    background-color: rgba(0, 0, 0, 0.72);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.login-form h3{
+   color: #fff;
+   font-size: xx-large;
+   text-align: center;
+}
+@media screen and (max-width: 768px) {
+    .login-form-container {
+        padding: 0 20px;
+        /* Añadimos un espacio en los bordes para pantallas más pequeñas */
+    }
+}

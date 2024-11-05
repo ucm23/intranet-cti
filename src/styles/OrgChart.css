@@ -1,0 +1,24 @@
+.node {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 10px;
+    width: 120px; /* Ancho del nodo */
+  }
+  
+  .node__image {
+    width: 80px; /* Ajusta el tamaño de la imagen */
+    height: 80px;
+    border-radius: 50%; /* Hace la imagen redonda */
+    object-fit: cover; /* Ajusta la imagen al contenedor */
+    margin-bottom: 8px;
+  }
+  
+  .node__name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+  

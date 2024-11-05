@@ -1,0 +1,80 @@
+.valores-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: -20px;
+  }
+  
+  .titulo-principal {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: black;
+    text-shadow: 4px 4px 8px rgba(255, 255, 255, 0.9);
+    /* color:darkgrey; */
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+    /* text-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5);
+    color:cyan; */
+    /* color: #0056b3; */
+    /* margin-top: -20px; */
+  }
+  
+  .valores-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 25px;
+  }
+  
+  .valor-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white; 
+    
+  }
+  .valor-item:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.9); /* Sombra más intensa al pasar el cursor */
+}
+  .valor-item h2 {
+    font-size: 1.8rem;
+    /* color: #0056b3; */
+    color:cyan;
+    margin-bottom: 10px;
+  }
+  
+  .valor-item p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .valores-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  .subrayado {
+    text-align: left; /* Centra el texto */
+    /* text-align: center; */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    text-decoration: underline; /* Subraya el texto */
+    text-decoration-color: orangered; /* Color de la subrayado */
+    text-decoration-thickness: 2px; /* Grosor de la subrayado */
+    text-decoration-style: solid; /* Estilo de la subrayado (sólido, punteado, etc.) */
+    font-size: 20px !important;
+}
+.justificado {
+    text-align: justify; /* Justifica el texto */
+    margin: 0; /* Elimina márgenes que puedan afectar la justificación */
+    color: white !important;
+    font-size: 14px !important;
+    font-weight: 300;
+}

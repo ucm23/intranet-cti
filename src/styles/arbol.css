@@ -1,0 +1,194 @@
+.tree-node {
+  padding: 5px;
+  padding-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10%;
+  text-align: center;
+  background-color: #f9f9f9;
+  justify-content: center;
+  /* Centrar horizontalmente */
+  align-items: center;
+  object-fit: cover;
+  /* width: 100px; */
+  box-sizing: border-box;
+  /* Incluye padding y border en el tamaño total */
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  width: 160px;
+  /*height: 220px;
+  /* transition: none !important;
+  transform: none !important; */
+  font-Size: '14px';
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.2);
+  /* Efecto sombreado */
+  transition: box-shadow 0.8s ease;
+  /* Animación suave */
+
+}
+
+.tree-node:hover {
+  box-shadow: 0 9px 17px rgba(0, 0, 0, 0.4);
+  background-color: #e6e6e6;
+  /* flex-grow: 1; */
+  /* display: flex; */
+  /* transition: none !important; Asegurarse de que no haya transformación en hover */
+  /* transition: none !important; Desactivar transiciones en hover */
+}
+
+.org-chart-node {
+  display: inline-block;
+  padding: 10px;
+  background-color: white;
+  /*border: 1px solid #ddd;
+  border-radius: 10%;
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.2); /* Efecto sombreado */
+  transition: box-shadow 0.8s ease;
+  /* Animación suave */
+  visibility: visible;
+}
+
+.org-chart-node:hover {
+  box-shadow: 0 9px 17px rgba(0, 0, 0, 0.4);
+  /* Sombra al pasar el ratón */
+  background-color: #e6e6e6;
+}
+
+
+
+
+.node__image {
+  height: 65px;
+  width: 65px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 40%;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: none;
+  transform: none;
+}
+
+.org-tree-container {
+  justify-content: flex-start;
+  transform-origin: top center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(90deg, rgba(209, 213, 219, 0.2) 1px, transparent 1px), linear-gradient(180deg, rgba(209, 213, 219, 0.2) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+
+.node-images {
+  display: flex;
+  /* Usar flexbox para colocar las imágenes una al lado de la otra */
+  justify-content: space-between;
+  /* Espacio uniforme entre las imágenes */
+  margin-bottom: 10px;
+  width: 80px;
+  /* Ancho de cada imagen */
+  height: 80px;
+  /* Altura de cada imagen */
+  object-fit: cover;
+  transition: none !important;
+  /* Asegurarse de que no haya transformación en hover */
+  transition: none !important;
+  /* Desactivar transiciones en hover */
+
+}
+
+.container-1,
+.container-2 {
+  flex: 1;
+  /* Asegura que ambos contenedores tengan el mismo tamaño */
+  background-color: #e6e6e6;
+  /* Fondo de cada contenedor */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.node-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+
+.image-container {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #ccc;
+  user-select: none;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  will-change: transform;
+}
+
+.org-tree-node-label .org-tree-node-label-inner {
+  padding: 0px 0px !important;
+  text-align: center;
+  color: black;
+  border-radius: 0px;
+}
+
+.org-tree-node-label-inner {
+  padding: 0px !important;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.childrens-label-title {
+  color: white;
+  border-radius: 3px;
+  font-weight: bold;
+  padding: 15px;
+}
+
+.image-img-profile {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.project-indicators {
+  padding: 20px;
+}
+
+.project-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.project-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  flex: 1 1 300px;
+}
+
+.progress-bar {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress {
+  background-color: #4caf50;
+  height: 20px;
+}
