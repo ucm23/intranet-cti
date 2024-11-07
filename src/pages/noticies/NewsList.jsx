@@ -3,21 +3,11 @@ import { FaNewspaper, FaGlobeAmericas, FaLandmark, FaFlask, FaFootballBall, FaMu
 import { indexIMGByID, indexNews } from "../../api/news/news";
 import { indexUsers } from "../../api/users/users";
 import { useNavigate } from 'react-router-dom';
-import moment from "moment/moment";
 import { Button, Empty, Typography } from 'antd';
 import {
     PlusOutlined
 } from '@ant-design/icons';
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure,
-} from '@chakra-ui/react'
-import AddNews from "./AddNews";
+
 
 const categories = [
     "Todos",
@@ -42,8 +32,6 @@ const viewModes = [
 ];
 
 const NewsList = () => {
-
-    const { isOpen: isOpenEvent, onOpen: onOpenEvent, onClose: onCloseEvent } = useDisclosure()
     const [data, setData] = useState([]);
     const [users, setUsers] = useState(null);
     const navigate = useNavigate();
@@ -54,17 +42,15 @@ const NewsList = () => {
 
     const getUsers = async () => {
         const user = await indexUsers({})
-        console.log("🚀 ~ getDocuments ~ user:", user)
         if (user?.status) setUsers(user?.data)
     }
 
     useEffect(() => {
-        if (users) getDocuments()
+        if (users) getDataNews()
     }, [users])
 
-    const getDocuments = async () => {
+    const getDataNews = async () => {
         const docs = await indexNews({})
-        console.log("🚀 ~ getDocuments ~ docs:", docs)
         if (docs?.status) setData(docs?.data)
     }
 
@@ -75,9 +61,7 @@ const NewsList = () => {
         setSelectedCategory(event.target.value);
     };
 
-    const filteredNews = selectedCategory === "Todos"
-        ? data
-        : data.filter(item => item.categories.find((item_) => item_ === selectedCategory));
+    const filteredNews = selectedCategory === "Todos" ? data : data.filter(item => item.categories.find((item_) => item_ === selectedCategory));
 
     const handleViewModeChange = (mode) => {
         setViewMode(mode);
@@ -175,13 +159,14 @@ const NewsList = () => {
                                                 <p className="text-sm text-gray-600 mb-0 pb-0 line-clamp-3 text-justify">
                                                     <div dangerouslySetInnerHTML={{ __html: item?.summary }} />
                                                 </p>
-                                                <div className="flex justify-between items-center">
-                                                    <div className="flex flex-row flex-wrap gap-0.5">
-                                                        {item?.categories.map((item, index) => <span key={`${item}-${index}`} className="bg-blue-200 text-blue-600 text-center py-0.5 px-1.5 rounded-lg text-xxs">{item}</span>)}
-                                                    </div>
+                                                <span className="text-xs text-blue-600 font-medium">{user?.label}</span>
+
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex flex-row flex-wrap gap-0.5">
+                                                    {item?.categories.map((item, index) => <span key={`${item}-${index}`} className="bg-blue-200 text-blue-600 text-center py-0.5 px-1.5 rounded-lg text-xxs">{item}</span>)}
                                                 </div>
                                             </div>
-                                            <span className="text-xs text-blue-600 font-medium">{user?.label}</span>
                                         </div>
                                     </div>
                                 </div>

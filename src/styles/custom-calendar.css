@@ -162,6 +162,23 @@ div.layout-splitter {
     box-shadow: none;
 }
 
+.input-text-form-02 {
+    border: none;
+    outline: none;
+    padding: 8px;
+    margin-left: 6px;
+    width: 100%;
+    font-size: 12px;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+.input-text-form-02:focus {
+    background-color: white;
+}
+.input-text-form-02:focus-visible {
+    background-color: white;
+}
 .input-text-form {
     border: none;
     border-bottom: 0.9px solid gray;
@@ -171,6 +188,9 @@ div.layout-splitter {
     font-size: 12px;
 }
 
+.input-text-form:focus {
+    border-bottom-color: darkgray;
+}
 .input-text-form:focus-visible {
     border: none;
     outline: none;
@@ -183,10 +203,6 @@ div.layout-splitter {
     outline: none;
     width: 100%;
     font-size: 12px;
-}
-
-.input-text-form:focus {
-    border-bottom-color: darkgray;
 }
 
 .div-container-inputs-form {

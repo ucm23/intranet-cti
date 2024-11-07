@@ -211,7 +211,7 @@ const Home = () => {
                         </Space>
                     </a>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 gap-y-16">
                         <div className="bg-gradient-to-br from-blue-200 to-blue-300 p-6 shadow-lg transition-all duration-300 relative pt-16" style={{ borderRadius: 8 }}>
                             <div className="flex items-center justify-center w-20 h-20 bg-blue-500 rounded-full mb-6 mx-auto absolute -top-10 left-1/2 transform -translate-x-1/2 shadow-lg">
                                 <FaBullseye className="text-white text-3xl" />

@@ -1,6 +1,9 @@
 import { dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import es from 'date-fns/locale/es';
+import { FaFolder, FaFileImage, FaFilePowerpoint, FaFilePdf, FaFileWord, FaFileExcel } from "react-icons/fa";
+import { AiOutlineFile } from "react-icons/ai";
+import { FcFolder } from "react-icons/fc";
 
 export const baseURL = "https://api-metrix.victum-re.online/intranet";
 
@@ -40,6 +43,41 @@ export const localizer = dateFnsLocalizer({
     locales,
 });
 
+export const icons = {
+    "image/png": <FaFileImage style={{ fontSize: 15 }} color="red" />,
+    "image/jpeg": <FaFileImage style={{ fontSize: 15 }} color="red" />,
+    "jpeg": <FaFileImage style={{ fontSize: 15 }} color="red" />,
+    "image/jpg": <FaFileImage style={{ fontSize: 15 }} color="red" />,
+    "image/svg+xml": <FaFileImage style={{ fontSize: 15 }} color="red" />,
+    "application/pdf": <FaFilePdf style={{ fontSize: 15 }} color="red" />,
+    "application/msword": <FaFileWord style={{ fontSize: 15 }} color="blue" />,
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": <FaFileWord style={{ fontSize: 15 }} color="blue" />,
+    "application/vnd.ms-powerpoint": <FaFilePowerpoint style={{ fontSize: 15 }} color="orange" />,
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": <FaFilePowerpoint style={{ fontSize: 15 }} color="orange" />,
+    "application/vnd.ms-excel": <FaFileExcel style={{ fontSize: 15 }} color="green" />,
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": <FaFileExcel style={{ fontSize: 15 }} color="green" />,
+    "default": <AiOutlineFile style={{ fontSize: 15 }} color="gray" />,
+    "folder_projs": <FcFolder style={{ fontSize: 15 }} color="gray" />,
+    "folder_depts": <FaFolder style={{ fontSize: 15 }} color="gray" />
+};
+
+export const types = {
+    "image/png": "Imagen",
+    "image/jpeg": "Imagen",
+    "jpeg": "Imagen",
+    "image/jpg": "Imagen",
+    "image/svg+xml": "Hojas de cálculo",
+    "application/pdf": "Documento PDF",
+    "application/msword": "Documento de texto",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "Documento de texto",
+    "application/vnd.ms-powerpoint": "Presentación de diapositivas",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": "Presentación de diapositivas",
+    "application/vnd.ms-excel": "Hojas de cálculo",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "Hojas de cálculo",
+    "default": "Archivo binario",
+    "folder_project": "Proyecto",
+    "folder_depts": "Departamento"
+};
 //export type NotificationType = 'info' | 'warning' | 'error' | 'success';
 
 const titleError = 'Error'

@@ -1939,3 +1939,12 @@ td {
 .width-hstack {
     width: -webkit-fill-available;
 }
+
+.ant-empty-image {
+    display: flex;
+    justify-content: center;
+}
+
+.span.chakra-checkbox__label.css-6x44c9 .css-6x44c9 {
+    font-size: 12px !important;
+}

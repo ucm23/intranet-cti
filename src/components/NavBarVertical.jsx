@@ -14,7 +14,8 @@ import {
     SettingOutlined,
     AppstoreOutlined,
     FileDoneOutlined,
-    FormOutlined
+    FormOutlined,
+    GroupOutlined,
 } from '@ant-design/icons';
 
 import { FaCalendarAlt, FaUser, FaComments, FaShareAlt, FaNewspaper, FaCheckCircle, FaExternalLinkAlt, FaCheck } from "react-icons/fa";
@@ -81,13 +82,13 @@ const items = [
         icon: React.createElement(FileDoneOutlined),
         route: '/files',
     },
-    /*{
+    {
         key: '7',
         label: 'Indicadores',
-        icon: <SettingOutlined />,
-        route: '/ind',
+        icon: React.createElement(GroupOutlined),
+        route: '/indicator',
         
-    },*/
+    },
     {
         key: '8',
         label: 'Calendario',
@@ -108,7 +109,6 @@ const NavBarVertical = ({ children, menu }) => {
 
     return (
         <Layout style={{ height: '100vh', overflow: 'hidden' }}>
-
             <Layout>
                 <Sider
                     collapsed={collapsed}
@@ -144,7 +144,7 @@ const NavBarVertical = ({ children, menu }) => {
                 </Sider>
 
 
-                <Content className='' style={{ backgroundColor: 'white' }}>
+                <Content className='' style={{  }}>
                     {/*<Header style={{ display: 'flex', alignItems: 'center', background: 'white' }}>
                         {mobile &&
                             <div className="btn-menu-header" onClick={() => setCollapsed(!collapsed)} >

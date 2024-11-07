@@ -34,3 +34,20 @@ export const createProjects = async ({ data }) => {
         return response;
     }
 }
+
+export const indexActivities = async ({ id }) => {
+    let response = { status: false }
+    try {
+        const fetch = await Fetcher({
+            method: 'GET',
+            url: `/activities?project_id=${id}&orderBy=id%3Aasc`
+        })
+        if (fetch.status == 200) {
+            response = { data: fetch?.data?.data, status: true }
+        }
+    } catch (error) {
+        console.error("TCL: indexActivities -> error", error)
+    } finally {
+        return response;
+    }
+}

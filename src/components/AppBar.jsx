@@ -39,7 +39,7 @@ const AppBar = ({ children, page, extra }) => {
                     <div className="btn-menu-header icon-container" onClick={handleBackToList} >
                         <Icon icon={loading} style={{ color: 'white' }} />
                     </div>
-                    <img src="/img/logo-white-removebg.png" alt="/img/logo-blue-removebg.png" style={{ height: 40, marginLeft: !mobile ? 12 : 0 }} />
+                    {/*<img src="/img/logo-white-removebg.png" alt="/img/logo-blue-removebg.png" style={{ height: 40, marginLeft: !mobile ? 12 : 0 }} />*/}
                 </div>
             </Header>
             {extra &&

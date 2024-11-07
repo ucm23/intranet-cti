@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
-import { FaFolder, FaFileImage, FaFilePowerpoint, FaFilePdf, FaFileWord, FaFileExcel, FaSpinner } from "react-icons/fa";
-import {
-    AiOutlineFile, AiOutlineDownload, AiOutlineDelete, AiOutlineShareAlt, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight
-} from "react-icons/ai";
+import { FaFolder, FaSpinner } from "react-icons/fa";
+import { AiOutlineDelete, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { CiCircleCheck } from "react-icons/ci";
 import { VscError } from "react-icons/vsc";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { FcFolder } from "react-icons/fc";
 import color from '../../color';
 import { Empty, Typography } from 'antd';
 import {
@@ -31,13 +28,12 @@ import {
     FormLabel,
     Input,
     Textarea,
-    VStack,
-    HStack,
-    FormErrorMessage,
 } from '@chakra-ui/react'
 import {
     CloseOutlined
 } from '@ant-design/icons';
+import Draggable from 'react-draggable';
+import { RxDragHandleDots2 } from "react-icons/rx";
 //import InputColor from 'react-input-color';
 import { createDocs, deleteDocuments, indexDocsImgs, indexDocuments, indexDocumentsByID } from '../../api/docs/docs';
 import { createDepartments, indexDepartments } from '../../api/departamentos/departments';
@@ -46,10 +42,13 @@ import { useImageCache } from '../../redux/ImageCacheProvider';
 import { usePreviewFile } from '../../redux/PreviewFileContext';
 import es from 'date-fns/locale/es';
 import { format } from 'date-fns';
-import { openNotificationWithIcon } from '../../libs/main';
+import { icons, openNotificationWithIcon, types } from '../../libs/main';
 import { notification } from 'antd';
+import { useSelector } from 'react-redux';
 
 const DocumentManager = () => {
+    const information_user = useSelector(state => state.login.information_user);
+    const { id: user_id } = information_user;
     const [level, setLevel] = useState(0);
     const [projects, setProjects] = useState([]);
     const [departments, setDepartments] = useState([]);
@@ -61,7 +60,7 @@ const DocumentManager = () => {
     const { isOpen: isOpenProject, onOpen: onOpenProject, onClose: onCloseProject } = useDisclosure()
     const today = new Date();
     const tomorrow = new Date();
-
+    const modalRef = useRef(null);
     const [api, contextHolder] = notification.useNotification();
     const openNotification = (type, description) => openNotificationWithIcon(api, type, description)
     const [colors, setColor] = useState({});
@@ -115,33 +114,38 @@ const DocumentManager = () => {
         }
         const startDate = new Date(formDataProjects?.start_date);
         const endDate = new Date(formDataProjects?.end_date);
-
-        if (startDate >= endDate) {
-            openNotification('warning', "La Fecha de Inicio debe ser anterior a la Fecha de Fin.");
-            return;
-        }
+        
         try {
             let data = {
-                user_id: 1,
+                user_id,
                 ...formDataProjects,
                 status: "activo",
                 color: colors
             }
             if (!data?.description) delete data?.description;
-            if (level === 1) delete data?.color;
-            if (level === 2) {
+            if (level < 1) {
+                if (startDate >= endDate) {
+                    openNotification('warning', "La Fecha de Inicio debe ser anterior a la Fecha de Fin.");
+                    return;
+                }
+                delete data?.color;
+            }
+            if (level == 1) {
                 delete data?.start_date;
                 delete data?.end_date;
                 delete data?.user_id;
                 delete data?.status;
+                data.color = '#B6B6B6';
             }
-            let response = await level === 1 ? createProjects({ data }) : createDepartments({ data })
+            console.log("🚀 ~ handleSubmit ~ data:", data)
+            let response = await level < 1 ? createProjects({ data }) : createDepartments({ data })
             console.log("🚀 ~ handleSubmit ~ response:", response)
         } catch (error) {
             console.error("🚀 ~ handleSubmit ~ error:", error)
         } finally {
-            await level === 1 ? getProjects() : getDepartments()
-            onCloseProject()
+            await getProjects();
+            await getDepartments()
+            defaultModal()
         }
     };
 
@@ -176,6 +180,7 @@ const DocumentManager = () => {
     const getProjects = async () => {
         try {
             const projects = await indexProjects({})
+            console.log("🚀 ~ getProjects ~ projects:", projects)
             if (projects?.status) setProjects(projects?.data)
         } catch (error) {
             console.error("🚀 ~ getProjects ~ error:", error)
@@ -198,19 +203,6 @@ const DocumentManager = () => {
     const closeModal = () => {
         setSelectedImage(null);
         setZoom(100);
-    };
-
-    const handleDownload = () => {
-        //window.open(selectedImage.src, "_blank");
-    };
-
-    const handleShare = () => {
-        /*if (navigator.share) {
-            navigator.share({
-                title: selectedImage.name,
-                url: selectedImage.src
-            });
-        }*/
     };
 
     const handleDelete = ({ id }) => {
@@ -348,17 +340,6 @@ const DocumentManager = () => {
                         </Menu>
                     </>
                 )}
-                {/*level === 2 && (
-                    <>
-                        <IoChevronForwardSharp />
-                        <Menu isLazy>
-                            <MenuButton as={Button} colorScheme='teal' variant='ghost' rightIcon={level === 2 ? <IoMdArrowDropdown /> : null}>
-                                Documentos
-                            </MenuButton>
-                            {level == 2 && <MenuGeneric />}
-                        </Menu>
-                    </>
-                )*/}
             </div>
         );
     };
@@ -425,7 +406,6 @@ const DocumentManager = () => {
         );
     };
 
-    //const [previewFile, setPreviewFile_] = useState(null);
     const { previewFile, setPreviewFile } = usePreviewFile()
     const handleFilePreview = (file) => {
         setPreviewFile(null)
@@ -442,12 +422,7 @@ const DocumentManager = () => {
         handleFilePreview(file);
     }, [handleFilePreview]);
 
-    /*const handleDocs = useCallback((file) => {
-        setPreviewFile(file);
-    }, [handleFilePreview]);*/
-
     const handleDocs = async (file) => {
-        //setPreviewFile(file);
         try {
             const pdf = await indexDocumentsByID({ id: file?.id, blob: false });
             const docUrl = pdf?.data;
@@ -459,85 +434,83 @@ const DocumentManager = () => {
     };
 
     const DocumentList = ({ isLoading, documents }) => {
-        return (
-            isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
-                <div>
-                    {documents.length === 0 ?
-                        <div style={{ height: '50vh', display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
-                            <Empty
-                                //image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                                image="../img/empty_folder.png"
-                                imageStyle={{
-                                    height: 250,
-                                }}
-                                description={
-                                    <Typography.Text>
-                                        <p className="text-center font-bold text-lg text-black mt-3 mb-0">Arrastra y suelta los archivos aquí</p>
-                                        <p className="text-center text-gray-600 mt-0">o usa el botón "Nuevo"</p>
-                                    </Typography.Text>
-                                }
-                            />
-                        </div>
-                        : <div>
-                            <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 pb-24">
-                                {documents.map((file, index) => (
-                                    <div
-                                        key={file.id}
-                                        className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
-                                        style={{ backgroundColor: color?.bgFiles }}
-                                        onClick={() => handlePreview(file)}
-                                        onDoubleClick={() => {
-                                            if (file.type.startsWith('image')) {
-                                                setImages(documents.filter(item => item.type.startsWith('image')));
-                                                handlePreview(file, true, index)
-                                            } else {
-                                                handleDocs(file)
-                                            }
-                                        }}
-                                    >
-                                        <div className="p-3 pb-0">
-                                            {/*<img
+        return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
+            <div>
+                {documents.length === 0 ?
+                    <div style={{ height: '50vh', display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+                        <Empty
+                            //image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                            image="../img/empty_folder.png"
+                            imageStyle={{
+                                height: 215,
+                            }}
+                            description={
+                                <Typography.Text>
+                                    <p className="text-center font-bold text-lg text-black mt-3 mb-0">Arrastra y suelta los archivos aquí</p>
+                                    <p className="text-center text-gray-600 mt-0">o usa el botón "Nuevo"</p>
+                                </Typography.Text>
+                            }
+                        />
+                    </div>
+                    : <div>
+                        <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 pb-24">
+                            {documents.map((file, index) => (
+                                <div
+                                    key={file.id}
+                                    className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
+                                    style={{ backgroundColor: color?.bgFiles }}
+                                    onClick={() => handlePreview(file)}
+                                    onDoubleClick={() => {
+                                        if (file.type.startsWith('image')) {
+                                            setImages(documents.filter(item => item.type.startsWith('image')));
+                                            handlePreview(file, true, index)
+                                        } else {
+                                            handleDocs(file)
+                                        }
+                                    }}
+                                >
+                                    <div className="p-3 pb-0">
+                                        {/*<img
                                                 src={file.thumbnail}
                                                 alt={file.name}
                                                 className="w-full h-32 object-cover rounded"
                                             />*/}
-                                            {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
-                                                <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
-                                                    <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
-                                                </div>}
-                                        </div>
-                                        <div className="p-3 pt-2">
-                                            <div className="flex items-center justify-between space-x-2">
-                                                <div className="flex items-center space-x-2 flex-1 min-w-0 truncate line-clamp-1">
-                                                    {getFileIcon(file?.type)}
-                                                    <span className="font-medium text-gray-800 truncate line-clamp-1">{file.name}</span>
-                                                </div>
-                                                {/*<BsThreeDotsVertical className="text-gray-400 flex-shrink-0" />*/}
-                                                <Menu isLazy>
-                                                    <MenuButton _hover={{ bg: 'transparent' }} /*as={Button}*/ colorScheme='teal' variant='ghost'>
-                                                        <BsThreeDotsVertical className="text-gray-400 pl-0 ml-0 flex-shrink-0" />
-                                                    </MenuButton>
-                                                    <MenuList>
-                                                        <MenuItem onClick={() => {
-                                                            handlePreview(file);
-                                                            if (file.type.startsWith('image')) {
-                                                                setImages(documents.filter(item => item.type.startsWith('image')));
-                                                                handlePreview(file, true, index);
-                                                            } else handleDocs(file);
-                                                        }} >Abrir</MenuItem>
-                                                        <MenuItem onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
-                                                    </MenuList>
-                                                </Menu>
+                                        {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
+                                            <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
+                                                <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
+                                            </div>}
+                                    </div>
+                                    <div className="p-3 pt-2">
+                                        <div className="flex items-center justify-between space-x-2">
+                                            <div className="flex items-center space-x-2 flex-1 min-w-0 truncate line-clamp-1">
+                                                {getFileIcon(file?.type)}
+                                                <span className="font-medium text-gray-800 truncate line-clamp-1">{file.name}</span>
                                             </div>
+                                            {/*<BsThreeDotsVertical className="text-gray-400 flex-shrink-0" />*/}
+                                            <Menu isLazy>
+                                                <MenuButton _hover={{ bg: 'transparent' }} /*as={Button}*/ colorScheme='teal' variant='ghost'>
+                                                    <BsThreeDotsVertical className="text-gray-400 pl-0 ml-0 flex-shrink-0" />
+                                                </MenuButton>
+                                                <MenuList>
+                                                    <MenuItem onClick={() => {
+                                                        handlePreview(file);
+                                                        if (file.type.startsWith('image')) {
+                                                            setImages(documents.filter(item => item.type.startsWith('image')));
+                                                            handlePreview(file, true, index);
+                                                        } else handleDocs(file);
+                                                    }} >Abrir</MenuItem>
+                                                    <MenuItem onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
+                                                </MenuList>
+                                            </Menu>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
-                    }
-                </div>
-        );
+                    </div>
+                }
+            </div>;
     };
 
     const ImageLoader = memo(({ id, className, style }) => {
@@ -562,37 +535,16 @@ const DocumentManager = () => {
 
     const PDFLoader = ({ id, className }) => {
         const [imageUrl, setImageUrl] = useState(null);
-
         useEffect(() => {
             const loadURL = async () => {
                 const pdf = await indexDocumentsByID({ id, blob: false });
                 console.log("🚀 ~ loadURL ~ pdf:", pdf)
-                //const blob = new Blob([pdf], { type: 'text/plain' });
-                //console.log("🚀 ~ loadURL ~ blob:", typeof blob, blob)
                 setImageUrl(pdf?.data);
-                //const response = await fetch(`${baseURL}/documents/${id}?blob=false`);
-                /*const blob = await response?.blob();
-                console.log("🚀 ~ loadURL ~ response:", response)
-                console.log("🚀 ~ loadURL ~ blob:", blob)
-                const blobUrl = URL.createObjectURL(blob);
-                console.log("🚀 ~ loadURL ~ blobUrl:", blobUrl)*/
-                /*let data = await response.text();
-                console.log("🚀 ~ loadURL ~ response:", response)
-                setImageUrl(data?.data?.signedUrl);*/
             };
             loadURL()
-            /*return () => {
-                if (imageUrl) {
-                    URL.revokeObjectURL(imageUrl);
-                }
-            };*/
         }, [id]);
-        //div-pdf
         return (imageUrl ?
             <div className={`${className}`}>
-                {/*<PDFViewerComp
-                    key='view'
-                    file={imageUrl} />*/}
                 <iframe
                     src={imageUrl}
                     width="100%"
@@ -624,13 +576,9 @@ const DocumentManager = () => {
 
         event.preventDefault();
         setUploadResults([])
-        //let files = [];
-        /*if (!mode) files = Array.from(event.target.files);
-        else files = Array.from(event.dataTransfer.files);*/
         const files = mode ? Array.from(event.dataTransfer.files) : Array.from(event.target.files);
         if (!files.length) return;
         let count = 0;
-        //if (files.length > 0) {
         setFilesLoad(files);
         setVisibleDrog(false);
         setIsLoading(true);
@@ -642,19 +590,14 @@ const DocumentManager = () => {
                 data.append("name", file.name);
                 data.append("type", file.type);
 
-                if (level === 1) data.append("project_id", selectedProject?.id);
-                if (level === 2) {
+                if (level < 1) data.append("project_id", selectedProject?.id);
+                if (level == 1) {
                     data.append("project_id", selectedProject?.id);
                     data.append("department_id", selectedDepartment?.id);
                 }
                 let success = false;
                 try {
                     const { status } = await createDocs({ data });
-                    /*console.log("🚀🚀 🚀 ~ Archivo cargado:", get_data);
-                    if (get_data?.status == 413 || get_data?.status == 0) success = 2
-                    if (get_data?.status == 201) success = 1*/
-
-                    //success = status === 201 ? 1 : (status === 413 || status === 0) ? 2 : 0;
                     success = status === 201 ? 1 : 2;
                     count += 1;
                 } catch (error) {
@@ -670,7 +613,6 @@ const DocumentManager = () => {
             await getDocuments();
             setIsLoading(false);
         }
-
     };
 
     const inputFileRef = useRef(null);
@@ -686,46 +628,33 @@ const DocumentManager = () => {
         setVisibleDrog(false)
     };
 
-    const icons = {
-        "image/png": <FaFileImage style={{ fontSize: 15 }} color="red" />,
-        "image/jpeg": <FaFileImage style={{ fontSize: 15 }} color="red" />,
-        "jpeg": <FaFileImage style={{ fontSize: 15 }} color="red" />,
-        "image/jpg": <FaFileImage style={{ fontSize: 15 }} color="red" />,
-        "image/svg+xml": <FaFileImage style={{ fontSize: 15 }} color="red" />,
-        "application/pdf": <FaFilePdf style={{ fontSize: 15 }} color="red" />,
-        "application/msword": <FaFileWord style={{ fontSize: 15 }} color="blue" />,
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": <FaFileWord style={{ fontSize: 15 }} color="blue" />,
-        "application/vnd.ms-powerpoint": <FaFilePowerpoint style={{ fontSize: 15 }} color="orange" />,
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation": <FaFilePowerpoint style={{ fontSize: 15 }} color="orange" />,
-        "application/vnd.ms-excel": <FaFileExcel style={{ fontSize: 15 }} color="green" />,
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": <FaFileExcel style={{ fontSize: 15 }} color="green" />,
-        "default": <AiOutlineFile style={{ fontSize: 15 }} color="gray" />,
-        "folder_projs": <FcFolder style={{ fontSize: 15 }} color="gray" />,
-        "folder_depts": <FaFolder style={{ fontSize: 15 }} color="gray" />,
-    };
 
-    const types = {
-        "image/png": "Imagen",
-        "image/jpeg": "Imagen",
-        "jpeg": "Imagen",
-        "image/jpg": "Imagen",
-        "image/svg+xml": "Hojas de cálculo",
-        "application/pdf": "Documento PDF",
-        "application/msword": "Documento de texto",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "Documento de texto",
-        "application/vnd.ms-powerpoint": "Presentación de diapositivas",
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation": "Presentación de diapositivas",
-        "application/vnd.ms-excel": "Hojas de cálculo",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "Hojas de cálculo",
-        "default": "Archivo binario",
-        "folder_project": "Proyecto",
-        "folder_depts": "Departamento",
-    };
 
     const getFileIcon = (fileType) => icons[fileType] || icons["default"];
     //const getFileIcon = (fileType) => icons[fileType];
 
     //className="w-full max-h-[70vh] object-contain"
+
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [dragging, setDragging] = useState(false);
+    const [initialMousePos, setInitialMousePos] = useState({ x: 0, y: 0 });
+
+    const handleMouseDown = (e) => {
+        setDragging(true);
+        setInitialMousePos({ x: e.clientX - position.x, y: e.clientY - position.y });
+    };
+
+    const handleMouseMove = ({ clientX, clientY }) => {
+        if (dragging) setPosition({ x: Math.abs(clientX - initialMousePos.x), y: Math.abs(clientY - initialMousePos.y) });
+    };
+    const handleMouseUp = () => setDragging(false);
+
+    const defaultModal = () => {
+        setPosition({ x: 0, y: 0 });
+        setDragging(false);
+        setInitialMousePos({ x: 0, y: 0 });
+        onCloseProject();
+    }
 
     return (
         <div className="mx-auto pr-4 pb-8 bgwhite">
@@ -733,7 +662,7 @@ const DocumentManager = () => {
             <div className="flex" style={{ width: '100%' }}>
                 <div className="mx-auto pb-8 content-scroll-auto" style={{ flex: '1' }}>
                     <div className="flex justify-between items-center mb-2 pl-6 mt-8">
-                        <h2 className="text-3xl font-bold text-gray-800 mb-0 pb-0 mt-8" style={{ paddingLeft: 8 }}>Gestor de archivos</h2>
+                        <h2 className="text-3xl font-bold text-gray-800 mb-0 pb-0 mt-8" style={{ paddingLeft: 8 }}>Gestor de archivos {level}</h2>
                         {/*<ButtonAntd
                             icon={<PlusOutlined />}
                             //onClick={() => navigate("/addnews")}
@@ -899,7 +828,7 @@ const DocumentManager = () => {
                                     <AiOutlineShareAlt className="w-5 h-5" />
                                 </button>*/}
                                 <button
-                                    onClick={() => handleDelete({ id: selectedImage?.id }) }
+                                    onClick={() => handleDelete({ id: selectedImage?.id })}
                                     className="p-2 hover:bg-gray-800 rounded-full text-red-400"
                                     aria-label="Delete image"
                                 >
@@ -948,13 +877,28 @@ const DocumentManager = () => {
                     </div>
                 </div>
             )}
-            <Modal isOpen={isOpenProject} onClose={onCloseProject} isCentered motionPreset='scale'>
+            <Modal closeOnOverlayClick={false} isOpen={isOpenProject} onClose={defaultModal} isCentered>
                 <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>{!level == 1 ? 'Proyecto' : 'Departamento'} nuevo</ModalHeader>
+                <ModalContent
+                    maxW="500px"
+                    style={{
+                        position: position.y && 'absolute',
+                        top: position.y && `${position.y}px`,
+                        left: position.x && `${position.x}px`
+                    }}
+                    //onMouseUp={handleMouseUp}
+                >
+                    <ModalHeader cursor="move"
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={handleMouseUp}
+                    >
+                        <RxDragHandleDots2 style={{ transform: 'rotate(90deg)', position: 'absolute', top: 12, left: 240, color: '#B6B6B670' }} />
+                        {!level == 1 ? 'Proyecto' : 'Departamento'} nuevo
+                    </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <div className='gap-3 space-y-3'>
+                        <div className='space-y-3'>
                             <FormControl id="name" isRequired>
                                 <FormLabel>Nombre</FormLabel>
                                 <div style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
@@ -1009,11 +953,11 @@ const DocumentManager = () => {
                                 </div>}
                         </div>
                     </ModalBody>
-                    <ModalFooter>
-                        <Button variant='ghost' onClick={onCloseProject}>
+                    <ModalFooter className='gap-1 border-t-1'>
+                        <Button variant='ghost' onClick={defaultModal}>
                             Cancelar
                         </Button>
-                        <Button variant='ghost' onClick={handleSubmit}>
+                        <Button variant='solid' onClick={handleSubmit}>
                             Guardar
                         </Button>
                     </ModalFooter>
