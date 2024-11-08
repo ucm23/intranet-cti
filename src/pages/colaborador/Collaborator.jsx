@@ -5,6 +5,7 @@ import DiagramOrgTree from '../../componentes/DiagramOrgTree';
 import { Box, IconButton, Tooltip, Divider } from "@chakra-ui/react";
 import { MdDragIndicator, MdTouchApp, MdSwipe } from "react-icons/md";
 import { BsMouse } from "react-icons/bs";
+import { MdRotate90DegreesCw } from "react-icons/md";
 
 const Colaborador = () => {
     const containerRef = useRef(null);
@@ -15,6 +16,7 @@ const Colaborador = () => {
     const [scale, setScale] = useState(1);
 
     const [horizontal, setHorizontal] = useState(false);
+    //const [collapsable, setCollapsable] = useState(false);
 
     const handleMouseDown = (e) => {
         setIsDragging(true);
@@ -57,7 +59,63 @@ const Colaborador = () => {
 
     return (
         <div>
+            <Box
+                position="absolute"
+                top="68px"
+                right="42px"
+                bg="gray.600"
+                p="4"
+                rounded="lg"
+                shadow="lg"
+                zIndex="999"
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                gap="3"
+            >
+                <Tooltip label="Zoom +/- (con scroll)" placement='top-end' hasArrow>
+                    <IconButton
+                        icon={<BsMouse size="24px" />}
+                        bg="white"
+                        color="gray.700"
+                        _hover={{ bg: "gray.100" }}
+                        isRound
+                        //onClick={handleWheel}
+                    />
+                </Tooltip>
+                <Tooltip label="Mantener clic y arrastrar" placement='top-start' hasArrow>
+                    <IconButton
+                        icon={<MdTouchApp size="24px" />}
+                        bg="white"
+                        color="gray.700"
+                        _hover={{ bg: "gray.100" }}
+                        isRound
+                    />
+                </Tooltip>
+                <div className="bg-gray-300" style={{ width: 1, height: 40 }} />
 
+                <Tooltip label="Rotar vista" placement='top-end' hasArrow>
+                    <IconButton
+                        icon={<MdRotate90DegreesCw size="24px" />}
+                        bg="white"
+                        color="gray.700"
+                        _hover={{ bg: "gray.100" }}
+                        isRound
+                        onClick={() => setHorizontal(!horizontal)}
+                    />
+                </Tooltip>
+                {/*<Tooltip label="Mantener clic y arrastrar" placement='top-start' hasArrow>
+                    <IconButton
+                        aria-label="Mantener clic y arrastrar"
+                        icon={<MdTouchApp size="24px" />}
+                        bg="white"
+                        color="gray.700"
+                        _hover={{ bg: "gray.100" }}
+                        isRound
+                        onClick={() => setCollapsable(!collapsable) }
+                    />
+                </Tooltip>*/}
+            </Box>
             <div
                 ref={containerRef}
                 onMouseDown={handleMouseDown}
@@ -75,65 +133,7 @@ const Colaborador = () => {
                 }}
                 className='center-div'
             >
-                <Box
-                    position="relative"
-                    bottom="42px"
-                    left="250px"
-                    bg="gray.600"
-                    p="4"
-                    rounded="lg"
-                    shadow="lg"
-                    zIndex="999"
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    gap="3"
-                >
-                    <Tooltip label="Zoom +/- (con scroll)" placement='top-end' hasArrow>
-                        <IconButton
-                            aria-label="Scroll"
-                            icon={<BsMouse size="24px" />}
-                            bg="white"
-                            color="gray.700"
-                            _hover={{ bg: "gray.100" }}
-                            isRound
-                            onClick={handleWheel}
-                        />
-                    </Tooltip>
-                    <Tooltip label="Mantener clic y arrastrar" placement='top-start' hasArrow>
-                        <IconButton
-                            aria-label="Mantener clic y arrastrar"
-                            icon={<MdTouchApp size="24px" />}
-                            bg="white"
-                            color="gray.700"
-                            _hover={{ bg: "gray.100" }}
-                            isRound
-                        />
-                    </Tooltip>
-                    <div className="bg-gray-300" style={{ width: 1, height: 40 }} />
 
-                    <Tooltip label="Zoom +/- (con scroll)" placement='top-end' hasArrow>
-                        <IconButton
-                            aria-label="Scroll"
-                            icon={<BsMouse size="24px" />}
-                            bg="white"
-                            color="gray.700"
-                            _hover={{ bg: "gray.100" }}
-                            isRound
-                            onClick={() => setHorizontal(!horizontal)}
-                        />
-                    </Tooltip>
-                    <Tooltip label="Mantener clic y arrastrar" placement='top-start' hasArrow>
-                        <IconButton
-                            aria-label="Mantener clic y arrastrar"
-                            icon={<MdTouchApp size="24px" />}
-                            bg="white"
-                            color="gray.700"
-                            _hover={{ bg: "gray.100" }}
-                            isRound
-                        />
-                    </Tooltip>
-                </Box>
 
                 <div
                     ref={contentRef}
@@ -148,7 +148,7 @@ const Colaborador = () => {
                         left: 0
                     }}
                 >
-                    <DiagramOrgTree xy={horizontal} />
+                    <DiagramOrgTree xy={horizontal} /*coll={collapsable}*/ />
                 </div>
             </div>
         </div>

@@ -25,11 +25,11 @@ import PerfilGral from './pages/perfiles/PerfilGral';
 import Indicator from './pages/indicador/Indicator';
 import IndicatorDetails from './pages/indicador/IndicatorDetails';
 
-const LayoutWithNavBar = ({ menu }) => (
-    <NavBarVertical menu={menu}>
+/*const LayoutWithNavBar = ({ }) => (
+    <NavBarVertical>
         <Outlet />
     </NavBarVertical>
-);
+);*/
 
 function App() {
     const initialTokenState = localStorage.getItem('userToken') === 'true';
@@ -66,54 +66,24 @@ function App() {
                             <Route path="*" index element={<Index />} />
                             {/*<Route path="/noticies" element={<Noticies />} />*/}
                         </Routes> :
-                        <Routes>
-                            <Route element={<LayoutWithNavBar menu={true} />}>
+                        <NavBarVertical>
+                            <Routes>
                                 <Route path="/*" element={<Home />} />
-                            </Route>
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/home" element={<Home />} />
-                            </Route>
-
-                            <Route path="/noticia/:id" element={<NoticiaDetalle />} />
-                            <Route path="/docs" element={<Tramites />} />
-
-                            <Route path="/gestor-contenidos/*" element={<Gestor />} />
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
+                                <Route path="/noticia/:id" element={<NoticiaDetalle />} />
+                                <Route path="/docs" element={<Tramites />} />
+                                <Route path="/gestor-contenidos/*" element={<Gestor />} />
                                 <Route path="/indicator" element={<Indicator />} />
-                            </Route>
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/indicatorDetails" element={<IndicatorDetails />} />
-                            </Route>
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/collaborator" element={<Collaborator />} />
-                            </Route>
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/PerfilGral/:id/:nombreImagen" element={<PerfilGral />} />
-                            </Route>
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/files" element={<Files />} />
-                            </Route>
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/newslist" element={<NewsList />} />
-                            </Route>
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/newDetails" element={<NewDetails page={'newslist'} />} />
-                            </Route>
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/addnews" element={<AddNews page={'newslist'} />} />
-                            </Route>
-
-                            <Route element={<LayoutWithNavBar menu={true} />}>
                                 <Route path="/calendar" element={<Calendar />} />
-                            </Route>
-                        </Routes>
+                            </Routes>
+                        </NavBarVertical>
                     }
                 </PersistGate>
             </Provider>

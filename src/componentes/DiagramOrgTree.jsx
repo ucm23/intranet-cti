@@ -25,13 +25,13 @@ import ITS2 from '../imgOrganigrama/ITS2.png';
 import UserProfileCard from '../components/UserProfileCard';
 
 
-const DiagramOrgTree = ({ xy }) => {
+const DiagramOrgTree = ({ xy, coll }) => {
     const navigate = useNavigate();
     const handleDetails = (id, profile) => navigate(profile ? `/PerfilGral/${id}/${profile}` : `/perfilesPuesto1/${id}`);
 
     const myTreeData = {
         id: 1,
-        label: <div className='flex flex-row gap-1'>
+        label: <div className={`flex flex-${!xy?'row':'col'} gap-1`}>
             <UserProfileCard
                 color="#E5C200"
                 name="Guillermina Sámano G."

@@ -447,7 +447,7 @@ const DocumentManager = () => {
                             description={
                                 <Typography.Text>
                                     <p className="text-center font-bold text-lg text-black mt-3 mb-0">Arrastra y suelta los archivos aquí</p>
-                                    <p className="text-center text-gray-600 mt-0">o usa el botón "Nuevo"</p>
+                                    <p className="text-center text-gray-600 mt-0">o usa el botón "Subir archivo" <br/><p className="text-xxs">Máx. 10 MB</p></p>
                                 </Typography.Text>
                             }
                         />

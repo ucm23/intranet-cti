@@ -99,7 +99,7 @@ const items = [
 
 ];
 
-const NavBarVertical = ({ children, menu }) => {
+const NavBarVertical = ({ children }) => {
 
     const { token: { colorBgContainer } } = theme.useToken();
     const navigate = useNavigate();
