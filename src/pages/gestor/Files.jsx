@@ -441,9 +441,7 @@ const DocumentManager = () => {
                         <Empty
                             //image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                             image="../img/empty_folder.png"
-                            imageStyle={{
-                                height: 215,
-                            }}
+                            imageStyle={{ height: 200 }}
                             description={
                                 <Typography.Text>
                                     <p className="text-center font-bold text-lg text-black mt-3 mb-0">Arrastra y suelta los archivos aquí</p>
@@ -590,8 +588,8 @@ const DocumentManager = () => {
                 data.append("name", file.name);
                 data.append("type", file.type);
 
-                if (level < 1) data.append("project_id", selectedProject?.id);
-                if (level == 1) {
+                if (level == 1) data.append("project_id", selectedProject?.id);
+                if (level == 2) {
                     data.append("project_id", selectedProject?.id);
                     data.append("department_id", selectedDepartment?.id);
                 }
@@ -749,9 +747,7 @@ const DocumentManager = () => {
                         <div className="flex items-center justify-center h-full text-gray-500">
                             <Empty
                                 image="../img/empty_details.png"
-                                imageStyle={{
-                                    height: 200,
-                                }}
+                                imageStyle={{ height: 200 }}
                                 description={
                                     <Typography.Text>
                                         <p className="text-center text-gray-600 mt-0">Selecciona un elemento para ver los detalles</p>
