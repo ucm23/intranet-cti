@@ -5,7 +5,7 @@ import { HiArrowUpRight, HiDocumentText } from "react-icons/hi2";
 const UserProfileCard = ({ color, name, puesto, urlPhoto, onClickCV, onClickProfile }) => {
     return (
         <div className="p-2" style={{ borderRadius: 4, borderLeft: `3px solid ${color}`, border: `0.8px solid ${color}`, backgroundColor: `${color}15`, }} /*style={{ maxWidth: 180, wordWrap: 'break-word', overflowWrap: 'break-word', flexWrap: 'wrap', whiteSpace: 'nowrap' }}*/>
-            <h3 className="text-sm pt-3 font-semibold mb-0.5 text-left drop-shadow-md" style={{ color }}>
+            <h3 className="text-sm pt-2 font-semibold mb-0.5 text-left drop-shadow-md" style={{ color }}>
                 {name}
             </h3>
             <p className="text-xxs text-gray-700 text-left" style={{ maxWidth: 150 }}>{puesto}</p>
@@ -15,19 +15,11 @@ const UserProfileCard = ({ color, name, puesto, urlPhoto, onClickCV, onClickProf
             <div className='flex flex-col gap-1 pt-3'>
                 <Button
                     type='link'
-                    //type='primary'
-                    //className="flex justify-between w-full"
                     onClick={onClickProfile}
                 >
                     Ver Curriculum 
                 <HiArrowUpRight className='text-[25px] border border-gray-800 rounded-full p-1' />
                 </Button>
-                {/*<Button
-                    type='primary'
-                    className="flex justify-between items-center w-full"
-                    onClick={onClickCV}
-                > Ver puesto <HiDocumentText className='text-[25px] p-1' />
-                </Button>*/}
             </div>
         </div>
     );

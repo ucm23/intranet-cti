@@ -24,16 +24,17 @@ import ITS1 from '../imgOrganigrama/ITS1.png';
 import ITS2 from '../imgOrganigrama/ITS2.png';
 import UserProfileCard from '../components/UserProfileCard';
 
-const DiagramOrgTree = () => {
+
+const DiagramOrgTree = ({ xy }) => {
     const navigate = useNavigate();
     const handleDetails = (id, profile) => navigate(profile ? `/PerfilGral/${id}/${profile}` : `/perfilesPuesto1/${id}`);
 
     const myTreeData = {
         id: 1,
-        label: <div className='flex flex-col gap-0.5'>
+        label: <div className='flex flex-row gap-1'>
             <UserProfileCard
                 color="#E5C200"
-                name="Guillermina Sámano Gaspar"
+                name="Guillermina Sámano G."
                 puesto="Dirección General"
                 urlPhoto={CEO}
                 onClickCV={() => handleDetails(1)}
@@ -321,9 +322,10 @@ const DiagramOrgTree = () => {
 
     return (
         <div className="org-tree-container">
+           
             <OrgTree
                 data={myTreeData}
-                horizontal={false}
+                horizontal={xy}
                 collapsable={false}
                 expandAll={false}
             />
