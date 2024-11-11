@@ -535,14 +535,16 @@ const DocumentManager = () => {
     const openShare = () => {
         console.log("🚀 ~ openShare ~ previewFile:", previewFile)
         //setSelectedShare(previewFile.users_ids.filter(item =>  { return ({ label: users.find(i => i?.id == item)?.label, value: users.find(i => i?.id == item)?.value }) }))
-        setSelectedShare(
-            previewFile.users_ids
-                .filter(item => item !== user_id)
-                .map(item => ({
-                    label: users.find(i => i?.id === item)?.label,
-                    value: users.find(i => i?.id === item)?.value
-                }))
-        );
+        let data = previewFile.users_ids
+            .filter(item => item !== user_id)
+            .map(item => ({
+                id: users.find(i => i?.id === item)?.id,
+                label: users.find(i => i?.id === item)?.label,
+                value: users.find(i => i?.id === item)?.value,
+                email: users.find(i => i?.id === item)?.email,
+            }));
+        console.log("🚀 ~ openShare ~ data:", data)
+        setSelectedShare(data);
         onOpenShare();
     }
 
@@ -1154,8 +1156,8 @@ const DocumentManager = () => {
                                     renderItem={(item, index) => (
                                         <List.Item actions={index == 0 && [<div className="pr-2">Propietario</div>]}>
                                             <List.Item.Meta
-                                                avatar={<Avatar>{item?.first_name.charAt(0)}</Avatar>}
-                                                title={`${item?.first_name} ${item?.last_name}`}
+                                                avatar={<Avatar>{item?.label && item?.label.charAt(0)}</Avatar>}
+                                                title={`${item?.label}`}
                                                 description={item?.email}
                                                 className='flex flex-row items-center pl-5'
                                             />
@@ -1220,7 +1222,7 @@ const DocumentManager = () => {
                                                         ))}
 
                                                         {Object.entries(project.departments).map(([departmentName, department]) => (
-                                                            <div key={departmentName} style={{ marginLeft: '20px' }}>
+                                                            <div key={departmentName} style={{ marginLeft: '20px' }} className='line-clamp-1'>
                                                                 <div>
                                                                     <span onClick={() => toggleDepartment(projectName, departmentName)} style={{ cursor: 'pointer' }}>
                                                                         {expandedDepartments[`${projectName}-${departmentName}`] ? '▼' : '▶'} {departmentName}
@@ -1230,13 +1232,13 @@ const DocumentManager = () => {
                                                                     </button>
                                                                 </div>
                                                                 {expandedDepartments[`${projectName}-${departmentName}`] && (
-                                                                    <ul style={{ marginLeft: '20px' }}>
+                                                                    <div style={{ marginLeft: '20px' }}>
                                                                         {department.documents.map((doc) => (
                                                                             <div key={doc.id} className='line-clamp-1'>
                                                                                 {doc.name}
                                                                             </div>
                                                                         ))}
-                                                                    </ul>
+                                                                    </div>
                                                                 )}
                                                             </div>
                                                         ))}
