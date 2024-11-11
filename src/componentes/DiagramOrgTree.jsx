@@ -25,13 +25,13 @@ import ITS2 from '../imgOrganigrama/ITS2.png';
 import UserProfileCard from '../components/UserProfileCard';
 
 
-const DiagramOrgTree = ({ xy, coll }) => {
+const DiagramOrgTree = ({ xy, min }) => {
     const navigate = useNavigate();
     const handleDetails = (id, profile) => navigate(profile ? `/PerfilGral/${id}/${profile}` : `/perfilesPuesto1/${id}`);
 
     const myTreeData = {
         id: 1,
-        label: <div className={`flex flex-${!xy?'row':'col'} gap-1`}>
+        label: <div className={`flex flex-${(!xy && min) ? 'row' : 'col'} gap-1`}>
             <UserProfileCard
                 color="#E5C200"
                 name="Guillermina Sámano G."
@@ -39,6 +39,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                 urlPhoto={CEO}
                 onClickCV={() => handleDetails(1)}
                 onClickProfile={() => handleDetails(1, 'CEO.png')}
+                min={min}
             />
             <UserProfileCard
                 color="#E5C200"
@@ -47,6 +48,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                 urlPhoto={ceo2}
                 onClickCV={() => handleDetails(2)}
                 onClickProfile={() => handleDetails(2, 'ceo2.png')}
+                min={min}
             />
         </div>,
         children: [
@@ -63,6 +65,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={juridico1}
                             onClickCV={() => handleDetails(2)}
                             onClickProfile={() => handleDetails(3, 'juridico1.png')}
+                            min={min}
                         />
                     },
                 ],
@@ -79,6 +82,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                         urlPhoto={rh1}
                         onClickCV={() => handleDetails(4)}
                         onClickProfile={() => handleDetails(4, 'RH1.png')}
+                        min={min}
                     />
                 },
                 ],
@@ -95,6 +99,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                         urlPhoto={calidad1}
                         onClickCV={() => handleDetails(5)}
                         onClickProfile={() => handleDetails(5, 'CALIDAD1.png')}
+                        min={min}
                     />
                 },
                 ],
@@ -111,6 +116,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                         urlPhoto={conta2}
                         onClickCV={() => handleDetails(6)}
                         onClickProfile={() => handleDetails(6, 'conta2.png')}
+                        min={min}
                     />
                 }],
             },
@@ -126,6 +132,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                         urlPhoto={conta1}
                         onClickCV={() => handleDetails(7)}
                         onClickProfile={() => handleDetails(7, 'conta1.png')}
+                        min={min}
                     />
                 }],
             },
@@ -142,6 +149,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={SAP1}
                             onClickCV={() => handleDetails(8)}
                             onClickProfile={() => handleDetails(8, 'SAP1.png')}
+                            min={min}
                         />
                     },
                     {
@@ -153,13 +161,14 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={SAP2}
                             onClickCV={() => handleDetails(9)}
                             onClickProfile={() => handleDetails(9, 'SAP2.png')}
+                            min={min}
                         />
                     },
                 ],
             },
             {
                 id: 10,
-                label: <div className='childrens-label-title' style={{ backgroundColor: '#001529' }}>Desarrollo de Aplicaciones Web, Móvil y C-S </div>,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#001529' }}>Desarrollo de Aplicaciones Web, Móvil y C-S</div>,
                 children: [
                     {
                         id: 10,
@@ -170,6 +179,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={dev1}
                             onClickCV={() => handleDetails(10)}
                             onClickProfile={() => handleDetails(10, 'DEV1.png')}
+                            min={min}
                         />,
                         children: [
 
@@ -182,6 +192,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                                     urlPhoto={becaria1}
                                     onClickCV={() => handleDetails(11)}
                                     onClickProfile={() => handleDetails(11, 'becaria1.png')}
+                                    min={min}
                                 />
                                 ,
                             },
@@ -197,6 +208,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={dev2}
                             onClickCV={() => handleDetails(12)}
                             onClickProfile={() => handleDetails(12, 'DEV2.png')}
+                            min={min}
                         />,
 
                     },
@@ -209,6 +221,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={dev3x}
                             onClickCV={() => handleDetails(13)}
                             onClickProfile={() => handleDetails(13, 'DEV3X.png')}
+                            min={min}
                         />,
                         children: [
                             {
@@ -220,6 +233,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                                     urlPhoto={becaria2}
                                     onClickCV={() => handleDetails(14)}
                                     onClickProfile={() => handleDetails(14, 'becaria2.png')}
+                                    min={min}
                                 />
                             },
                         ],
@@ -239,6 +253,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={IA1}
                             onClickCV={() => handleDetails(15)}
                             onClickProfile={() => handleDetails(15, 'IA1.png')}
+                            min={min}
                         />
                     },
                     {
@@ -250,13 +265,14 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={IA2}
                             onClickCV={() => handleDetails(16)}
                             onClickProfile={() => handleDetails(16, 'IA2.png')}
+                            min={min}
                         />
                     },
                 ],
             },
             {
                 id: 17,
-                label: <div className='childrens-label-title' style={{ backgroundColor: '#1890ff' }}>Infraestructura, CiberSeguridad <br />y Mesa de Ayuda</div>,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#1890ff' }}>Infraestructura, CiberSeguridad {min && <br />}y Mesa de Ayuda</div>,
                 children: [
                     {
                         id: 17,
@@ -267,6 +283,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={infra1}
                             onClickCV={() => handleDetails(17)}
                             onClickProfile={() => handleDetails(17, 'infra1.png')}
+                            min={min}
                         />,
                         children: [
                             {
@@ -278,6 +295,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                                     urlPhoto={curso1}
                                     onClickCV={() => handleDetails(18)}
                                     onClickProfile={() => handleDetails(18, 'curso1.png')}
+                                    min={min}
                                 />
                             },
 
@@ -287,7 +305,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
             },
             {
                 id: 19,
-                label: <div className='childrens-label-title' style={{ backgroundColor: '#A9A9A9' }}>ITS, Peaje y <br /> Telepeaje</div>,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#A9A9A9' }}>ITS, Peaje y {min && <br />} Telepeaje</div>,
                 children: [
                     {
                         id: 19,
@@ -298,6 +316,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                             urlPhoto={ITS2}
                             onClickCV={() => handleDetails(19)}
                             onClickProfile={() => handleDetails(19, 'ITS2.png')}
+                            min={min}
                         />,
                         children: [
 
@@ -310,6 +329,7 @@ const DiagramOrgTree = ({ xy, coll }) => {
                                     urlPhoto={ITS1}
                                     onClickCV={() => handleDetails(20)}
                                     onClickProfile={() => handleDetails(20, 'ITS1.png')}
+                                    min={min}
                                 />
                             },
 
@@ -322,12 +342,11 @@ const DiagramOrgTree = ({ xy, coll }) => {
 
     return (
         <div className="org-tree-container">
-           
             <OrgTree
                 data={myTreeData}
                 horizontal={xy}
                 collapsable={false}
-                expandAll={false}
+                expandAll={true}
             />
         </div>
     );

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineRight } from "react-icons/ai";
 import { BsListTask } from "react-icons/bs";
-import { ArrowDownOutlined, ArrowUpOutlined, CheckSquareOutlined, EditOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowLeftOutlined, ArrowUpOutlined, CheckSquareOutlined, EditOutlined } from '@ant-design/icons';
+import { Button as ButtonAntd } from 'antd';
 import { Card, Statistic } from 'antd';
-import { useBreakpointValue } from '@chakra-ui/react';
+import { Portal, useBreakpointValue } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import { Spin } from 'antd';
 import { Progress } from 'antd';
@@ -17,6 +18,7 @@ import { indexActivities } from '../../api/project/projects';
 import { indexUsers } from '../../api/users/users';
 import { Avatar } from 'antd';
 import { RxClipboardCopy } from "react-icons/rx";
+import { FiPlus } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import {
     Modal,
@@ -38,6 +40,19 @@ import {
     Input,
     Textarea,
 } from '@chakra-ui/react'
+import { GoBook } from "react-icons/go";
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,
+} from '@chakra-ui/react'
+import { FaNewspaper, FaSearch, FaSpinner } from "react-icons/fa";
 import { FiBriefcase } from 'react-icons/fi';
 import { TbUsersPlus } from "react-icons/tb";
 import { VscUngroupByRefType } from "react-icons/vsc";
@@ -46,6 +61,7 @@ import { RiSave2Fill } from "react-icons/ri";
 import { BsTextParagraph } from "react-icons/bs";
 import { MdOutlineLayers } from "react-icons/md";
 import { CiVideoOn } from "react-icons/ci";
+import color from '../../color';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -394,8 +410,8 @@ const IndicatorDetails = () => {
 
                     </TabPanel>
                     <TabPanel>
-                        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-3 xl:gap-x-8">
-                            <div className="flex flex-col rounded shadow gap-1 pb-2" style={{ backgroundColor: '#f1f2f4' }}>
+                        <div className="mt-6 flex flex-row gap-x-1.5 gap-y-10 grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:gap-x-8">
+                            <div className="flex flex-col rounded shadow gap-1.5 pb-2 min-w-[350px] max-w-[350px]" style={{ backgroundColor: '#f1f2f4', height: 'fit-content' }}>
                                 <h3 className='text-black pb-0' style={{ padding: 14, fontSize: 14 }}>Pendiente</h3>
                                 {pendiente.map((item) => {
                                     let checks = countTasks(item?.notes);
@@ -417,6 +433,92 @@ const IndicatorDetails = () => {
                                         </div>
                                     )
                                 })}
+                                <ButtonAntd
+                                    type='link'
+                                    //type='primary'
+                                    className="flex justify-start items-center w-full"
+                                    onClick={() => { }}
+                                >
+                                    <FiPlus /> Añade una tarjeta
+                                </ButtonAntd>
+                            </div>
+                            <div className="flex flex-col rounded shadow gap-1.5 pb-2 min-w-[330px]" style={{ backgroundColor: '#f1f2f4', height: 'fit-content' }}>
+                                <h3 className='text-black pb-0' style={{ padding: 14, fontSize: 14 }}>En curso</h3>
+                                {enCurso.map((item) => {
+                                    let checks = countTasks(item?.notes);
+                                    let colorCheck = checks == item?.notes.length;
+                                    return (
+                                        <div className="group relative rounded bg-white mb-0 mt-0 shadow-sm border border-white hover:border-gray-400 " style={{ margin: 8, padding: '8px 12px 6px' }} onClick={() => viewDetails({ item })}>
+                                            <div className='flex flex-row justify-between items-start'>
+                                                <h2 className="text-sm font-semibold text-gray-800" style={{ width: '90%' }}>{item?.name}</h2>
+                                                <EditOutlined className="hidden group-hover:block" />
+                                            </div>
+                                            <div className='flex flex-row justify-between'>
+                                                <div className='flex flex-row flex-wrap items-center rounded p-1 justify-between gap-1' style={{ border: '0.5px solid #B6B6B650', backgroundColor: colorCheck && 'green', color: colorCheck ? 'white' : '#B6B6B680', fontSize: 14 }}>
+                                                    <CheckSquareOutlined /> {checks}/{item?.notes.length}
+                                                </div>
+                                                <Avatar.Group>
+                                                    {item?.notes.map((item_, index) => <Avatar style={{ backgroundColor: colores[index] }}>{indexUserById(item_?.id)?.label.charAt(0)}</Avatar>)}
+                                                </Avatar.Group>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                                <ButtonAntd
+                                    type='link'
+                                    //type='primary'
+                                    className="flex justify-start items-center w-full"
+                                    onClick={() => { }}
+                                >
+                                    <FiPlus /> Añade una tarjeta
+                                </ButtonAntd>
+                            </div>
+                            <div className="flex flex-col rounded shadow gap-1.5 pb-2 min-w-[330px]" style={{ backgroundColor: '#f1f2f4', height: 'fit-content' }}>
+                                <h3 className='text-black pb-0' style={{ padding: 14, fontSize: 14 }}>Terminado</h3>
+                                {completado.map((item) => {
+                                    const checks = countTasks(item?.notes);
+                                    const isComplete = checks === item?.notes.length;
+
+                                    return (
+                                        <div
+                                            key={item.id}
+                                            className="group relative rounded bg-white shadow-sm border border-white hover:border-gray-400 p-2"
+                                            style={{ margin: 8 }}
+                                            onClick={() => viewDetails({ item })}
+                                        >
+                                            <div className="flex justify-between items-start mb-2">
+                                                <h2 className="text-sm font-semibold text-gray-800 truncate w-5/6">
+                                                    {item?.name}
+                                                </h2>
+                                                <EditOutlined className="hidden group-hover:block text-gray-500" />
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <div
+                                                    className={`flex items-center gap-1 rounded p-1 text-sm ${isComplete ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500"}`}
+                                                    style={{ border: "0.5px solid rgba(182, 182, 182, 0.5)" }}
+                                                >
+                                                    <CheckSquareOutlined />
+                                                    {checks}/{item?.notes.length}
+                                                </div>
+                                                <Avatar.Group>
+                                                    {item?.notes.map((note, index) => (
+                                                        <Avatar key={note.id} style={{ backgroundColor: colores[index] }}>
+                                                            {indexUserById(note.id)?.label.charAt(0)}
+                                                        </Avatar>
+                                                    ))}
+                                                </Avatar.Group>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                                <ButtonAntd
+                                    type='link'
+                                    //type='primary'
+                                    className="flex justify-start items-center w-full"
+                                    onClick={() => { }}
+                                >
+                                    <FiPlus /> Añade una tarjeta
+                                </ButtonAntd>
                             </div>
                         </div>
                     </TabPanel>
@@ -450,8 +552,8 @@ const IndicatorDetails = () => {
                                 <div style={{ display: 'grid', gridTemplateColumns: '8fr 1fr' }}>
                                     <div>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                                            <div className='div-container-inputs-form'>
-                                                <VscUngroupByRefType style={{ fontSize: 25, color: '#00a0df80', border: '1px solid #B6B6B650', borderRadius: 3, padding: 2, marginRight: 4 }} />
+                                            <div className="flex flex-row w-full items-center">
+                                                <VscUngroupByRefType style={{ fontSize: 25, color: color?.bold }} />
                                                 <input
                                                     type="text"
                                                     placeholder="Agregar título"
@@ -462,7 +564,36 @@ const IndicatorDetails = () => {
                                                 //style={{ fontSize: 20 }}
                                                 />
                                             </div>
-                                            <p style={{ paddingLeft: 39 }} className='pb-0 mb-0 text-sm'>Alta</p>
+                                            <div className="flex flex-row w-full items-center gap-1" style={{ paddingLeft: 39 }}>
+                                                <p className='pb-0 mb-0 text-sm'>Prioridad</p>
+                                                <p className='pb-0 mb-0 text-sm'>Alta</p>
+                                            </div>
+                                            <div className="flex-row-columns">
+                                                <div className="flex columns">
+                                                    <Popover placement='bottom-start'>
+                                                        <PopoverTrigger>
+                                                            <div className="sub-flex-row-columns">
+                                                                <FaNewspaper style={{ color: color.primary }} />
+                                                                <a className="p-ellipsis"> {'Página'}</a>
+                                                            </div>
+                                                        </PopoverTrigger>
+                                                        <Portal>
+                                                            <PopoverContent>
+                                                                <PopoverArrow />
+                                                                <PopoverBody>
+                                                                    <p style={{ padding: 3, fontWeight: 'bold', fontSize: 12, marginBottom: '0px' }}>Título <span className="text-red-600">*</span></p>
+                                                                    <Input
+                                                                        value={'title'}
+                                                                        //onChange={(e) => setTitle(e.target.value)}
+                                                                        placeholder="Agregar un título"
+                                                                        size='sm'
+                                                                    />
+                                                                </PopoverBody>
+                                                            </PopoverContent>
+                                                        </Portal>
+                                                    </Popover>
+                                                </div>
+                                            </div>
                                             <div style={{ paddingLeft: 39 }} className='flex flex-col gap-y-1.5'>
                                                 <div>
                                                     <p className='pb-0 mb-0'>Miembros</p>
@@ -475,8 +606,8 @@ const IndicatorDetails = () => {
                                                     <p className='pb-0 mb-0 text-xxs'>{itemSelected?.start_date} - {itemSelected?.end_date}</p>
                                                 </div>
                                             </div>
-                                            <div className='div-container-inputs-form'>
-                                                <VscUngroupByRefType style={{ fontSize: 25, color: '#00a0df80', border: '1px solid #B6B6B650', borderRadius: 3, padding: 2, marginRight: 4 }} />
+                                            <div className="flex flex-col w-full">
+                                                <VscUngroupByRefType style={{ fontSize: 25, color: color?.bold }} />
                                                 <div style={{ width: '100%' }}>
                                                     <p className='pb-0 mb-0' style={{ paddingLeft: 39 }}>description</p>
                                                     <textarea
@@ -491,19 +622,19 @@ const IndicatorDetails = () => {
                                                 </div>
 
                                             </div>
-                                            <div className='div-container-inputs-form'>
-                                                <VscUngroupByRefType style={{ fontSize: 25, color: '#00a0df80', border: '1px solid #B6B6B650', borderRadius: 3, padding: 2, marginRight: 4 }} />
+                                            <div className="flex flex-col w-full">
+                                                <VscUngroupByRefType style={{ fontSize: 25, color: color?.bold }} />
                                                 <div>
                                                     <p className='pb-0 mb-0' style={{ paddingLeft: 6 }}>Lista</p>
                                                     <CheckboxGroup colorScheme='green' defaultValue={[0]}>
                                                         <div className='flex flex-col'>
                                                             {itemSelected?.notes.map((item_) => <Checkbox value={item_?.task}><p className='text-sm pb-0 mb-0'>{item_?.task}</p></Checkbox>)}
-                                                            
+
                                                         </div>
                                                     </CheckboxGroup>
                                                     <Button variant='ghost' onClick={() => setModal1Open(false)}>
-                                                                Añadeelemnto
-                                                            </Button>
+                                                        Añadir elemento
+                                                    </Button>
                                                 </div>
                                             </div>
                                         </div>
@@ -512,7 +643,7 @@ const IndicatorDetails = () => {
                                         <Button leftIcon={<RxClipboardCopy />} size={'sm'} style={{ backgroundColor: '#e7e9eb' }} onClick={() => setModal1Open(false)}>
                                             Duplicar
                                         </Button>
-                                        <Button leftIcon={<MdDeleteOutline />}  size={'sm'} style={{ backgroundColor: '#e7e9eb' }} onClick={() => setModal1Open(false)}>
+                                        <Button leftIcon={<MdDeleteOutline />} size={'sm'} style={{ backgroundColor: '#e7e9eb' }} onClick={() => setModal1Open(false)}>
                                             Eliminar
                                         </Button>
                                     </div>

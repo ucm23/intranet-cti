@@ -24,6 +24,7 @@ import Files from './pages/gestor/Files';
 import PerfilGral from './pages/perfiles/PerfilGral';
 import Indicator from './pages/indicador/Indicator';
 import IndicatorDetails from './pages/indicador/IndicatorDetails';
+import Manager from './pages/gestor/Manager';
 
 /*const LayoutWithNavBar = ({ }) => (
     <NavBarVertical>
@@ -78,6 +79,8 @@ function App() {
                                 <Route path="/collaborator" element={<Collaborator />} />
                                 <Route path="/PerfilGral/:id/:nombreImagen" element={<PerfilGral />} />
                                 <Route path="/files" element={<Files />} />
+                                <Route path="/files_" element={<Manager />} />
+                                
                                 <Route path="/newslist" element={<NewsList />} />
                                 <Route path="/newDetails" element={<NewDetails page={'newslist'} />} />
                                 <Route path="/addnews" element={<AddNews page={'newslist'} />} />

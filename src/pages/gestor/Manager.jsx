@@ -203,8 +203,6 @@ const Manager = () => {
                 type: "file",
             });
         });
-
-
         console.log("🚀 ~ transformToTree ~ tree:", tree)
         return tree;
     };

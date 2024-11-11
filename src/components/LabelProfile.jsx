@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import { List, Avatar } from 'antd';
 import { Menu, MenuButton, MenuList, MenuItem, MenuDivider } from '@chakra-ui/react';
-import {
-    LogoutOutlined,
-    SettingFilled,
-    UserOutlined
-} from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 
 const LabelProfile = ({ collapsed, signOut }) => {
     const information_user = useSelector(state => state.login.information_user);
-    console.log("🚀 ~ LabelProfile ~ information_user:", information_user)
     const { first_name, last_name, email, position } = information_user;
 
     useEffect(() => {
+        console.log("🚀 ~ LabelProfile ~ information_user:", information_user)
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);

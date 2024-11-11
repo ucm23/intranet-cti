@@ -97,9 +97,9 @@ const NewsList = () => {
                             const user = findUser({ id: item.user_id });
                             return (
                                 <div key={index} onClick={() => handleDetails({ item, user })} className="bg-white rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                    <ImageLoader id={item?.id} className={"w-full h-55 object-cover"} />
+                                    <ImageLoader id={item?.id} className={"w-full h-[220px] object-cover"} />
                                     <div className="p-6">
-                                        <h3 className="text-xl font-semibold mb-0 text-gray-800">{item.title}</h3>
+                                        <h3 className="text-xl font-semibold mb-0 text-gray-800 line-clamp-2">{item.title}</h3>
                                         <span className="text-xs text-blue-600 font-medium">{user?.label}</span>
                                         <p className="text-gray-600 mb-4 mt-3 line-clamp-3">
                                             <div dangerouslySetInnerHTML={{ __html: item?.summary }} />
@@ -150,13 +150,13 @@ const NewsList = () => {
                                 //onKeyPress={(e) => e.key === "Enter" && setSelectedCard(item)}
                                 >
                                     <div className="flex flex-row">
-                                        <div className="w-1/3">
-                                            <ImageLoader id={item?.id} className={"w-full h-full object-cover"} />
+                                        <div className=" ">
+                                            <ImageLoader id={item?.id} className={"h-[220px] w-[220px] object-cover"} />
                                         </div>
-                                        <div className="w-2/3 p-6 flex flex-col justify-between">
+                                        <div className="w-4/5 p-6 flex flex-col justify-between">
                                             <div>
                                                 <h3 className="text-2xl font-bold mb-2 line-clamp-1">{item.title}</h3>
-                                                <p className="text-sm text-gray-600 mb-0 pb-0 line-clamp-3 text-justify">
+                                                <p className="text-sm text-gray-600 mb-0 pb-0 line-clamp-2 text-justify">
                                                     <div dangerouslySetInnerHTML={{ __html: item?.summary }} />
                                                 </p>
                                                 <span className="text-xs text-blue-600 font-medium">{user?.label}</span>

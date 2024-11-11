@@ -4,6 +4,7 @@ import DiagramOrgTree from '../../componentes/DiagramOrgTree';
 
 import { Box, IconButton, Tooltip, Divider } from "@chakra-ui/react";
 import { MdDragIndicator, MdTouchApp, MdSwipe } from "react-icons/md";
+import { FiMinimize, FiMaximize, FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import { BsMouse } from "react-icons/bs";
 import { MdRotate90DegreesCw } from "react-icons/md";
 
@@ -16,7 +17,8 @@ const Colaborador = () => {
     const [scale, setScale] = useState(1);
 
     const [horizontal, setHorizontal] = useState(false);
-    //const [collapsable, setCollapsable] = useState(false);
+    const [collapsable, setCollapsable] = useState(true);
+    const [max, setmax] = useState(true);
 
     const handleMouseDown = (e) => {
         setIsDragging(true);
@@ -27,7 +29,6 @@ const Colaborador = () => {
 
     const handleMouseMove = (e) => {
         if (!isDragging) return;
-
         const dx = e.clientX - prevX;
         const dy = e.clientY - prevY;
         containerRef.current.scrollLeft -= dx;
@@ -55,16 +56,34 @@ const Colaborador = () => {
         containerRef.current.scrollLeft += dx * (newScale - scale);
         containerRef.current.scrollTop += dy * (newScale - scale);
         containerRef.current.style.overflow = 'scroll';
+        containerRef.current.style.cursor = 'all-scroll';
+    };
+
+    const divRef = useRef(null);
+
+    const handleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            if (divRef.current.requestFullscreen) divRef.current.requestFullscreen();
+            else if (divRef.current.mozRequestFullScreen) divRef.current.mozRequestFullScreen();
+            else if (divRef.current.webkitRequestFullscreen) divRef.current.webkitRequestFullscreen();
+            else if (divRef.current.msRequestFullscreen) divRef.current.msRequestFullscreen();
+        } else {
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            else if (document.msExitFullscreen) document.msExitFullscreen();
+        }
+        setmax(!max)
     };
 
     return (
-        <div>
+        <div ref={divRef}>
             <Box
                 position="absolute"
                 top="68px"
-                right="42px"
+                right="38px"
                 bg="gray.600"
-                p="4"
+                p="3"
                 rounded="lg"
                 shadow="lg"
                 zIndex="999"
@@ -73,48 +92,64 @@ const Colaborador = () => {
                 alignItems="center"
                 gap="3"
             >
-                <Tooltip label="Zoom +/- (con scroll)" placement='top-end' hasArrow>
+                <Tooltip label="Para zoom +/-, use scroll" placement='top-end' hasArrow>
                     <IconButton
-                        icon={<BsMouse size="24px" />}
+                        icon={<BsMouse size="18px" />}
                         bg="white"
                         color="gray.700"
                         _hover={{ bg: "gray.100" }}
                         isRound
-                        //onClick={handleWheel}
+                        size={'sm'}
+                    //onClick={handleWheel}
                     />
                 </Tooltip>
-                <Tooltip label="Mantener clic y arrastrar" placement='top-start' hasArrow>
+                <Tooltip label="Para mover, mantener click y arrastrar" placement='top-start' hasArrow>
                     <IconButton
-                        icon={<MdTouchApp size="24px" />}
+                        icon={<MdTouchApp size="18px" />}
                         bg="white"
                         color="gray.700"
                         _hover={{ bg: "gray.100" }}
                         isRound
+                        size={'sm'}
                     />
                 </Tooltip>
                 <div className="bg-gray-300" style={{ width: 1, height: 40 }} />
-
                 <Tooltip label="Rotar vista" placement='top-end' hasArrow>
                     <IconButton
-                        icon={<MdRotate90DegreesCw size="24px" />}
+                        icon={<MdRotate90DegreesCw size="18px" />}
                         bg="white"
                         color="gray.700"
                         _hover={{ bg: "gray.100" }}
                         isRound
                         onClick={() => setHorizontal(!horizontal)}
+                        size={'sm'}
                     />
                 </Tooltip>
-                {/*<Tooltip label="Mantener clic y arrastrar" placement='top-start' hasArrow>
+                <Tooltip label={!collapsable ? 'Maximizar' : 'Minimizar'} placement='top-start' hasArrow>
                     <IconButton
                         aria-label="Mantener clic y arrastrar"
-                        icon={<MdTouchApp size="24px" />}
+                        icon={!collapsable ? <FiMaximize size="18px" /> : <FiMinimize size="18px" />}
                         bg="white"
                         color="gray.700"
                         _hover={{ bg: "gray.100" }}
                         isRound
-                        onClick={() => setCollapsable(!collapsable) }
+                        onClick={() => setCollapsable(!collapsable)}
+                        size={'sm'}
                     />
-                </Tooltip>*/}
+                </Tooltip>
+                <div className="bg-gray-300" style={{ width: 1, height: 40 }} />
+                <Tooltip label={'Pantalla completa'} placement='top-start' hasArrow>
+                    <IconButton
+                        aria-label="Pantalla completa"
+                        icon={max ? <FiMaximize2 size="18px" /> : <FiMinimize2 size="18px" />}
+                        bg="white"
+                        color="gray.700"
+                        _hover={{ bg: "gray.100" }}
+                        isRound
+                        onClick={handleFullscreen}
+                        size={'sm'}
+                    />
+                </Tooltip>
             </Box>
             <div
                 ref={containerRef}
@@ -125,30 +160,29 @@ const Colaborador = () => {
                 onWheel={handleWheel}
                 style={{
                     width: '100%',
-                    height: '96vh',
-                    overflow: 'hidden',
-                    cursor: 'grab',
+                    height: 'calc(100vh - 48px)',
+                    //overflow: 'auto',
+                    overflowY: 'auto',
+                    overflowX: 'auto',
                     backgroundColor: '#f8f7f7',
-                    position: 'relative'
+                    position: 'relative',
+                    cursor: 'default'
                 }}
-                className='center-div'
             >
-
-
                 <div
                     ref={contentRef}
                     style={{
-                        width: `${2000 * scale}px`,
-                        height: `${500 * scale}px`,
+                        width: scale != 1 && `${2000 * scale}px`,
+                        height: scale != 1 && `${500 * scale}px`,
                         transform: `scale(${scale})`,
-                        transformOrigin: 'top left',
+                        transformOrigin: 'bottom',
                         position: 'absolute',
                         padding: 20,
                         top: 0,
-                        left: 0
+                        left: 0,
                     }}
                 >
-                    <DiagramOrgTree xy={horizontal} /*coll={collapsable}*/ />
+                    <DiagramOrgTree xy={horizontal} min={collapsable} />
                 </div>
             </div>
         </div>

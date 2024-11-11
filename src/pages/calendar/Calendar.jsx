@@ -5,6 +5,7 @@ import { format, parse, startOfWeek, getDay } from 'date-fns';
 import es from 'date-fns/locale/es';
 import { Box, useBreakpointValue, useDisclosure } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
+import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { createEvents, indexEvents } from '../../api/events/events';
 import { indexDepartments } from '../../api/departamentos/departments';
@@ -68,12 +69,14 @@ const localizer = dateFnsLocalizer({
 });
 
 const Calendar = () => {
+    const information_user = useSelector(state => state.login.information_user);
+    const { id: user_id } = information_user;
     const mobile = useBreakpointValue({ base: true, md: false });
     const navigate = useNavigate();
     const { isOpen: isOpenEvent, onOpen: onOpenEvent, onClose: onCloseEvent } = useDisclosure()
     const [newEvent, setNewEvent] = useState({
         department_id: 0,
-        user_id: 0,
+        user_id,
         title: '',
         description: '',
         link: '',
@@ -101,24 +104,18 @@ const Calendar = () => {
     }, [])
 
     const getEvents = async () => {
-        const response = await indexEvents({})
-        if (response.status) {
-            setEvents(response.data)
-        }
+        const { status, data } = await indexEvents({})
+        if (status) setEvents(data)
     };
 
     const getDepartments = async () => {
-        const response = await indexDepartments({})
-        if (response.status) {
-            setDepartaments(response.data)
-        }
+        const { status, data } = await indexDepartments({})
+        if (status) setDepartaments(data)
     };
 
     const getUsers = async () => {
-        const response = await indexUsers({})
-        if (response.status) {
-            setUsers(response.data);
-        }
+        const { status, data } = await indexUsers({})
+        if (status) setUsers(data);
     };
 
     const formatDateTime = (date) => {
@@ -165,7 +162,7 @@ const Calendar = () => {
             newEvent.end_date = localDate;
             delete newEvent.start;
             delete newEvent.end;
-            newEvent.user_id = 1;
+            newEvent.user_id = user_id;
             newEvent.participants_ids = selected.map(item => item?.value)
             console.log("Estado de newEvent:", newEvent);
             const response = await createEvents({ event: newEvent });
@@ -320,7 +317,7 @@ const Calendar = () => {
                         onSelectEvent={handleEditEvent}
                     />
                 </div>
-                <div style={{ padding: '10px 0px 10px 8px', width: '30%'  }}>
+                <div style={{ padding: '10px 0px 10px 8px', width: '30%' }}>
                     <h2>
                         <Box as='span' flex='1' textAlign='left'>
                             {dateSelect}
@@ -401,7 +398,7 @@ const Calendar = () => {
                             <div className='div-container-inputs-form' style={{ marginTop: 6, marginBottom: 6 }}>
                                 <TbUsersPlus style={{ fontSize: 22, color: '#ccc', padding: 2, marginRight: 8 }} />
                                 <MultiSelect
-                                    options={users}
+                                    options={users.filter((item) => item?.id !== user_id)}
                                     value={selected}
                                     onChange={setSelected}
                                     //labelledBy="Select"

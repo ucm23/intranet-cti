@@ -37,6 +37,7 @@ export const indexUsers = async ({ }) => {
         if (fetch.status == 200) {
             let data = fetch?.data?.data.map((item) => {
                 return {
+                    ...item,
                     label: `${item?.first_name} ${item?.last_name}`,
                     value: `${item?.id}`
                 }

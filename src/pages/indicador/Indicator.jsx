@@ -60,7 +60,7 @@ const Indicator = () => {
                                             <FaFolder style={{ fontSize: 18 }} className="text-yellow-400" />
                                             <div className="flex-1">
                                                 <h3 className="font-normal text-sm text-gray-800 line-clamp-1">{project?.name}</h3>
-                                                <p className="text-sm text-gray-500 pb-0 line-clamp-1">{departments.length} elementos</p>
+                                                {/*<p className="text-sm text-gray-500 pb-0 line-clamp-1">{departments.length} elementos</p>*/}
                                             </div>
                                         </div>
                                     </div>

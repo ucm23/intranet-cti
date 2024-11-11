@@ -44,10 +44,13 @@ import { Input } from '@chakra-ui/react'
 import color from "../../color";
 import { notification } from 'antd';
 import { formats, modules, openNotificationWithIcon } from "../../libs/main";
+import { useSelector } from 'react-redux';
 
 const AddNews = ({ page }) => {
     const location = useLocation();
     const { item, user } = location?.state || {};
+    const information_user = useSelector(state => state.login.information_user);
+    const { id: user_id } = information_user;
     //const { isOpen: isOpenBanner, onOpen: onOpenBanner, onClose: onCloseBanner } = useDisclosure();
 
     const [image, setImage] = useState(null);
@@ -86,7 +89,7 @@ const AddNews = ({ page }) => {
     const [body, setBody] = useState('');
     const [conclusion, setConclusion] = useState('');
     const test = {
-        user_id: 1,
+        user_id,
         title: "",
         body: "",
         active: true,
@@ -249,7 +252,7 @@ const AddNews = ({ page }) => {
         if (!validateEvent()) return;
         try {
             let data = new FormData();
-            data.append("user_id", 1);
+            data.append("user_id", user_id);
             data.append("title", title);
             data.append("body", body);
             data.append("categories", JSON.stringify(selectedCategories));

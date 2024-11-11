@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaCalendarAlt, FaUser, FaComments, FaShareAlt, FaNewspaper, FaCheckCircle, FaExternalLinkAlt } from "react-icons/fa";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { indexIMGByID } from "../../api/news/news";
 import moment from "moment/moment";
 import { FallingLines } from 'react-loader-spinner'
@@ -27,6 +27,7 @@ const ImageLoader = ({ id, picture, className }) => {
 
 const NewDetails = ({ page }) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { item, user } = location?.state || {};
 
     const handleBackToList = () => {

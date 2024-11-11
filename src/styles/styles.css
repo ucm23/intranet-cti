@@ -1788,6 +1788,8 @@ img.w-32\.h-32\.object-cover {
     line-height: normal;
     padding: 17px;
     justify-content: space-between;
+    border-bottom-right-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-sm);
 }
 
 .bg-border-blue {
@@ -1947,4 +1949,19 @@ td {
 
 .span.chakra-checkbox__label.css-6x44c9 .css-6x44c9 {
     font-size: 12px !important;
+}
+
+.ant-list-item-meta.flex.flex-row.items-center {
+    display: flex;
+    align-items: center;
+}
+
+:where(.css-dev-only-do-not-override-apn68).ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title {
+    margin: 0 0 0 0 !important;
+    line-height: 1 !important;
+}
+
+.css-k0waxj {
+    -webkit-justify-content: space-between !important;
+    justify-content: space-between !important;
 }

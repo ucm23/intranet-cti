@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
-import { FaFolder, FaSpinner } from "react-icons/fa";
-import { AiOutlineDelete, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { FaFolder, FaNewspaper, FaSpinner } from "react-icons/fa";
+import { AiOutlineDelete, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight, AiOutlineShareAlt } from "react-icons/ai";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { CiCircleCheck } from "react-icons/ci";
 import { VscError } from "react-icons/vsc";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import color from '../../color';
 import { Empty, Typography } from 'antd';
 import {
@@ -28,12 +29,22 @@ import {
     FormLabel,
     Input,
     Textarea,
+    Popover,
+    PopoverTrigger,
+    Portal,
+    PopoverContent,
+    PopoverArrow,
+    PopoverBody,
 } from '@chakra-ui/react'
 import {
     CloseOutlined
 } from '@ant-design/icons';
-import Draggable from 'react-draggable';
+import { FiEye } from "react-icons/fi";
+import { LuUserPlus2 } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
+import { MultiSelect } from "react-multi-select-component";
 import { RxDragHandleDots2 } from "react-icons/rx";
+import { Avatar, List } from 'antd';
 //import InputColor from 'react-input-color';
 import { createDocs, deleteDocuments, indexDocsImgs, indexDocuments, indexDocumentsByID } from '../../api/docs/docs';
 import { createDepartments, indexDepartments } from '../../api/departamentos/departments';
@@ -45,10 +56,11 @@ import { format } from 'date-fns';
 import { icons, openNotificationWithIcon, types } from '../../libs/main';
 import { notification } from 'antd';
 import { useSelector } from 'react-redux';
+import { indexUsers } from '../../api/users/users';
 
 const DocumentManager = () => {
     const information_user = useSelector(state => state.login.information_user);
-    const { id: user_id } = information_user;
+    const { id: user_id, role } = information_user;
     const [level, setLevel] = useState(0);
     const [projects, setProjects] = useState([]);
     const [departments, setDepartments] = useState([]);
@@ -58,6 +70,8 @@ const DocumentManager = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [uploadResults, setUploadResults] = useState([]);
     const { isOpen: isOpenProject, onOpen: onOpenProject, onClose: onCloseProject } = useDisclosure()
+    const { isOpen: isOpenShare, onOpen: onOpenShare, onClose: onCloseShare } = useDisclosure()
+    const { isOpen: isOpenMove, onOpen: onOpenMove, onClose: onCloseMove } = useDisclosure()
     const today = new Date();
     const tomorrow = new Date();
     const modalRef = useRef(null);
@@ -65,6 +79,9 @@ const DocumentManager = () => {
     const openNotification = (type, description) => openNotificationWithIcon(api, type, description)
     const [colors, setColor] = useState({});
     const [minEndDate, setMinEndDate] = useState('');
+    const [selected, setSelected] = useState([]);
+    const [selectedShare, setSelectedShare] = useState([]);
+    const [users, setUsers] = useState([]);
 
     const [formDataProjects, setFormDataProjects] = useState({
         name: '',
@@ -97,7 +114,7 @@ const DocumentManager = () => {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    /*const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Form Data:', formDataProjects);
         if (!formDataProjects.name) {
@@ -114,7 +131,6 @@ const DocumentManager = () => {
         }
         const startDate = new Date(formDataProjects?.start_date);
         const endDate = new Date(formDataProjects?.end_date);
-        
         try {
             let data = {
                 user_id,
@@ -129,6 +145,11 @@ const DocumentManager = () => {
                     return;
                 }
                 delete data?.color;
+                data.departments_ids = selected.flatMap(item => item?.id);
+                if (data.departments_ids.length == 0) {
+                    openNotification('warning', "Debe selecionar al menos un departamento.");
+                    return;
+                }
             }
             if (level == 1) {
                 delete data?.start_date;
@@ -137,29 +158,97 @@ const DocumentManager = () => {
                 delete data?.status;
                 data.color = '#B6B6B6';
             }
+            setIsLoading(true);
             console.log("🚀 ~ handleSubmit ~ data:", data)
             let response = await level < 1 ? createProjects({ data }) : createDepartments({ data })
             console.log("🚀 ~ handleSubmit ~ response:", response)
+            await level < 1 ? getProjects() : getDepartments();
+            await defaultModal()
         } catch (error) {
             console.error("🚀 ~ handleSubmit ~ error:", error)
         } finally {
-            await getProjects();
-            await getDepartments()
-            defaultModal()
+            setIsLoading(false);
+        }
+    };*/
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const projectName = formDataProjects.name?.trim();
+        if (!projectName) {
+            openNotification('warning', 'Añade un nombre');
+            return;
+        }
+        const projectExists = projects.some(item => item?.name.trim().toLowerCase() === projectName.toLowerCase());
+        const departmentExists = departments.some(item => item?.name.trim().toLowerCase() === projectName.toLowerCase());
+
+        if (projectExists || departmentExists) {
+            openNotification('warning',
+                projectExists
+                    ? 'Ya existe un proyecto con el mismo nombre'
+                    : 'Ya existe un departamento con el mismo nombre'
+            );
+            return;
+        }
+        const startDate = new Date(formDataProjects?.start_date);
+        const endDate = new Date(formDataProjects?.end_date);
+        if (level < 1 && startDate >= endDate) {
+            openNotification('warning', "La Fecha de Inicio debe ser anterior a la Fecha de Fin.");
+            return;
+        }
+        let data = {
+            user_id,
+            ...formDataProjects,
+            status: "activo",
+            color: colors
+        };
+        if (!data.description) delete data.description;
+        if (level < 1) {
+            data.departments_ids = selected.flatMap(item => item?.id);
+            if (data.departments_ids.length === 0) {
+                openNotification('warning', "Debe seleccionar al menos un departamento.");
+                return;
+            }
+            delete data.color;
+        } else if (level === 1) {
+            delete data.start_date;
+            delete data.end_date;
+            delete data.user_id;
+            delete data.status;
+            data.color = '#B6B6B6';
+        }
+        try {
+            setIsLoading(true);
+            console.log("🚀 ~ handleSubmit ~ data:", data);
+            const response = level < 1 ? await createProjects({ data }) : await createDepartments({ data });
+            console.log("🚀 ~ handleSubmit ~ response:", response);
+            await (level < 1 ? getProjects() : getDepartments());
+            defaultModal();
+        } catch (error) {
+            console.error("🚀 ~ handleSubmit ~ error:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
+
 
     const deleteItem = async ({ id }) => {
         try {
             let response = await deleteDocuments({ id })
             if (response?.status) await getDocuments()
-            console.log("🚀 ~ deleteItem ~ response:", response);
         } catch (error) {
             console.error("🚀 ~ deleteItem ~ error:", error);
+        } finally {
+            setPreviewFile(null)
         }
     };
 
+    const getUsers = async () => {
+        const { status, data } = await indexUsers({})
+        if (status) setUsers(data);
+    };
+
     useEffect(() => {
+        getUsers()
         getProjects()
         getDepartments()
         getDocuments()
@@ -168,8 +257,8 @@ const DocumentManager = () => {
 
     const getDocuments = async () => {
         try {
-            const docs = await indexDocuments({})
-            if (docs?.status) setDocuments(docs?.data)
+            const { status, data } = await indexDocuments({})
+            if (status) setDocuments(data)
         } catch (error) {
             console.error("🚀 ~ getDocuments ~ error:", error)
         } finally {
@@ -179,17 +268,16 @@ const DocumentManager = () => {
 
     const getProjects = async () => {
         try {
-            const projects = await indexProjects({})
-            console.log("🚀 ~ getProjects ~ projects:", projects)
-            if (projects?.status) setProjects(projects?.data)
+            const { status, data } = await indexProjects({})
+            if (status) setProjects(data)
         } catch (error) {
             console.error("🚀 ~ getProjects ~ error:", error)
         }
     }
     const getDepartments = async () => {
         try {
-            const depas = await indexDepartments({})
-            if (depas?.status) setDepartments(depas?.data)
+            const { status, data } = await indexDepartments({})
+            if (status) setDepartments(data)
         } catch (error) {
             console.error("🚀 ~ getDepartments ~ error:", error)
         }
@@ -229,7 +317,6 @@ const DocumentManager = () => {
         setSelectedIndex(newIndex);
         setSelectedImage(images[newIndex]);
         setZoom(100);
-        console.log("Previous index:", selectedIndex, "New index:", newIndex);
     };
 
     const handleNext = () => {
@@ -237,11 +324,9 @@ const DocumentManager = () => {
         setSelectedIndex(newIndex);
         setSelectedImage(images[newIndex]);
         setZoom(100);
-        console.log("handleNext index:", selectedIndex, "New index:", newIndex);
     };
 
     const handleProjectSelect = (project) => {
-        console.log("🚀 ~ handleProjectSelect ~ project:", project)
         setIsLoading(true);
         setSelectedProject(project);
         setLevel(1);
@@ -280,7 +365,7 @@ const DocumentManager = () => {
             { option: 'Subir archivo [Nivel proyecto]', onClick: handleButtonClick },
         ],
         department: [
-            { option: 'Departamento nuevo', onClick: onOpenProject },
+            //{ option: 'Departamento nuevo', onClick: onOpenProject },
             { option: 'Subir archivo [Nivel departamento]', onClick: handleButtonClick },
         ],
         documents: [
@@ -345,13 +430,13 @@ const DocumentManager = () => {
     };
 
     const ProjectList = ({ isLoading, projects, onProjectSelect, project_id }) => {
-        return (
+        return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
                 <h2 className="text-sm font-semibold text-gray-800 mb-3">Proyectos</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
-                    {projects.map((folder) => (
+                    {projects.map((folder, index) => (
                         <div
-                            key={folder.id}
+                            key={`files-projects-${folder.id}-${index}`}
                             className="p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             style={{ backgroundColor: color?.bgFiles }}
                             onClick={() => handleFilePreview(folder)}
@@ -364,46 +449,47 @@ const DocumentManager = () => {
                                 <FaFolder style={{ fontSize: 18 }} className="text-yellow-400" />
                                 <div className="flex-1">
                                     <h3 className="font-normal text-sm text-gray-800 line-clamp-1">{folder.name}</h3>
-                                    <p className="text-sm text-gray-500 pb-0 line-clamp-1">{departments.length} elementos</p>
+                                    <p className="text-sm text-gray-500 pb-0 line-clamp-1">{folder?.departments_ids.length} elementos</p>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-        );
     };
 
-    const DepartmentList_ = ({ isLoading, departments, documents, project_id, department_id, onDepartmentSelect }) => {
-        return (
+    const DepartmentList_ = ({ isLoading, departments, documents, project_id, selectedProject, department_id, onDepartmentSelect }) => {
+        if (departments.every(folder => !selectedProject?.departments_ids.includes(folder.id))) {
+            return
+        }
+        return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
                 <h2 className="text-sm font-semibold text-gray-800 mb-3">Departamentos</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
-                    {departments.map((folder) => {
-                        const linkedDocs = documents.filter(doc => doc.department_id === folder.id && doc.project_id === project_id);
-                        return (
+                    {departments.map((folder, index) => {
+                        const linkedDocs = documents.filter((doc) => doc.department_id === folder.id && doc.project_id === project_id);
+                        const isSelected = selectedProject?.departments_ids.includes(folder?.id);
+
+                        return isSelected && (
                             <div
-                                key={folder.id}
+                                key={`files-departaments-${folder.id}-${index}`}
                                 className="p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                                 style={{ backgroundColor: color?.bgFiles }}
                                 onClick={() => handleFilePreview(folder)}
-                                onDoubleClick={() => {
-                                    onDepartmentSelect(folder);
-                                }}
+                                onDoubleClick={() => onDepartmentSelect(folder)}
                             >
                                 <div className="flex items-center space-x-2">
-                                    <FaFolder style={{ fontSize: 18, color: folder?.color }}/* className="text-yellow-400" */ />
+                                    <FaFolder style={{ fontSize: 18, color: folder?.color }} />
                                     <div className="flex-1">
                                         <h3 className="font-normal text-sm text-gray-800 line-clamp-1">{folder?.name}</h3>
                                         <p className="text-sm text-gray-500 pb-0 line-clamp-1">{linkedDocs.length} elementos</p>
                                     </div>
                                 </div>
                             </div>
-                        )
+                        );
                     })}
                 </div>
             </div>
-        );
     };
 
     const { previewFile, setPreviewFile } = usePreviewFile()
@@ -433,6 +519,33 @@ const DocumentManager = () => {
         }
     };
 
+    const onDoubleClick_ = (file, index, mode, share, move) => {
+        if (mode) handlePreview(file);
+        if (move) {
+            onOpenMove();
+            return;
+        }
+        if (file.type.startsWith('image')) {
+            setImages(documents.filter(item => item.type.startsWith('image')));
+            if (!share) handlePreview(file, true, index); else openShare();
+        } else if (!share) handleDocs(file); else openShare();
+
+    }
+
+    const openShare = () => {
+        console.log("🚀 ~ openShare ~ previewFile:", previewFile)
+        //setSelectedShare(previewFile.users_ids.filter(item =>  { return ({ label: users.find(i => i?.id == item)?.label, value: users.find(i => i?.id == item)?.value }) }))
+        setSelectedShare(
+            previewFile.users_ids
+                .filter(item => item !== user_id)
+                .map(item => ({
+                    label: users.find(i => i?.id === item)?.label,
+                    value: users.find(i => i?.id === item)?.value
+                }))
+        );
+        onOpenShare();
+    }
+
     const DocumentList = ({ isLoading, documents }) => {
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
@@ -445,7 +558,7 @@ const DocumentManager = () => {
                             description={
                                 <Typography.Text>
                                     <p className="text-center font-bold text-lg text-black mt-3 mb-0">Arrastra y suelta los archivos aquí</p>
-                                    <p className="text-center text-gray-600 mt-0">o usa el botón "Subir archivo" <br/><p className="text-xxs">Máx. 10 MB</p></p>
+                                    <p className="text-center text-gray-600 mt-0">o usa el botón "Subir archivo" <br /><p className="text-xxs">Máx. 10 MB</p></p>
                                 </Typography.Text>
                             }
                         />
@@ -453,58 +566,47 @@ const DocumentManager = () => {
                     : <div>
                         <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 pb-24">
-                            {documents.map((file, index) => (
-                                <div
-                                    key={file.id}
-                                    className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
-                                    style={{ backgroundColor: color?.bgFiles }}
-                                    onClick={() => handlePreview(file)}
-                                    onDoubleClick={() => {
-                                        if (file.type.startsWith('image')) {
-                                            setImages(documents.filter(item => item.type.startsWith('image')));
-                                            handlePreview(file, true, index)
-                                        } else {
-                                            handleDocs(file)
-                                        }
-                                    }}
-                                >
-                                    <div className="p-3 pb-0">
-                                        {/*<img
-                                                src={file.thumbnail}
-                                                alt={file.name}
-                                                className="w-full h-32 object-cover rounded"
-                                            />*/}
-                                        {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
-                                            <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
-                                                <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
-                                            </div>}
-                                    </div>
-                                    <div className="p-3 pt-2">
-                                        <div className="flex items-center justify-between space-x-2">
-                                            <div className="flex items-center space-x-2 flex-1 min-w-0 truncate line-clamp-1">
-                                                {getFileIcon(file?.type)}
-                                                <span className="font-medium text-gray-800 truncate line-clamp-1">{file.name}</span>
+                            {documents.map((file, index) => {
+                                console.log("🚀 ~ {documents.map ~ file:", file, user_id, role)
+                                //const isSelected = file?.users_ids.includes(user_id) ;
+                                const isSelected = !role.startsWith('admin') ? file?.users_ids.includes(user_id) : true;
+                                return (isSelected) && (
+                                    <div
+                                        key={`files-docs-${file.id}-${index}`}
+                                        className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
+                                        style={{ backgroundColor: color?.bgFiles }}
+                                        onClick={() => handlePreview(file)}
+                                        onDoubleClick={() => onDoubleClick_(file, index)}
+                                    >
+                                        <div className="p-3 pb-0">
+                                            {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
+                                                <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
+                                                    <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
+                                                </div>}
+                                        </div>
+                                        <div className="p-3 pt-2">
+                                            <div className="flex items-center justify-between space-x-2">
+                                                <div className="flex items-center space-x-2 flex-1 min-w-0 truncate line-clamp-1">
+                                                    {getFileIcon(file?.type)}
+                                                    <span className="font-medium text-gray-800 truncate line-clamp-1">{file.name}</span>
+                                                </div>
+                                                {/*<BsThreeDotsVertical className="text-gray-400 flex-shrink-0" />*/}
+                                                <Menu isLazy>
+                                                    <MenuButton _hover={{ bg: 'transparent' }} colorScheme='teal' variant='ghost' style={{ cursor: "context-menu", padding: 5 }}>
+                                                        <BsThreeDotsVertical className="text-gray-400 pl-0 ml-0 flex-shrink-0" />
+                                                    </MenuButton>
+                                                    <MenuList>
+                                                        <MenuItem icon={<FiEye />} onClick={() => onDoubleClick_(file, index, true)}>Abrir</MenuItem>
+                                                        <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
+                                                        <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
+                                                        <MenuItem icon={<MdDeleteOutline />} onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
+                                                    </MenuList>
+                                                </Menu>
                                             </div>
-                                            {/*<BsThreeDotsVertical className="text-gray-400 flex-shrink-0" />*/}
-                                            <Menu isLazy>
-                                                <MenuButton _hover={{ bg: 'transparent' }} /*as={Button}*/ colorScheme='teal' variant='ghost'>
-                                                    <BsThreeDotsVertical className="text-gray-400 pl-0 ml-0 flex-shrink-0" />
-                                                </MenuButton>
-                                                <MenuList>
-                                                    <MenuItem onClick={() => {
-                                                        handlePreview(file);
-                                                        if (file.type.startsWith('image')) {
-                                                            setImages(documents.filter(item => item.type.startsWith('image')));
-                                                            handlePreview(file, true, index);
-                                                        } else handleDocs(file);
-                                                    }} >Abrir</MenuItem>
-                                                    <MenuItem onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
-                                                </MenuList>
-                                            </Menu>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                )
+                            })}
                         </div>
                     </div>
                 }
@@ -587,6 +689,7 @@ const DocumentManager = () => {
                 data.append("file", file);
                 data.append("name", file.name);
                 data.append("type", file.type);
+                data.append("users_ids", JSON.stringify([user_id]))
 
                 if (level == 1) data.append("project_id", selectedProject?.id);
                 if (level == 2) {
@@ -654,8 +757,47 @@ const DocumentManager = () => {
         onCloseProject();
     }
 
+    function transformToTree(data) {
+        const tree = { root: { documents: [], projects: {} } };
+        documents.forEach(item => {
+            const { project, department } = item;
+            if (!project) tree.root.documents.push(item);
+            else {
+                if (!tree.root.projects[project.name]) tree.root.projects[project.name] = { departments: {}, documents: [] };
+                const projectNode = tree.root.projects[project.name];
+                if (!department) projectNode.documents.push(item);
+                else {
+                    if (!projectNode.departments[department.name]) projectNode.departments[department.name] = { documents: [] };
+                    projectNode.departments[department.name].documents.push(item);
+                }
+            }
+        });
+        return tree;
+    }
+
+    const [expandedProjects, setExpandedProjects] = useState({});
+    const [expandedDepartments, setExpandedDepartments] = useState({});
+
+    const toggleProject = (projectName) => {
+        setExpandedProjects((prev) => ({
+            ...prev,
+            [projectName]: !prev[projectName]
+        }));
+    };
+
+    const toggleDepartment = (projectName, departmentName) => {
+        setExpandedDepartments((prev) => ({
+            ...prev,
+            [`${projectName}-${departmentName}`]: !prev[`${projectName}-${departmentName}`]
+        }));
+    };
+
+    const handleMove = (name) => {
+        alert(`Move ${name}`);
+    };
+
     return (
-        <div className="mx-auto pr-4 pb-8 bgwhite">
+        <div className="mx-auto pb-8 bgwhite">
             {contextHolder}
             <div className="flex" style={{ width: '100%' }}>
                 <div className="mx-auto pb-8 content-scroll-auto" style={{ flex: '1' }}>
@@ -690,7 +832,7 @@ const DocumentManager = () => {
                             )}
                             {level === 1 && (
                                 <>
-                                    <DepartmentList_ isLoading={isLoading} departments={departments} documents={documents} department_id={selectedDepartment?.id} project_id={selectedProject?.id} onDepartmentSelect={handleDepartmentSelect} />
+                                    <DepartmentList_ isLoading={isLoading} departments={departments} documents={documents} department_id={selectedDepartment?.id} project_id={selectedProject?.id} selectedProject={selectedProject} onDepartmentSelect={handleDepartmentSelect} />
                                     <DocumentList isLoading={isLoading} documents={filteredDocumentsForLevel()} />
                                 </>
                             )}
@@ -698,7 +840,7 @@ const DocumentManager = () => {
                         </Box>
                     </div>
                 </div>
-                <div className="border-l pl-4 pt-4" style={{ width: '300px' }}>
+                <div className="border-l p-3" style={{ width: '290px' }}>
                     {previewFile ? (
                         <div className="space-y-4">
                             <h3 className="text-lg font-medium">Detalles</h3>
@@ -784,10 +926,8 @@ const DocumentManager = () => {
                                     {file.name}
                                 </h1>
                             </div>
-                            <h1 style={{ fontSize: 13 }}>
-                                {!uploadResults[index]?.success ? <FaSpinner className="animate-spin text-blue-400" /> :
-                                    uploadResults[index]?.success == 1 ? <CiCircleCheck color='green' /> : <VscError color='blue' />
-                                }
+                            <h1 style={{ fontSize: '1rem' }}>
+                                {!uploadResults[index]?.success ? <FaSpinner className="animate-spin text-blue-400" /> : uploadResults[index]?.success == 1 ? <CiCircleCheck color='green' /> : <VscError color='blue' />}
                             </h1>
                         </div>
                     ))}
@@ -812,21 +952,18 @@ const DocumentManager = () => {
                                 {/*<button
                                     onClick={handleDownload}
                                     className="p-2 hover:bg-gray-800 rounded-full text-blue-400"
-                                    aria-label="Download image"
                                 >
                                     <AiOutlineDownload className="w-5 h-5" />
                                 </button>*/}
-                                {/*<button
-                                    onClick={handleShare}
-                                    className="p-2 hover:bg-gray-800 rounded-full text-green-400"
-                                    aria-label="Share image"
+                                <button
+                                    onClick={openShare}
+                                    className="p-2 hover:bg-gray-800 rounded-full text-white"
                                 >
                                     <AiOutlineShareAlt className="w-5 h-5" />
-                                </button>*/}
+                                </button>
                                 <button
                                     onClick={() => handleDelete({ id: selectedImage?.id })}
-                                    className="p-2 hover:bg-gray-800 rounded-full text-red-400"
-                                    aria-label="Delete image"
+                                    className="p-2 hover:bg-gray-800 rounded-full text-white"
                                 >
                                     <AiOutlineDelete className="w-5 h-5" />
                                 </button>
@@ -882,7 +1019,7 @@ const DocumentManager = () => {
                         top: position.y && `${position.y}px`,
                         left: position.x && `${position.x}px`
                     }}
-                    //onMouseUp={handleMouseUp}
+                //onMouseUp={handleMouseUp}
                 >
                     <ModalHeader cursor="move"
                         onMouseDown={handleMouseDown}
@@ -894,7 +1031,7 @@ const DocumentManager = () => {
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <div className='space-y-3'>
+                        <div className='space-y-2'>
                             <FormControl id="name" isRequired>
                                 <FormLabel>Nombre</FormLabel>
                                 <div style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
@@ -924,28 +1061,47 @@ const DocumentManager = () => {
                                 />
                             </FormControl>
                             {!level == 1 &&
-                                <div className='flex flex-row gap-3'>
-                                    <FormControl id="start_date" isRequired>
-                                        <FormLabel>Fecha de Inicio</FormLabel>
-                                        <Input
-                                            type="date"
-                                            name="start_date"
-                                            value={formDataProjects.start_date}
-                                            onChange={handleStartDateChange}
-                                            min={new Date().toISOString().split('T')[0]}
-                                        />
-                                    </FormControl>
-                                    <FormControl id="end_date" isRequired>
-                                        <FormLabel>Fecha de Fin</FormLabel>
-                                        <Input
-                                            type="date"
-                                            name="end_date"
-                                            value={formDataProjects.end_date}
-                                            onChange={handleChange}
-                                            min={minEndDate}
-                                            disabled={!formDataProjects?.start_date || false}
-                                        />
-                                    </FormControl>
+                                <div className='flex flex-col gap-3'>
+                                    <MultiSelect
+                                        options={departments}
+                                        value={selected}
+                                        onChange={setSelected}
+                                        labelledBy="name"
+                                        className='input-multi-text-form-files'
+                                        hasSelectAll={false}
+                                        style={{ fontSize: 18 }}
+                                        overrideStrings={{
+                                            "selectSomeItems": "Seleccionar departamentos",
+                                            "allItemsAreSelected": "Todos los departamentos ligados",
+                                            "search": "Buscar",
+                                            "clearSearch": "Limpiar búsqueda",
+                                            "clearSelected": "Limpiar seleccionados",
+                                            "noOptions": "No hay opciones disponibles"
+                                        }}
+                                    />
+                                    <div className='flex flex-row gap-3'>
+                                        <FormControl id="start_date" isRequired>
+                                            <FormLabel>Fecha de Inicio</FormLabel>
+                                            <Input
+                                                type="date"
+                                                name="start_date"
+                                                value={formDataProjects.start_date}
+                                                onChange={handleStartDateChange}
+                                                min={new Date().toISOString().split('T')[0]}
+                                            />
+                                        </FormControl>
+                                        <FormControl id="end_date" isRequired>
+                                            <FormLabel>Fecha de Fin</FormLabel>
+                                            <Input
+                                                type="date"
+                                                name="end_date"
+                                                value={formDataProjects.end_date}
+                                                onChange={handleChange}
+                                                min={minEndDate}
+                                                disabled={!formDataProjects?.start_date || false}
+                                            />
+                                        </FormControl>
+                                    </div>
                                 </div>}
                         </div>
                     </ModalBody>
@@ -954,6 +1110,160 @@ const DocumentManager = () => {
                             Cancelar
                         </Button>
                         <Button variant='solid' onClick={handleSubmit}>
+                            Guardar
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            <Modal closeOnOverlayClick={false} isOpen={isOpenShare} onClose={onCloseShare} isCentered scrollBehavior={'outside'} size={'2xl'}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>
+                        <div className='font-normal w-96 pt-3.5'>
+                            Compartir "{previewFile?.name}"
+                        </div>
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody className='p-0 m-0'>
+                        <div className='space-y-2'>
+                            <div className='flex flex-col gap-y-1.5'>
+                                <MultiSelect
+                                    options={users.filter(item => item?.id !== user_id)}
+                                    value={selectedShare}
+                                    onChange={setSelectedShare}
+                                    labelledBy="name"
+                                    className='input-multi-text-form-files px-4 pt-3.5'
+                                    hasSelectAll={false}
+                                    style={{ fontSize: 18 }}
+                                    overrideStrings={{
+                                        "selectSomeItems": "Seleccionar usuarios",
+                                        "allItemsAreSelected": "Todos los departamentos ligados",
+                                        "search": "Buscar",
+                                        "clearSearch": "Limpiar búsqueda",
+                                        "clearSelected": "Limpiar seleccionados",
+                                        "noOptions": "No hay opciones disponibles"
+                                    }}
+                                />
+                                <p className='pb-0 px-4 pt-2 font-medium'>Personas que tienen acceso</p>
+                                <List
+                                    //className="demo-loadmore-list"
+                                    //itemLayout="horizontal"
+                                    style={{ maxHeight: 300, overflowY: 'auto' }}
+                                    dataSource={[users.find(item => item?.id == user_id), ...selectedShare]}
+                                    renderItem={(item, index) => (
+                                        <List.Item actions={index == 0 && [<div className="pr-2">Propietario</div>]}>
+                                            <List.Item.Meta
+                                                avatar={<Avatar>{item?.first_name.charAt(0)}</Avatar>}
+                                                title={`${item?.first_name} ${item?.last_name}`}
+                                                description={item?.email}
+                                                className='flex flex-row items-center pl-5'
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter className='gap-1 border-t-1 flex justify-between'>
+                        <Button variant='ghost' rounded={100} onClick={onCloseShare}>
+                            Cancelar
+                        </Button>
+                        <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={onCloseShare}>
+                            Guardar
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            <Modal closeOnOverlayClick={false} isOpen={isOpenMove} onClose={onCloseMove} isCentered scrollBehavior={'outside'} size={'2xl'}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>
+                        <div className='font-normal w-96 pt-3.5'>
+                            Mover "{previewFile?.name}"
+                        </div>
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody className='p-0 m-0'>
+                        <div className='space-y-1.2'>
+                            <div className='flex flex-col gap-y-1.5'>
+                                <div className='flex flex-row px-4 pt-1.5 gap-1'>
+                                    <p className='pb-0 font-medium'>Ubicación actual del archivo: </p>
+                                    <p className='pb-0 font-medium border border-gray-500 rounded px-1 flex flex-row items-center gap-1'>
+                                        {level == 0 && <FaFolder style={{ fontSize: 15 }} color="gray" />}
+                                        {level == 1 && selectedProject?.name}
+                                        {level == 2 && selectedDepartment?.name}
+                                    </p>
+                                </div>
+                                {
+                                    //style={{ maxHeight: 300, overflowY: 'auto' }}
+                                }
+                                <div className='pb-0 px-4'>
+                                    <div>
+                                        {Object.entries(transformToTree().root.projects).map(([projectName, project]) => (
+                                            <div key={projectName}>
+                                                <div className='flex flex-row justify-between'>
+                                                    <span onClick={() => toggleProject(projectName)} style={{ cursor: 'pointer' }}>
+                                                        {expandedProjects[projectName] ? '▼' : '▶'} {projectName}
+                                                    </span>
+                                                    <button onClick={() => handleMove(projectName)} style={{ marginLeft: '10px' }}>
+                                                        Mover
+                                                    </button>
+                                                </div>
+                                                {expandedProjects[projectName] && (
+                                                    <div>
+                                                        {project.documents.map((doc) => (
+                                                            <div key={doc.id} style={{ marginLeft: '20px' }} className='line-clamp-1'>
+                                                                {doc.name}
+                                                            </div>
+                                                        ))}
+
+                                                        {Object.entries(project.departments).map(([departmentName, department]) => (
+                                                            <div key={departmentName} style={{ marginLeft: '20px' }}>
+                                                                <div>
+                                                                    <span onClick={() => toggleDepartment(projectName, departmentName)} style={{ cursor: 'pointer' }}>
+                                                                        {expandedDepartments[`${projectName}-${departmentName}`] ? '▼' : '▶'} {departmentName}
+                                                                    </span>
+                                                                    <button onClick={() => handleMove(departmentName)} style={{ marginLeft: '10px' }}>
+                                                                        Mover
+                                                                    </button>
+                                                                </div>
+                                                                {expandedDepartments[`${projectName}-${departmentName}`] && (
+                                                                    <ul style={{ marginLeft: '20px' }}>
+                                                                        {department.documents.map((doc) => (
+                                                                            <div key={doc.id} className='line-clamp-1'>
+                                                                                {doc.name}
+                                                                            </div>
+                                                                        ))}
+                                                                    </ul>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div>
+                                        {transformToTree().root.documents.map((doc) => (
+                                            <div key={doc.id} className='line-clamp-1'>
+                                                {doc.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <p className='pb-0 px-4 font-medium flex flex-row items-center gap-1 text-sm'>
+                                    <FaFolder style={{ fontSize: 15 }} color="gray" /> <MdOutlineKeyboardArrowRight /> {selectedProject?.name} <MdOutlineKeyboardArrowRight /> {selectedDepartment?.name}
+                                </p>
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter className='gap-1 border-t-1 flex justify-between'>
+                        <Button variant='ghost' rounded={100} onClick={onCloseMove}>
+                            Cancelar
+                        </Button>
+                        <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={onCloseMove}>
                             Guardar
                         </Button>
                     </ModalFooter>
