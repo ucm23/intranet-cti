@@ -545,18 +545,20 @@ const DocumentManager = () => {
         }
         if (file.type.startsWith('image')) {
             setImages(documents.filter(item => item.type.startsWith('image')));
-            if (!share) handlePreview(file, true, index); else openShare();
-        } else if (!share) handleDocs(file); else openShare();
+            if (!share) handlePreview(file, true, index); else openShare(file);
+        } else if (!share) handleDocs(file); else openShare(file);
 
     }
 
-    const openShare = () => {
+    const openShare = (file) => {
+        setPreviewFile(null)
+        setPreviewFile(file);
         let data = users
-            .filter(item => item?.role == 'administrador' || previewFile?.users_ids.includes(item?.id))
+            .filter(item => item?.role == 'administrador' || file?.users_ids.includes(item?.id))
             .map(item => ({ ...item }))
         setSelectedShare(data);
 
-        console.log("🚀 ~ openShare ~ previewFile:", previewFile)
+        console.log("🚀 ~ openShare ~ file:", file)
         console.log("🚀 ~ openShare ~ data:", data)
         onOpenShare();
     }
