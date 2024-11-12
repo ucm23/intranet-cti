@@ -1965,3 +1965,17 @@ td {
     -webkit-justify-content: space-between !important;
     justify-content: space-between !important;
 }
+
+.rmsc .item-renderer {
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+}
+
+.rmsc .options {
+    max-height: 180px !important;
+}
+
+svg.dropdown-search-clear-icon.gray {
+    display: none !important;
+}

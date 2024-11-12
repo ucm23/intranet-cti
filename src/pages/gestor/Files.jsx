@@ -10,6 +10,8 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import color from '../../color';
 import { Empty, Typography } from 'antd';
+import { RiFolderSharedLine } from "react-icons/ri";
+import { FaPlusCircle } from "react-icons/fa";
 import {
     Modal,
     ModalOverlay,
@@ -46,7 +48,7 @@ import { MultiSelect } from "react-multi-select-component";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { Avatar, List } from 'antd';
 //import InputColor from 'react-input-color';
-import { createDocs, deleteDocuments, indexDocsImgs, indexDocuments, indexDocumentsByID } from '../../api/docs/docs';
+import { createDocs, deleteDocuments, indexDocsImgs, indexDocuments, indexDocumentsByID, updateDoc } from '../../api/docs/docs';
 import { createDepartments, indexDepartments } from '../../api/departamentos/departments';
 import { createProjects, indexProjects } from '../../api/project/projects';
 import { useImageCache } from '../../redux/ImageCacheProvider';
@@ -361,15 +363,18 @@ const DocumentManager = () => {
 
     const menus = {
         project: [
-            { option: 'Proyecto nuevo', onClick: onOpenProject },
-            { option: 'Subir archivo [Nivel proyecto]', onClick: handleButtonClick },
+            { option: 'Proyecto nuevo', icon: <RiFolderSharedLine />, onClick: onOpenProject },
+            { option: 'Crear archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
+            { option: 'Subir archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
         ],
         department: [
             //{ option: 'Departamento nuevo', onClick: onOpenProject },
-            { option: 'Subir archivo [Nivel departamento]', onClick: handleButtonClick },
+            { option: 'Crear archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
+            { option: 'Subir archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
         ],
         documents: [
-            { option: 'Subir archivo', onClick: handleButtonClick },
+            { option: 'Crear archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
+            { option: 'Subir archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
         ],
     }
 
@@ -377,7 +382,7 @@ const DocumentManager = () => {
         return (
             <MenuList>
                 {menus[type].map((item, index) => (
-                    <MenuItem key={`menus-${index}`} onClick={() => item?.onClick()}>{item?.option}</MenuItem>
+                    <MenuItem key={`menus-${index}`} icon={item?.icon} onClick={() => item?.onClick()}>{item?.option}</MenuItem>
                 ))}
             </MenuList>
         )
@@ -459,35 +464,48 @@ const DocumentManager = () => {
     };
 
     const DepartmentList_ = ({ isLoading, departments, documents, project_id, selectedProject, department_id, onDepartmentSelect }) => {
-        if (departments.every(folder => !selectedProject?.departments_ids.includes(folder.id))) {
+        /*if (departments.every(folder => !selectedProject?.departments_ids.includes(folder.id))) {
             return
-        }
+        }*/
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
                 <h2 className="text-sm font-semibold text-gray-800 mb-3">Departamentos</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
                     {departments.map((folder, index) => {
-                        const linkedDocs = documents.filter((doc) => doc.department_id === folder.id && doc.project_id === project_id);
+                        const linkedDocs = documents.filter((doc) => doc.department_id === folder.id && doc.project_id === project_id).length || null;
                         const isSelected = selectedProject?.departments_ids.includes(folder?.id);
 
                         return isSelected && (
                             <div
                                 key={`files-departaments-${folder.id}-${index}`}
-                                className="p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                                className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer flex items-center p-3 "
                                 style={{ backgroundColor: color?.bgFiles }}
                                 onClick={() => handleFilePreview(folder)}
                                 onDoubleClick={() => onDepartmentSelect(folder)}
                             >
-                                <div className="flex items-center space-x-2">
-                                    <FaFolder style={{ fontSize: 18, color: folder?.color }} />
-                                    <div className="flex-1">
-                                        <h3 className="font-normal text-sm text-gray-800 line-clamp-1">{folder?.name}</h3>
-                                        <p className="text-sm text-gray-500 pb-0 line-clamp-1">{linkedDocs.length} elementos</p>
+                                <div className="flex flex-row items-center space-x-2">
+                                    <FaFolder style={{ fontSize: 18, color: '#008080' }} />
+                                    <div>
+                                        <h3 className="font-normal text-sm text-gray-800 line-clamp-1 pb-0">{folder?.name}</h3>
+                                        {linkedDocs && <p className="text-sm text-gray-500 pb-0 line-clamp-1">{linkedDocs} elementos</p>}
                                     </div>
                                 </div>
                             </div>
                         );
                     })}
+                    {selectedProject?.departments_ids.length !== departments.length &&
+                        <div
+                            className="flex items-center p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                            style={{ backgroundColor: color?.bgFiles }}
+                        //onClick={() => handleFilePreview(folder)}
+                        >
+                            <div className="flex items-center space-x-2">
+                                <FaPlusCircle style={{ fontSize: 30, color: color.blueWord }} />
+                                <h3 style={{ color: color.blueWord }} className="text-sm text-gray-800 pb-0 font-semibold">Agregar departamento</h3>
+                            </div>
+                        </div>
+                    }
+
                 </div>
             </div>
     };
@@ -533,20 +551,37 @@ const DocumentManager = () => {
     }
 
     const openShare = () => {
-        console.log("🚀 ~ openShare ~ previewFile:", previewFile)
-        //setSelectedShare(previewFile.users_ids.filter(item =>  { return ({ label: users.find(i => i?.id == item)?.label, value: users.find(i => i?.id == item)?.value }) }))
-        let data = previewFile.users_ids
-            .filter(item => item !== user_id)
-            .map(item => ({
-                id: users.find(i => i?.id === item)?.id,
-                label: users.find(i => i?.id === item)?.label,
-                value: users.find(i => i?.id === item)?.value,
-                email: users.find(i => i?.id === item)?.email,
-            }));
-        console.log("🚀 ~ openShare ~ data:", data)
+        let data = users
+            .filter(item => item?.role == 'administrador' || previewFile?.users_ids.includes(item?.id))
+            .map(item => ({ ...item }))
         setSelectedShare(data);
+
+        console.log("🚀 ~ openShare ~ previewFile:", previewFile)
+        console.log("🚀 ~ openShare ~ data:", data)
         onOpenShare();
     }
+
+    const updateDocs = async ({ id, share }) => {
+        let formData = new FormData();
+        //formData.append("id", id);
+        if (share) {
+            let ids = selectedShare.map(item => item?.id)
+            formData.append("users_ids", JSON.stringify(ids))
+        }
+        try {
+            let { status, data } = await updateDoc({ id, data: formData })
+            if (status) {
+                if (share) setDocuments((prevDocuments) => [data, ...prevDocuments.filter((doc) => doc.id !== id)]);
+            }
+
+        } catch (error) {
+            console.log("🚀 ~ sendShare ~ error:", error)
+        } finally {
+            if (share) onCloseShare()
+        }
+    }
+
+
 
     const DocumentList = ({ isLoading, documents }) => {
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
@@ -569,28 +604,25 @@ const DocumentManager = () => {
                         <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 pb-24">
                             {documents.map((file, index) => {
-                                console.log("🚀 ~ {documents.map ~ file:", file, user_id, role)
-                                //const isSelected = file?.users_ids.includes(user_id) ;
                                 const isSelected = !role.startsWith('admin') ? file?.users_ids.includes(user_id) : true;
                                 return (isSelected) && (
                                     <div
-                                        key={`files-docs-${file.id}-${index}`}
+                                        key={`files-docs-${file?.id}-${index}`}
                                         className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
                                         style={{ backgroundColor: color?.bgFiles }}
-                                        onClick={() => handlePreview(file)}
                                         onDoubleClick={() => onDoubleClick_(file, index)}
                                     >
-                                        <div className="p-3 pb-0">
+                                        <div className="p-3 pb-0" onClick={() => handlePreview(file)}>
                                             {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
                                                 <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
                                                     <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
                                                 </div>}
                                         </div>
                                         <div className="p-3 pt-2">
-                                            <div className="flex items-center justify-between space-x-2">
-                                                <div className="flex items-center space-x-2 flex-1 min-w-0 truncate line-clamp-1">
-                                                    {getFileIcon(file?.type)}
-                                                    <span className="font-medium text-gray-800 truncate line-clamp-1">{file.name}</span>
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center min-w-0 truncate line-clamp-1">
+                                                    {/*getFileIcon(file?.type)*/}
+                                                    <span className="font-medium text-gray-800 truncate line-clamp-1" onClick={() => handlePreview(file)}>{file?.file_name}</span>
                                                 </div>
                                                 {/*<BsThreeDotsVertical className="text-gray-400 flex-shrink-0" />*/}
                                                 <Menu isLazy>
@@ -599,9 +631,11 @@ const DocumentManager = () => {
                                                     </MenuButton>
                                                     <MenuList>
                                                         <MenuItem icon={<FiEye />} onClick={() => onDoubleClick_(file, index, true)}>Abrir</MenuItem>
-                                                        <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
-                                                        <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
-                                                        <MenuItem icon={<MdDeleteOutline />} onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
+                                                        {role.startsWith('admin') && <>
+                                                            <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
+                                                            <MenuItem icon={<RiFolderSharedLine />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
+                                                            <MenuItem icon={<MdDeleteOutline />} onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
+                                                        </>}
                                                     </MenuList>
                                                 </Menu>
                                             </div>
@@ -640,7 +674,6 @@ const DocumentManager = () => {
         useEffect(() => {
             const loadURL = async () => {
                 const pdf = await indexDocumentsByID({ id, blob: false });
-                console.log("🚀 ~ loadURL ~ pdf:", pdf)
                 setImageUrl(pdf?.data);
             };
             loadURL()
@@ -675,7 +708,6 @@ const DocumentManager = () => {
 
     const handleDrop = async (event, mode) => {
         console.log("🚀 ~ handleDrop ~ event:", event)
-
         event.preventDefault();
         setUploadResults([])
         const files = mode ? Array.from(event.dataTransfer.files) : Array.from(event.target.files);
@@ -689,7 +721,7 @@ const DocumentManager = () => {
             for (const file of files || []) {
                 let data = new FormData();
                 data.append("file", file);
-                data.append("name", file.name);
+                data.append("name", user_id);
                 data.append("type", file.type);
                 data.append("users_ids", JSON.stringify([user_id]))
 
@@ -777,26 +809,43 @@ const DocumentManager = () => {
         return tree;
     }
 
-    const [expandedProjects, setExpandedProjects] = useState({});
-    const [expandedDepartments, setExpandedDepartments] = useState({});
+    const [view, setView] = useState({ type: 'projects', id: null });
 
-    const toggleProject = (projectName) => {
-        setExpandedProjects((prev) => ({
-            ...prev,
-            [projectName]: !prev[projectName]
-        }));
+    useEffect(() => {
+        if (projects.length && departments.length) setdataSource(getDataSource());
+    }, [projects, departments, view])
+
+    const getDataSource = () => {
+        console.log("🚀 ~ DocumentManager ~ view:", view)
+
+        console.log("🚀 ~ getDataSource ~ projects:", projects)
+        if (view.type === 'projects') {
+            return projects;
+        } else if (view.type === 'departments') {
+            return departments.filter((dep) => projects.find((proj) => proj.id === view.id)?.departments_ids.includes(dep.id));
+        } /*else if (view.type === 'documents') {
+            return []; //documents.filter((doc) => doc.project_id === view.id);
+        }*/
+        return [];
     };
 
-    const toggleDepartment = (projectName, departmentName) => {
-        setExpandedDepartments((prev) => ({
-            ...prev,
-            [`${projectName}-${departmentName}`]: !prev[`${projectName}-${departmentName}`]
-        }));
+    const handleItemClick = (item) => {
+        if (view.type === 'projects') {
+            setView({ type: 'departments', id: item.id });
+        } else if (view.type === 'departments') {
+            setView({ type: 'documents', id: item.id });
+        }
     };
 
-    const handleMove = (name) => {
-        alert(`Move ${name}`);
+    const handleBack = () => {
+        if (view.type === 'documents') {
+            setView({ type: 'departments', id: projects.find((proj) => proj.departments_ids.includes(view.id))?.id });
+        } else if (view.type === 'departments') {
+            setView({ type: 'projects', id: null });
+        }
     };
+
+    const [dataSource, setdataSource] = useState(null)
 
     return (
         <div className="mx-auto pb-8 bgwhite">
@@ -805,12 +854,6 @@ const DocumentManager = () => {
                 <div className="mx-auto pb-8 content-scroll-auto" style={{ flex: '1' }}>
                     <div className="flex justify-between items-center mb-2 pl-6 mt-8">
                         <h2 className="text-3xl font-bold text-gray-800 mb-0 pb-0 mt-8" style={{ paddingLeft: 8 }}>Gestor de archivos {level}</h2>
-                        {/*<ButtonAntd
-                            icon={<PlusOutlined />}
-                            //onClick={() => navigate("/addnews")}
-                            type="primary">
-                            Añadir
-                        </ButtonAntd>*/}
                     </div>
                     <div className="p-4 pt-0 pb-0">
                         <Breadcrumbs
@@ -863,7 +906,7 @@ const DocumentManager = () => {
                             <div className="space-y-3">
                                 <p className="font-small">
                                     <span className='font-semibold'>Nombre</span> <br />
-                                    {previewFile.name}
+                                    {previewFile.file_name}
                                 </p>
                                 <p className="font-small">
                                     <span className='font-semibold'>Tipo</span>  <br />
@@ -948,7 +991,7 @@ const DocumentManager = () => {
                                 >
                                     <AiOutlineClose className="w-5 h-5" />
                                 </button>
-                                <h3 className="text-sm font-semibold text-white pb-0 mb-0">{selectedImage.name}</h3>
+                                <h3 className="text-sm font-semibold text-white pb-0 mb-0">{selectedImage?.file_name || selectedImage?.name}</h3>
                             </div>
                             <div className="flex gap-2">
                                 {/*<button
@@ -1027,6 +1070,7 @@ const DocumentManager = () => {
                         onMouseDown={handleMouseDown}
                         onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUp}
+                        className='pb-0 mb-0'
                     >
                         <RxDragHandleDots2 style={{ transform: 'rotate(90deg)', position: 'absolute', top: 12, left: 240, color: '#B6B6B670' }} />
                         {!level == 1 ? 'Proyecto' : 'Departamento'} nuevo
@@ -1122,8 +1166,8 @@ const DocumentManager = () => {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
-                        <div className='font-normal w-96 pt-3.5'>
-                            Compartir "{previewFile?.name}"
+                        <div className='font-normal w-[9/10] pt-3.5'>
+                            Compartir "{previewFile?.file_name}"
                         </div>
                     </ModalHeader>
                     <ModalCloseButton />
@@ -1131,30 +1175,32 @@ const DocumentManager = () => {
                         <div className='space-y-2'>
                             <div className='flex flex-col gap-y-1.5'>
                                 <MultiSelect
-                                    options={users.filter(item => item?.id !== user_id)}
+                                    options={users/*.filter(item => item?.id !== user_id)*/}
                                     value={selectedShare}
                                     onChange={setSelectedShare}
                                     labelledBy="name"
                                     className='input-multi-text-form-files px-4 pt-3.5'
-                                    hasSelectAll={false}
+                                    hasSelectAll={true}
                                     style={{ fontSize: 18 }}
                                     overrideStrings={{
                                         "selectSomeItems": "Seleccionar usuarios",
-                                        "allItemsAreSelected": "Todos los departamentos ligados",
+                                        "allItemsAreSelected": "Se compartira con todos los usuarios",
                                         "search": "Buscar",
                                         "clearSearch": "Limpiar búsqueda",
                                         "clearSelected": "Limpiar seleccionados",
-                                        "noOptions": "No hay opciones disponibles"
+                                        "noOptions": "No hay opciones disponibles",
+                                        "selectAll": "Seleccionar todo",
                                     }}
                                 />
                                 <p className='pb-0 px-4 pt-2 font-medium'>Personas que tienen acceso</p>
                                 <List
                                     //className="demo-loadmore-list"
                                     //itemLayout="horizontal"
-                                    style={{ maxHeight: 300, overflowY: 'auto' }}
-                                    dataSource={[users.find(item => item?.id == user_id), ...selectedShare]}
-                                    renderItem={(item, index) => (
-                                        <List.Item actions={index == 0 && [<div className="pr-2">Propietario</div>]}>
+                                    style={{ height: 300, maxHeight: 300, overflowY: 'auto' }}
+                                    //dataSource={[users.find(item => item?.id == user_id), ...selectedShare]}
+                                    dataSource={selectedShare}
+                                    renderItem={(item) => (
+                                        <List.Item actions={previewFile?.name == item?.value && [<div className="pr-2">Propietario</div>]}>
                                             <List.Item.Meta
                                                 avatar={<Avatar>{item?.label && item?.label.charAt(0)}</Avatar>}
                                                 title={`${item?.label}`}
@@ -1171,8 +1217,8 @@ const DocumentManager = () => {
                         <Button variant='ghost' rounded={100} onClick={onCloseShare}>
                             Cancelar
                         </Button>
-                        <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={onCloseShare}>
-                            Guardar
+                        <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={() => updateDocs({ id: previewFile?.id, share: true })}>
+                            Compartir
                         </Button>
                     </ModalFooter>
                 </ModalContent>
@@ -1183,7 +1229,7 @@ const DocumentManager = () => {
                 <ModalContent>
                     <ModalHeader>
                         <div className='font-normal w-96 pt-3.5'>
-                            Mover "{previewFile?.name}"
+                            Mover "{previewFile?.file_name}"
                         </div>
                     </ModalHeader>
                     <ModalCloseButton />
@@ -1198,66 +1244,33 @@ const DocumentManager = () => {
                                         {level == 2 && selectedDepartment?.name}
                                     </p>
                                 </div>
-                                {
-                                    //style={{ maxHeight: 300, overflowY: 'auto' }}
-                                }
                                 <div className='pb-0 px-4'>
                                     <div>
-                                        {Object.entries(transformToTree().root.projects).map(([projectName, project]) => (
-                                            <div key={projectName}>
-                                                <div className='flex flex-row justify-between'>
-                                                    <span onClick={() => toggleProject(projectName)} style={{ cursor: 'pointer' }}>
-                                                        {expandedProjects[projectName] ? '▼' : '▶'} {projectName}
-                                                    </span>
-                                                    <button onClick={() => handleMove(projectName)} style={{ marginLeft: '10px' }}>
-                                                        Mover
-                                                    </button>
-                                                </div>
-                                                {expandedProjects[projectName] && (
-                                                    <div>
-                                                        {project.documents.map((doc) => (
-                                                            <div key={doc.id} style={{ marginLeft: '20px' }} className='line-clamp-1'>
-                                                                {doc.name}
-                                                            </div>
-                                                        ))}
+                                        <Button onClick={handleBack} style={{ marginBottom: 16 }} disabled={view.type == 'projects'}>
+                                            Volver
+                                        </Button>
 
-                                                        {Object.entries(project.departments).map(([departmentName, department]) => (
-                                                            <div key={departmentName} style={{ marginLeft: '20px' }} className='line-clamp-1'>
-                                                                <div>
-                                                                    <span onClick={() => toggleDepartment(projectName, departmentName)} style={{ cursor: 'pointer' }}>
-                                                                        {expandedDepartments[`${projectName}-${departmentName}`] ? '▼' : '▶'} {departmentName}
-                                                                    </span>
-                                                                    <button onClick={() => handleMove(departmentName)} style={{ marginLeft: '10px' }}>
-                                                                        Mover
-                                                                    </button>
-                                                                </div>
-                                                                {expandedDepartments[`${projectName}-${departmentName}`] && (
-                                                                    <div style={{ marginLeft: '20px' }}>
-                                                                        {department.documents.map((doc) => (
-                                                                            <div key={doc.id} className='line-clamp-1'>
-                                                                                {doc.name}
-                                                                            </div>
-                                                                        ))}
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div>
-                                        {transformToTree().root.documents.map((doc) => (
-                                            <div key={doc.id} className='line-clamp-1'>
-                                                {doc.name}
-                                            </div>
-                                        ))}
+                                        <List
+                                            dataSource={dataSource}
+                                            style={{ height: 300, maxHeight: 300, overflowY: 'auto' }}
+                                            renderItem={(item) => (
+                                                <List.Item key={item.id} onClick={() => handleItemClick(item)} actions={[<Button onClick={() => { }} className="pr-2">Mover</Button>]}>
+                                                    <List.Item.Meta
+                                                        avatar={<FaFolder style={{ fontSize: 18, color: view.type === 'projects' ? '#008080' : '#facc15' }} />}
+                                                        title={<a>{item.name}</a>}
+                                                        className='flex flex-row items-center'
+                                                    />
+                                                </List.Item>
+                                            )}
+                                            locale={{
+                                                emptyText: <Empty description="No hay contenido disponible" />,
+                                            }}
+                                        />
                                     </div>
                                 </div>
-                                <p className='pb-0 px-4 font-medium flex flex-row items-center gap-1 text-sm'>
+                                {/*<p className='pb-0 px-4 font-medium flex flex-row items-center gap-1 text-sm'>
                                     <FaFolder style={{ fontSize: 15 }} color="gray" /> <MdOutlineKeyboardArrowRight /> {selectedProject?.name} <MdOutlineKeyboardArrowRight /> {selectedDepartment?.name}
-                                </p>
+                                </p>*/}
                             </div>
                         </div>
                     </ModalBody>

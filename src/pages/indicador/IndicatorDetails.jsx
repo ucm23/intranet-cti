@@ -210,13 +210,15 @@ const IndicatorDetails = () => {
             let { status, data } = await indexActivities({ id: project?.id })
             if (status) {
                 setItem(data)
+
+                console.log("🚀 ~ searchArray ~ data:", data)
                 if (data.length > 0) {
                     const completedTasks = [];
                     const pendingTasks = [];
                     const inProgressTasks = [];
                     data.forEach(task => {
-                        const allMadeTrue = task.notes.every(note => note.made);
-                        const allMadeFalse = task.notes.every(note => !note.made);
+                        const allMadeTrue = task?.notes.every(note => note.made);
+                        const allMadeFalse = task?.notes.every(note => !note.made);
                         if (allMadeTrue) completedTasks.push(task);
                         else if (allMadeFalse) pendingTasks.push(task);
                         else inProgressTasks.push(task);

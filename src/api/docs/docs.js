@@ -82,6 +82,27 @@ export const createDocs = async ({ data }) => {
     }
 }
 
+export const updateDoc = async ({ id, data }) => {
+    let fetch = { status: false };
+    try {
+        console.log("🚀 ~ updateDocs ~ data:", data)
+        let response = await Fetcher({
+            url: `/documents/${id}`,
+            method: 'PUT',
+            data,
+            headers: headers2
+        });
+        console.log(response?.status, response?.data)
+        if (response.status === 200 || response.status === 201) {
+            fetch = { status: response?.status, data: response?.data }
+        }
+    } catch (error) {
+        console.error("🚀 ~ createDocs ~ error:", error)
+    } finally {
+        return fetch;
+    }
+}
+
 export const indexDocsImgs = async ({ id }) => {
     let response = { status: false }
     try {

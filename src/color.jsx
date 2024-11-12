@@ -6,6 +6,7 @@ const color = {
     orange: '#e25a28',
     bgGray: '#f4f2f2',
     bgFiles: '#eaeaea',
+    blueWord: '#379bff',
 }
 
 export default color;

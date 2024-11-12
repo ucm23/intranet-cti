@@ -4,6 +4,7 @@ import es from 'date-fns/locale/es';
 import { FaFolder, FaFileImage, FaFilePowerpoint, FaFilePdf, FaFileWord, FaFileExcel } from "react-icons/fa";
 import { AiOutlineFile } from "react-icons/ai";
 import { FcFolder } from "react-icons/fc";
+import color from '../color';
 
 export const baseURL = "https://api-metrix.victum-re.online/intranet";
 
@@ -50,8 +51,8 @@ export const icons = {
     "image/jpg": <FaFileImage style={{ fontSize: 15 }} color="red" />,
     "image/svg+xml": <FaFileImage style={{ fontSize: 15 }} color="red" />,
     "application/pdf": <FaFilePdf style={{ fontSize: 15 }} color="red" />,
-    "application/msword": <FaFileWord style={{ fontSize: 15 }} color="blue" />,
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": <FaFileWord style={{ fontSize: 15 }} color="blue" />,
+    "application/msword": <FaFileWord style={{ fontSize: 15 }} color={color.blueWord} />,
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": <FaFileWord style={{ fontSize: 15 }} color={color.blueWord} />,
     "application/vnd.ms-powerpoint": <FaFilePowerpoint style={{ fontSize: 15 }} color="orange" />,
     "application/vnd.openxmlformats-officedocument.presentationml.presentation": <FaFilePowerpoint style={{ fontSize: 15 }} color="orange" />,
     "application/vnd.ms-excel": <FaFileExcel style={{ fontSize: 15 }} color="green" />,

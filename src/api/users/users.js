@@ -39,7 +39,8 @@ export const indexUsers = async ({ }) => {
                 return {
                     ...item,
                     label: `${item?.first_name} ${item?.last_name}`,
-                    value: `${item?.id}`
+                    value: `${item?.id}`,
+                    disabled: item?.role == 'administrador'
                 }
             })
             response = { data: data || [], status: true };
