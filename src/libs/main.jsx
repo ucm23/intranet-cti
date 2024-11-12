@@ -44,6 +44,19 @@ export const localizer = dateFnsLocalizer({
     locales,
 });
 
+/*const letras = '0123456789ABC';
+export const colorRandom = () => {
+    let color = '';
+    for (let i = 0; i < 6; i++) {
+        color += letras[Math.floor(Math.random() * letras.length)];
+    }
+    return color;
+} */
+
+const letras = '0123456789ABC';
+
+export const colorRandom = () => `#${Array.from({ length: 6 }, () => letras[Math.floor(Math.random() * letras.length)]).join('')}`;
+
 export const icons = {
     "image/png": <FaFileImage style={{ fontSize: 15 }} color="red" />,
     "image/jpeg": <FaFileImage style={{ fontSize: 15 }} color="red" />,

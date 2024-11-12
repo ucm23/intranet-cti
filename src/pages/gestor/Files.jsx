@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
-import { FaFolder, FaNewspaper, FaSpinner } from "react-icons/fa";
+import { FaFolder, FaSpinner } from "react-icons/fa";
 import { AiOutlineDelete, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight, AiOutlineShareAlt } from "react-icons/ai";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { CiCircleCheck } from "react-icons/ci";
@@ -7,46 +7,16 @@ import { VscError } from "react-icons/vsc";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoChevronForwardSharp } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import color from '../../color';
-import { Empty, Typography } from 'antd';
 import { RiFolderSharedLine } from "react-icons/ri";
 import { FaPlusCircle } from "react-icons/fa";
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    Button,
-    Box,
-    useDisclosure,
-    FormControl,
-    FormLabel,
-    Input,
-    Textarea,
-    Popover,
-    PopoverTrigger,
-    Portal,
-    PopoverContent,
-    PopoverArrow,
-    PopoverBody,
-} from '@chakra-ui/react'
-import {
-    CloseOutlined
-} from '@ant-design/icons';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea } from '@chakra-ui/react'
+import { CloseOutlined } from '@ant-design/icons';
 import { FiEye } from "react-icons/fi";
 import { LuUserPlus2 } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import { MultiSelect } from "react-multi-select-component";
 import { RxDragHandleDots2 } from "react-icons/rx";
-import { Avatar, List } from 'antd';
 //import InputColor from 'react-input-color';
 import { createDocs, deleteDocuments, indexDocsImgs, indexDocuments, indexDocumentsByID, updateDoc } from '../../api/docs/docs';
 import { createDepartments, indexDepartments } from '../../api/departamentos/departments';
@@ -55,8 +25,8 @@ import { useImageCache } from '../../redux/ImageCacheProvider';
 import { usePreviewFile } from '../../redux/PreviewFileContext';
 import es from 'date-fns/locale/es';
 import { format } from 'date-fns';
-import { icons, openNotificationWithIcon, types } from '../../libs/main';
-import { notification } from 'antd';
+import { colorRandom, icons, openNotificationWithIcon, types } from '../../libs/main';
+import { notification, Tooltip, Avatar, List, Empty, Typography, } from 'antd';
 import { useSelector } from 'react-redux';
 import { indexUsers } from '../../api/users/users';
 
@@ -250,6 +220,7 @@ const DocumentManager = () => {
     };
 
     useEffect(() => {
+        //setPreviewFile(null)
         getUsers()
         getProjects()
         getDepartments()
@@ -444,7 +415,7 @@ const DocumentManager = () => {
                             key={`files-projects-${folder.id}-${index}`}
                             className="p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             style={{ backgroundColor: color?.bgFiles }}
-                            onClick={() => handleFilePreview(folder)}
+                            onClick={() => handleFilePreview(folder, true)}
                             onDoubleClick={() => {
                                 //handleFilePreview({ ...folder, type: 'folder_projs' })
                                 onProjectSelect(folder)
@@ -480,7 +451,7 @@ const DocumentManager = () => {
                                 key={`files-departaments-${folder.id}-${index}`}
                                 className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer flex items-center p-3 "
                                 style={{ backgroundColor: color?.bgFiles }}
-                                onClick={() => handleFilePreview(folder)}
+                                onClick={() => handleFilePreview(folder, true)}
                                 onDoubleClick={() => onDepartmentSelect(folder)}
                             >
                                 <div className="flex flex-row items-center space-x-2">
@@ -516,13 +487,20 @@ const DocumentManager = () => {
         setPreviewFile(file);
     };
 
+    const selectedUser = (file) => {
+        let data = users
+            .filter(item => item?.role == 'administrador' || file?.users_ids.includes(item?.id))
+            .map(item => ({ ...item }))
+        setSelectedShare(data);
+    }
 
-    const handlePreview = useCallback((file, modal, index) => {
+    const handlePreview = useCallback((file, modal, index, mode) => {
         if (modal) {
             setSelectedIndex(index);
             setSelectedImage(file);
             setZoom(100);
         }
+        selectedUser(file)
         handleFilePreview(file);
     }, [handleFilePreview]);
 
@@ -537,31 +515,27 @@ const DocumentManager = () => {
         }
     };
 
-    const onDoubleClick_ = (file, index, mode, share, move) => {
-        if (mode) handlePreview(file);
+    const onDoubleClick_ = (file, index, mode, share, move, again) => {
+        if (mode || index || share) {
+            if (!again) selectedUser()
+            handlePreview(file);
+        }
         if (move) {
             onOpenMove();
             return;
         }
         if (file.type.startsWith('image')) {
             setImages(documents.filter(item => item.type.startsWith('image')));
-            if (!share) handlePreview(file, true, index); else openShare(file);
-        } else if (!share) handleDocs(file); else openShare(file);
+            if (!share) handlePreview(file, true, index); else onOpenShare();
+        } else if (!share) handleDocs(file); else onOpenShare();
 
     }
 
-    const openShare = (file) => {
-        setPreviewFile(null)
-        setPreviewFile(file);
-        let data = users
-            .filter(item => item?.role == 'administrador' || file?.users_ids.includes(item?.id))
-            .map(item => ({ ...item }))
+    /*const openShare = () => {
+        let data = users.filter(item => item?.role == 'administrador' || previewFile?.users_ids.includes(item?.id)).map(item => ({ ...item }))
         setSelectedShare(data);
-
-        console.log("🚀 ~ openShare ~ file:", file)
-        console.log("🚀 ~ openShare ~ data:", data)
         onOpenShare();
-    }
+    }*/
 
     const updateDocs = async ({ id, share }) => {
         let formData = new FormData();
@@ -582,8 +556,6 @@ const DocumentManager = () => {
             if (share) onCloseShare()
         }
     }
-
-
 
     const DocumentList = ({ isLoading, documents }) => {
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
@@ -612,9 +584,9 @@ const DocumentManager = () => {
                                         key={`files-docs-${file?.id}-${index}`}
                                         className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
                                         style={{ backgroundColor: color?.bgFiles }}
-                                        onDoubleClick={() => onDoubleClick_(file, index)}
+                                    //onDoubleClick={() => onDoubleClick_(file, index, true)}
                                     >
-                                        <div className="p-3 pb-0" onClick={() => handlePreview(file)}>
+                                        <div className="p-3 pb-0" onClick={() => handlePreview(file)} /*onDoubleClick={() => onDoubleClick_(file, index, true)}*/>
                                             {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
                                                 <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
                                                     <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
@@ -622,9 +594,8 @@ const DocumentManager = () => {
                                         </div>
                                         <div className="p-3 pt-2">
                                             <div className="flex items-center justify-between">
-                                                <div className="flex items-center min-w-0 truncate line-clamp-1">
-                                                    {/*getFileIcon(file?.type)*/}
-                                                    <span className="font-medium text-gray-800 truncate line-clamp-1" onClick={() => handlePreview(file)}>{file?.file_name}</span>
+                                                <div className="flex items-center min-w-0">
+                                                    <span className="font-medium text-xs text-gray-800 truncate line-clamp-1" /*onClick={() => handlePreview(file)}*/>{file?.file_name}</span>
                                                 </div>
                                                 {/*<BsThreeDotsVertical className="text-gray-400 flex-shrink-0" />*/}
                                                 <Menu isLazy>
@@ -793,7 +764,7 @@ const DocumentManager = () => {
         onCloseProject();
     }
 
-    function transformToTree(data) {
+    /*function transformToTree(data) {
         const tree = { root: { documents: [], projects: {} } };
         documents.forEach(item => {
             const { project, department } = item;
@@ -809,7 +780,7 @@ const DocumentManager = () => {
             }
         });
         return tree;
-    }
+    }*/
 
     const [view, setView] = useState({ type: 'projects', id: null });
 
@@ -917,6 +888,23 @@ const DocumentManager = () => {
                                         previewFile?.color ? 'Departamento' : 'Proyecto'
                                     }
                                 </p>
+                                {previewFile?.type &&
+                                    <p className="font-small">
+                                        <span className='font-semibold'>Usuarios con acceso</span>  <br />
+                                        <Avatar.Group>
+                                            {selectedShare.map((item_) =>
+                                                <Tooltip title={`${item_?.label}`}>
+                                                    <Avatar style={{ background: colorRandom() }}>{item_?.label.charAt(0)}</Avatar>
+                                                </Tooltip>
+                                            )}
+                                            {(selectedShare.length !== users.length && role.startsWith('admin')) &&
+                                                <Tooltip title={`Añadir más`}>
+                                                    <Avatar onClick={() => onDoubleClick_(previewFile, true, false, true, false, true)} style={{ background: '#163370' }}>+</Avatar>
+                                                </Tooltip>}
+                                        </Avatar.Group>
+                                    </p>
+                                }
+
                                 <p className="font-small">
                                     <span className='font-semibold'>Creado</span>  <br />
                                     {format(new Date(previewFile.created_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
@@ -927,8 +915,6 @@ const DocumentManager = () => {
                                         {format(new Date(previewFile.updated_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
                                         <FaClockRotateLeft style={{ fontSize: 15 }} color="gray" />
                                     </div>
-
-
                                 </p>
                             </div>
                         </div>
@@ -1003,7 +989,7 @@ const DocumentManager = () => {
                                     <AiOutlineDownload className="w-5 h-5" />
                                 </button>*/}
                                 <button
-                                    onClick={openShare}
+                                    onClick={/*openShare*/onOpenShare}
                                     className="p-2 hover:bg-gray-800 rounded-full text-white"
                                 >
                                     <AiOutlineShareAlt className="w-5 h-5" />
@@ -1116,7 +1102,7 @@ const DocumentManager = () => {
                                         onChange={setSelected}
                                         labelledBy="name"
                                         className='input-multi-text-form-files'
-                                        hasSelectAll={false}
+                                        hasSelectAll={true}
                                         style={{ fontSize: 18 }}
                                         overrideStrings={{
                                             "selectSomeItems": "Seleccionar departamentos",
@@ -1124,7 +1110,8 @@ const DocumentManager = () => {
                                             "search": "Buscar",
                                             "clearSearch": "Limpiar búsqueda",
                                             "clearSelected": "Limpiar seleccionados",
-                                            "noOptions": "No hay opciones disponibles"
+                                            "noOptions": "No hay opciones disponibles",
+                                            "selectAll": "Seleccionar todo",
                                         }}
                                     />
                                     <div className='flex flex-row gap-3'>
