@@ -8,6 +8,10 @@ import color from '../color';
 
 export const baseURL = "https://api-metrix.victum-re.online/intranet";
 
+export const headers1 = {
+    'Content-Type': 'application/pdf',
+}
+
 export const headers = {
     "Accept": "application/json",
     "Content-Type": "application/json; charset=utf-8; multipart/form-data"

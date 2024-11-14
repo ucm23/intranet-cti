@@ -1,4 +1,4 @@
-import { headers, headers2 } from "../../libs/main";
+import { headers, headers1, headers2 } from "../../libs/main";
 import Fetcher from "../../libs/Petition";
 
 export const indexDocuments = async ({ }) => {
@@ -47,11 +47,13 @@ export const indexDocumentsByID = async ({ id, blob }) => {
         const fetch = await Fetcher({
             method: 'GET',
             url,
-            headers: headers2
+            headers: headers1,
+            responseType: blob && 'blob',
         })
+        console.log("🚀 ~ indexDocumentsByID ~ fetch:", fetch)
         if (blob) response = fetch?.data;
         else response = { data: fetch?.data?.signedUrl, status: true }
-        console.log("🚀 ~ indexDocumentsByID ~ response:", typeof response)
+        console.log("🚀 ~ indexDocumentsByID ~ response:", response)
     } catch (error) {
         console.error("🚀 ~ indeDocuments ~ error:", error)
     } finally {

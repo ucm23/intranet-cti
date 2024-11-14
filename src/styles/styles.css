@@ -2042,3 +2042,22 @@ svg.dropdown-search-clear-icon.gray {
     flex-direction: column;
     width: 330px;
 }
+
+.pdf-container {
+    width: 100%;
+    max-width: 100vw;
+    height: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.pdf-embed {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 100vh;
+}
+
+.flex-1.flex.items-center.justify-center.false.pt-0.relative {
+    background-color: #969595f0;
+}

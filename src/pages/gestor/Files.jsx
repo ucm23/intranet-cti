@@ -27,7 +27,7 @@ import { useImageCache } from '../../redux/ImageCacheProvider';
 import { usePreviewFile } from '../../redux/PreviewFileContext';
 import es from 'date-fns/locale/es';
 import { format } from 'date-fns';
-import { formats_, icons, modules_, openNotificationWithIcon, types } from '../../libs/main';
+import { baseURL, formats_, icons, modules_, openNotificationWithIcon, types } from '../../libs/main';
 import { notification, Tooltip, Avatar, List, Empty, Typography, } from 'antd';
 import { useSelector } from 'react-redux';
 import { indexUsers } from '../../api/users/users';
@@ -471,7 +471,8 @@ const DocumentManager = () => {
 
     const handleDocs = async (file) => {
         try {
-            const pdf = await indexDocumentsByID({ id: file?.id, blob: false });
+            const pdf = await indexDocumentsByID({ id: file?.id, blob: true });
+            console.log("🚀 ~ handleDocs ~ pdf:", pdf)
             const docUrl = pdf?.data;
             window.open(docUrl, '_blank');
         } catch (error) {
@@ -483,7 +484,7 @@ const DocumentManager = () => {
     const onDoubleClick_ = (file, index, mode, share, move, again) => {
         if (mode || index || share) {
             if (!again) selectedUser()
-            handlePreview(file);
+            handlePreview(file, true); // QUITAR IMPORTANTE
         }
         if (move) {
             onOpenMove();
@@ -501,8 +502,9 @@ const DocumentManager = () => {
         if (file.type.startsWith('image')) {
             setImages(documents.filter(item => item.type.startsWith('image')));
             if (!share) handlePreview(file, true, index); else onOpenShare();
-
-        } else if (!share) handleDocs(file); else onOpenShare();
+        }
+        //else if (!share) handleDocs(file); else onOpenShare();
+        if (share) onOpenShare();
 
     }
 
@@ -697,35 +699,41 @@ const DocumentManager = () => {
             <img src={imageUrl} alt={`img-loader-1${id * 2}`} style={style} className={className} loading="lazy" onError={(e) => { e.target.src = '../400.png'; }} />
     });
 
-    const PDFLoader = ({ id, className }) => {
+    const PdfViewer = ({ pdfBlob }) => {
+        const [pdfUrl, setPdfUrl] = useState(null);
+
+        useEffect(() => {
+            //const pdfBlobWithType = new Blob([pdfBlob], { type: 'application/pdf' });
+            const pdfBlobWithType = new File([pdfBlob], "NombrePersonalizado.pdf", { type: "application/pdf" });
+            const url = URL.createObjectURL(pdfBlobWithType);
+            setPdfUrl(url);
+            return () => URL.revokeObjectURL(url);
+        }, [pdfBlob]);
+        if (!pdfUrl) return <p>Cargando PDF...</p>;
+
+        return (
+            <div className="pdf-container">
+                <embed
+                    src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                    //src={pdfUrl}
+                    type="application/pdf"
+                    className="pdf-embed"
+                />
+            </div>
+        );
+    };
+
+    const PDFLoader = ({ id }) => {
         const [imageUrl, setImageUrl] = useState(null);
         useEffect(() => {
             const loadURL = async () => {
-                const pdf = await indexDocumentsByID({ id, blob: false });
-                setImageUrl(pdf?.data);
+                const pdf = await indexDocumentsByID({ id, blob: true });
+                console.log("🚀 ~ loadURL ~ pdf:", pdf)
+                setImageUrl(pdf);
             };
             loadURL()
         }, [id]);
-        return (imageUrl ?
-            <div className={`${className}`}>
-                <iframe
-                    src={imageUrl}
-                    width="100%"
-                    height="600px"
-                    title="PDF Viewer"
-                    style={{ border: 'none' }}
-                ></iframe>
-                <object
-                    data={imageUrl}
-                    type="application/pdf"
-                    width="100%"
-                    height="600px"
-                    aria-label="PDF Viewer"
-                >
-                    <p>Tu navegador no soporta PDF, por favor descarga el PDF <a href={imageUrl}>aquí</a>.</p>
-                </object>
-            </div>
-            : <p>Cargando...</p>);
+        return imageUrl ? <PdfViewer pdfBlob={imageUrl} /> : <p>Cargando PDF...</p>
     };
 
     const SkeletonItem = () => (
@@ -821,6 +829,7 @@ const DocumentManager = () => {
     const handleMouseMove = ({ clientX, clientY }) => {
         if (dragging) setPosition({ x: Math.abs(clientX - initialMousePos.x), y: Math.abs(clientY - initialMousePos.y) });
     };
+
     const handleMouseUp = () => setDragging(false);
 
     const defaultModal = () => {
@@ -1055,16 +1064,17 @@ const DocumentManager = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="flex-1 flex items-center justify-center p-4 pt-0 relative">
-                            <button
-                                onClick={handlePrevious}
-                                className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-75 transition-all z-50"
-                            >
-                                <AiOutlineLeft className="w-6 h-6" />
-                            </button>
+                        <div className={`flex-1 flex items-center justify-center ${!selectedImage?.type.endsWith('pdf') && 'p-4'} pt-0 relative`}>
+                            {selectedImage?.type.startsWith('image') &&
+                                <button
+                                    onClick={handlePrevious}
+                                    className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-75 transition-all z-50"
+                                >
+                                    <AiOutlineLeft className="w-6 h-6" />
+                                </button>}
                             <div className="relative w-full flex items-center justify-center">
                                 {selectedImage?.type.startsWith('image') && <ImageLoader style={{ transform: `scale(${zoom / 100})` }} id={selectedImage?.id} className="max-w-[70%] max-h-[70%] object-contain transition-transform duration-300 ease-in-out shadow-xl" />}
-                                {selectedImage?.type.endsWith('pdf') && <PDFLoader id={selectedImage?.id} className="max-w-[70%] max-h-[70%] object-contain transition-transform duration-300 ease-in-out shadow-xl" />}
+                                {selectedImage?.type.endsWith('pdf') && <PDFLoader id={selectedImage?.id} />}
                                 {selectedImage?.type.startsWith('image') &&
                                     <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4 p-3 rounded-full bg-black bg-opacity-50 position-fixed-50">
                                         <button
@@ -1086,12 +1096,13 @@ const DocumentManager = () => {
                                         </button>
                                     </div>}
                             </div>
-                            <button
-                                onClick={handleNext}
-                                className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-75 transition-all"
-                            >
-                                <AiOutlineRight className="w-6 h-6" />
-                            </button>
+                            {selectedImage?.type.startsWith('image') &&
+                                <button
+                                    onClick={handleNext}
+                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-75 transition-all"
+                                >
+                                    <AiOutlineRight className="w-6 h-6" />
+                                </button>}
                         </div>
                     </div>
                 </div>
@@ -1107,13 +1118,15 @@ const DocumentManager = () => {
                     }}
                 //onMouseUp={handleMouseUp}
                 >
-                    <ModalHeader cursor="move"
-                        onMouseDown={handleMouseDown}
-                        onMouseMove={handleMouseMove}
-                        onMouseUp={handleMouseUp}
-                        className='pb-0 mb-0'
-                    >
-                        <RxDragHandleDots2 style={{ transform: 'rotate(90deg)', position: 'absolute', top: 12, left: 240, color: '#B6B6B670' }} />
+                    <ModalHeader>
+                        <RxDragHandleDots2
+                            cursor="move"
+                            onMouseDown={handleMouseDown}
+                            onMouseMove={handleMouseMove}
+                            onMouseUp={handleMouseUp}
+                            className='pb-0 mb-0'
+                            style={{ transform: 'rotate(90deg)', position: 'absolute', top: 12, left: 240, color: '#B6B6B670' }}
+                        />
                         {!level == 1 ? 'Proyecto' : 'Departamento'} nuevo
                     </ModalHeader>
                     <ModalCloseButton />
@@ -1175,7 +1188,7 @@ const DocumentManager = () => {
                                                 name="start_date"
                                                 value={formDataProjects.start_date}
                                                 onChange={handleStartDateChange}
-                                                min={new Date().toISOString().split('T')[0]}
+                                            //min={new Date().toISOString().split('T')[0]}
                                             />
                                         </FormControl>
                                         <FormControl id="end_date" isRequired>
