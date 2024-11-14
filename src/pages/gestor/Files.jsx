@@ -426,7 +426,7 @@ const DocumentManager = () => {
                             </div>
                         );
                     })}
-                    {selectedProject?.departments_ids.length !== departments.length &&
+                    {(selectedProject?.departments_ids.length !== departments.length && role != 'lector') &&
                         <div
                             className="flex items-center p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             style={{ backgroundColor: color?.bgFiles }}
@@ -657,7 +657,7 @@ const DocumentManager = () => {
                                                 </MenuButton>
                                                 <MenuList>
                                                     <MenuItem icon={<FiEye />} onClick={() => onDoubleClick_(file, index, true)}>Abrir</MenuItem>
-                                                    {role.startsWith('admin') && (
+                                                    {role !== 'lector' && (
                                                         <>
                                                             <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
                                                             <MenuItem icon={<RiFolderSharedLine />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
@@ -737,6 +737,11 @@ const DocumentManager = () => {
     const handleDrop = async (event, mode, txt) => {
         console.log("🚀 ~ handleDrop ~ event:", event)
         event.preventDefault();
+        setVisibleDrog(false);
+        if (role == 'lector') {
+            openNotification('warning', 'Al parecer no tienes permisos para subir documentos');
+            return
+        }
         setUploadResults([])
         let files = []
         if (txt) {
@@ -753,7 +758,6 @@ const DocumentManager = () => {
             }
             let count = 0;
             setFilesLoad(files);
-            setVisibleDrog(false);
             setIsLoading(true);
             setVisibleList(true)
             for (const file of files || []) {
