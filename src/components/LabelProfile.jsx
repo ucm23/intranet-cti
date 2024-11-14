@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const LabelProfile = ({ collapsed, signOut }) => {
     const information_user = useSelector(state => state.login.information_user);
-    const { first_name, last_name, email, position } = information_user;
+    const { first_name, email, position } = information_user;
 
     useEffect(() => {
         console.log("🚀 ~ LabelProfile ~ information_user:", information_user)
@@ -22,11 +22,11 @@ const LabelProfile = ({ collapsed, signOut }) => {
                 className='list.item.meta'
                 avatar={
                     <Avatar size='default' className='list-item-meta-avatar list-item-meta-title' style={{ marginRight: collapsed ? 7 : 0 }}>
-                        {first_name && first_name.charAt(0)}{last_name && last_name.charAt(0)}
+                        {first_name && first_name.charAt(0)}{/*last_name && last_name.charAt(0)*/}
                     </Avatar>
                 }
                 title={!collapsed && <h1 className='list-item-meta-title'>{position}</h1>}
-                description={!collapsed && <h1 className='list-item-meta-description'>{first_name} {last_name}</h1>}
+                description={!collapsed && <h1 className='list-item-meta-description'>{first_name}</h1>}
             />
         </List.Item>
     )
@@ -38,7 +38,7 @@ const LabelProfile = ({ collapsed, signOut }) => {
             </MenuButton>
             <MenuList className='menu-lis-profile-sider' style={{ position: 'static', zIndex: 1000 }}>
                 <div className='menu-list-profile-header'>
-                    <Avatar size='large' className='list-item-meta-avatar list-item-meta-title'>{first_name && first_name.charAt(0)}{last_name && last_name.charAt(0)}</Avatar>
+                    <Avatar size='large' className='list-item-meta-avatar list-item-meta-title'>{first_name && first_name.charAt(0)}{/*last_name && last_name.charAt(0)*/}</Avatar>
                     <h1 style={{ fontSize: 12, marginTop: 15, marginBottom: 0 }}>{position}</h1>
                     <h1 style={{ fontSize: 11 }}>{email}</h1>
                 </div>

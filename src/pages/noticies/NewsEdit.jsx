@@ -37,7 +37,7 @@ const NewsEdit = ({ page }) => {
                         <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
                             <div className="flex items-center">
                                 <FaUser className="mr-2" />
-                                <span>{user?.first_name} {user?.last_name}</span>
+                                <span>{user?.first_name} {/*user?.last_name*/}</span>
                             </div>
                             <div className="flex items-center">
                                 <FaCalendarAlt className="mr-2" />

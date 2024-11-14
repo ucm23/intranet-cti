@@ -83,12 +83,12 @@ const AddNews = ({ page }) => {
     };
 
 
-    const [banner, setBanner] = useState(1);
+    //const [banner, setBanner] = useState(1);
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [body, setBody] = useState('');
     const [conclusion, setConclusion] = useState('');
-    const test = {
+    /*const test = {
         user_id,
         title: "",
         body: "",
@@ -102,7 +102,7 @@ const AddNews = ({ page }) => {
             ]
         },
         banner: ""
-    }
+    }*/
 
     const [formData, setFormData] = useState({
         title: "",
@@ -138,7 +138,7 @@ const AddNews = ({ page }) => {
         setFormData({ ...formData, data: newData });
     };
 
-    const validateForm = () => {
+    /*const validateForm = () => {
         const newErrors = {};
         if (!formData.title) {
             newErrors.title = "El título es obligatorio";
@@ -153,7 +153,7 @@ const AddNews = ({ page }) => {
         });
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };
+    };*/
 
     const isTitleEmpty = formData.title.trim() === "";
 
@@ -171,7 +171,7 @@ const AddNews = ({ page }) => {
     };
 
     const [selectedBanner, setSelectedBanner] = useState(1);
-    const [selectedBody, setSelectedBody] = useState(1);
+    //const [selectedBody, setSelectedBody] = useState(1);
 
     const handleBannerClick = (id) => {
         setSelectedBanner(id);

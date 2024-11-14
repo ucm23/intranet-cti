@@ -6,29 +6,33 @@ import { CiCircleCheck } from "react-icons/ci";
 import { VscError } from "react-icons/vsc";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoChevronForwardSharp } from "react-icons/io5";
+import { FiMaximize2, FiMinimize2, FiEye } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import color from '../../color';
-import { RiFolderSharedLine } from "react-icons/ri";
+import { RiFolderSharedLine, RiUpload2Line, RiStickyNoteLine } from "react-icons/ri";
+import { FiPlus } from "react-icons/fi";
 import { FaPlusCircle } from "react-icons/fa";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea, Portal } from '@chakra-ui/react'
+import { Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow } from '@chakra-ui/react'
 import { CloseOutlined } from '@ant-design/icons';
-import { FiEye } from "react-icons/fi";
 import { LuUserPlus2 } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import { MultiSelect } from "react-multi-select-component";
 import { RxDragHandleDots2 } from "react-icons/rx";
-//import InputColor from 'react-input-color';
 import { createDocs, deleteDocuments, indexDocsImgs, indexDocuments, indexDocumentsByID, updateDoc } from '../../api/docs/docs';
 import { createDepartments, indexDepartments } from '../../api/departamentos/departments';
+import Chip from '../../components/Chip'
 import { createProjects, indexProjects } from '../../api/project/projects';
 import { useImageCache } from '../../redux/ImageCacheProvider';
 import { usePreviewFile } from '../../redux/PreviewFileContext';
 import es from 'date-fns/locale/es';
 import { format } from 'date-fns';
-import { colorRandom, icons, openNotificationWithIcon, types } from '../../libs/main';
+import { formats_, icons, modules_, openNotificationWithIcon, types } from '../../libs/main';
 import { notification, Tooltip, Avatar, List, Empty, Typography, } from 'antd';
 import { useSelector } from 'react-redux';
 import { indexUsers } from '../../api/users/users';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const DocumentManager = () => {
     const information_user = useSelector(state => state.login.information_user);
@@ -44,6 +48,7 @@ const DocumentManager = () => {
     const { isOpen: isOpenProject, onOpen: onOpenProject, onClose: onCloseProject } = useDisclosure()
     const { isOpen: isOpenShare, onOpen: onOpenShare, onClose: onCloseShare } = useDisclosure()
     const { isOpen: isOpenMove, onOpen: onOpenMove, onClose: onCloseMove } = useDisclosure()
+    const { isOpen: isOpenNote, onOpen: onOpenNote, onClose: onCloseNote } = useDisclosure()
     const today = new Date();
     const tomorrow = new Date();
     const modalRef = useRef(null);
@@ -86,68 +91,11 @@ const DocumentManager = () => {
         }));
     };
 
-    /*const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log('Form Data:', formDataProjects);
-        if (!formDataProjects.name) {
-            openNotification('warning', 'Añade un nombre');
-            return;
-        }
-        if (projects.find(item => item?.name.trim().toLowerCase() == formDataProjects.name.trim().toLowerCase())) {
-            openNotification('warning', 'Ya existe un projecto con el mismo nombre');
-            return;
-        }
-        if (departments.find(item => item?.name.trim().toLowerCase() == formDataProjects.name.trim().toLowerCase())) {
-            openNotification('warning', 'Ya existe un departamento con el mismo nombre');
-            return;
-        }
-        const startDate = new Date(formDataProjects?.start_date);
-        const endDate = new Date(formDataProjects?.end_date);
-        try {
-            let data = {
-                user_id,
-                ...formDataProjects,
-                status: "activo",
-                color: colors
-            }
-            if (!data?.description) delete data?.description;
-            if (level < 1) {
-                if (startDate >= endDate) {
-                    openNotification('warning', "La Fecha de Inicio debe ser anterior a la Fecha de Fin.");
-                    return;
-                }
-                delete data?.color;
-                data.departments_ids = selected.flatMap(item => item?.id);
-                if (data.departments_ids.length == 0) {
-                    openNotification('warning', "Debe selecionar al menos un departamento.");
-                    return;
-                }
-            }
-            if (level == 1) {
-                delete data?.start_date;
-                delete data?.end_date;
-                delete data?.user_id;
-                delete data?.status;
-                data.color = '#B6B6B6';
-            }
-            setIsLoading(true);
-            console.log("🚀 ~ handleSubmit ~ data:", data)
-            let response = await level < 1 ? createProjects({ data }) : createDepartments({ data })
-            console.log("🚀 ~ handleSubmit ~ response:", response)
-            await level < 1 ? getProjects() : getDepartments();
-            await defaultModal()
-        } catch (error) {
-            console.error("🚀 ~ handleSubmit ~ error:", error)
-        } finally {
-            setIsLoading(false);
-        }
-    };*/
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const projectName = formDataProjects.name?.trim();
         if (!projectName) {
-            openNotification('warning', 'Añade un nombre');
+            openNotification('warning', 'Añada un nombre');
             return;
         }
         const projectExists = projects.some(item => item?.name.trim().toLowerCase() === projectName.toLowerCase());
@@ -202,7 +150,6 @@ const DocumentManager = () => {
         }
     };
 
-
     const deleteItem = async ({ id }) => {
         try {
             let response = await deleteDocuments({ id })
@@ -247,6 +194,7 @@ const DocumentManager = () => {
             console.error("🚀 ~ getProjects ~ error:", error)
         }
     }
+
     const getDepartments = async () => {
         try {
             const { status, data } = await indexDepartments({})
@@ -257,6 +205,7 @@ const DocumentManager = () => {
     }
 
     const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedNote, setSelectedNote] = useState(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [zoom, setZoom] = useState(100);
     const [images, setImages] = useState([])
@@ -332,32 +281,45 @@ const DocumentManager = () => {
         }
     };
 
+    const openNote = () => {
+        let data = users.map(item => ({ ...item }))
+        setSelectedShare(data);
+        onOpenNote()
+    }
+
     const menus = {
         project: [
             { option: 'Proyecto nuevo', icon: <RiFolderSharedLine />, onClick: onOpenProject },
-            { option: 'Crear archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
-            { option: 'Subir archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
+            { option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
+            { option: 'Subir archivo', icon: <RiUpload2Line />, onClick: handleButtonClick },
         ],
         department: [
             //{ option: 'Departamento nuevo', onClick: onOpenProject },
-            { option: 'Crear archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
-            { option: 'Subir archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
+            { option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
+            { option: 'Subir archivo', icon: <RiUpload2Line />, onClick: handleButtonClick },
         ],
         documents: [
-            { option: 'Crear archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
-            { option: 'Subir archivo', icon: <RiFolderSharedLine />, onClick: handleButtonClick },
+            { option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
+            { option: 'Subir archivo', icon: <RiUpload2Line />, onClick: handleButtonClick },
         ],
     }
 
     const MenuGeneric = ({ type }) => {
+        const filteredMenus = menus[type].filter(item => {
+            if (role === 'editor' && item.option === 'Proyecto nuevo') return false;
+            return true;
+        });
         return (
             <MenuList>
-                {menus[type].map((item, index) => (
+                {filteredMenus.map((item, index) => <MenuItem key={`menus-options-${index}`} icon={item?.icon} onClick={() => item?.onClick()}>{item?.option}</MenuItem>)}
+                {/*menus[type].map((item, index) => (
                     <MenuItem key={`menus-${index}`} icon={item?.icon} onClick={() => item?.onClick()}>{item?.option}</MenuItem>
-                ))}
+                ))*/}
             </MenuList>
         )
     }
+
+
 
     const Breadcrumbs = ({ level, projectName, departmentName, onNavigateBack }) => {
         const goBack = (index) => {
@@ -367,10 +329,10 @@ const DocumentManager = () => {
         return (
             <div className="text-sm text-gray-500 space-x-2 mb-0 flex flex-row items-center content-center pl-0" style={{ marginLeft: 8 }}>
                 <Menu isLazy>
-                    <MenuButton style={{ marginLeft: -16 }} _hover={{ bg: 'transparent' }} onClick={() => goBack(0)} as={Button} colorScheme='teal' variant='ghost' rightIcon={level === 0 ? <IoMdArrowDropdown /> : null}>
+                    <MenuButton style={{ marginLeft: -16 }} _hover={{ bg: 'transparent' }} onClick={() => goBack(0)} as={Button} colorScheme='teal' variant='ghost' rightIcon={(level === 0 && role != 'lector') ? <IoMdArrowDropdown /> : null}>
                         root
                     </MenuButton>
-                    {level === 0 && <MenuGeneric type={'project'} />}
+                    {(level === 0 && role != 'lector') && <MenuGeneric type={'project'} />}
                     <input
                         type="file"
                         ref={inputFileRef}
@@ -383,10 +345,10 @@ const DocumentManager = () => {
                     <>
                         <IoChevronForwardSharp />
                         <Menu isLazy>
-                            <MenuButton onClick={() => level != 1 && goBack(1)} as={Button} colorScheme='teal' variant='ghost' rightIcon={level === 1 ? <IoMdArrowDropdown /> : null}>
+                            <MenuButton onClick={() => level != 1 && goBack(1)} as={Button} colorScheme='teal' variant='ghost' rightIcon={(level == 1 && role != 'lector') ? <IoMdArrowDropdown /> : null}>
                                 {projectName}
                             </MenuButton>
-                            {level == 1 && <MenuGeneric type={'department'} />}
+                            {(level == 1 && role != 'lector') && <MenuGeneric type={'department'} />}
                         </Menu>
                     </>
                 )}
@@ -394,10 +356,10 @@ const DocumentManager = () => {
                     <>
                         <IoChevronForwardSharp />
                         <Menu isLazy>
-                            <MenuButton /*onClick={() => level < 2 && onNavigateBack(2)}*/ as={Button} colorScheme='teal' variant='ghost' rightIcon={level === 2 ? <IoMdArrowDropdown /> : null}>
+                            <MenuButton /*onClick={() => level < 2 && onNavigateBack(2)}*/ as={Button} colorScheme='teal' variant='ghost' rightIcon={(level == 2 && role != 'lector') ? <IoMdArrowDropdown /> : null}>
                                 {departmentName}
                             </MenuButton>
-                            {level == 2 && <MenuGeneric type={'documents'} />}
+                            {(level == 2 && role != 'lector') && <MenuGeneric type={'documents'} />}
                         </Menu>
                     </>
                 )}
@@ -488,9 +450,7 @@ const DocumentManager = () => {
     };
 
     const selectedUser = (file) => {
-        let data = users
-            .filter(item => item?.role == 'administrador' || file?.users_ids.includes(item?.id))
-            .map(item => ({ ...item }))
+        let data = users.filter(item => item?.role == 'administrador' || file?.users_ids.includes(item?.id)).map(item => ({ ...item }))
         setSelectedShare(data);
     }
 
@@ -499,6 +459,11 @@ const DocumentManager = () => {
             setSelectedIndex(index);
             setSelectedImage(file);
             setZoom(100);
+        }
+        if (mode) {
+            setSelectedNote(file)
+            setblocName(file?.file_name.replace(/\.txt$/, ""))
+            handleDownload({ id: file?.id })
         }
         selectedUser(file)
         handleFilePreview(file);
@@ -524,22 +489,41 @@ const DocumentManager = () => {
             onOpenMove();
             return;
         }
+        if (file.type.startsWith('text')) {
+            setblocEdit(true)
+            if (share) {
+                onOpenShare()
+                return
+            }
+            handlePreview(file, false, 0, true);
+            return;
+        }
         if (file.type.startsWith('image')) {
             setImages(documents.filter(item => item.type.startsWith('image')));
             if (!share) handlePreview(file, true, index); else onOpenShare();
+
         } else if (!share) handleDocs(file); else onOpenShare();
 
     }
 
-    /*const openShare = () => {
-        let data = users.filter(item => item?.role == 'administrador' || previewFile?.users_ids.includes(item?.id)).map(item => ({ ...item }))
-        setSelectedShare(data);
-        onOpenShare();
-    }*/
+    const handleDownload = async ({ id }) => {
+        try {
+            const data = await indexDocumentsByID({ id, blob: true });
+            console.log("🚀 ~ handleDownload ~ data:", data)
+            setblocContent(data);
+        } catch (error) {
+            console.error("Error al descargar el archivo:", error);
+        } finally {
+            onOpenNote()
+        }
+    };
 
-    const updateDocs = async ({ id, share }) => {
+    const updateDocs = async ({ id, file, share }) => {
         let formData = new FormData();
         //formData.append("id", id);
+        if (file) {
+            formData.append("file", file);
+        }
         if (share) {
             let ids = selectedShare.map(item => item?.id)
             formData.append("users_ids", JSON.stringify(ids))
@@ -549,21 +533,20 @@ const DocumentManager = () => {
             if (status) {
                 if (share) setDocuments((prevDocuments) => [data, ...prevDocuments.filter((doc) => doc.id !== id)]);
             }
-
         } catch (error) {
             console.log("🚀 ~ sendShare ~ error:", error)
         } finally {
             if (share) onCloseShare()
+            if (file) setPreviewFile(null)
         }
     }
 
-    const DocumentList = ({ isLoading, documents }) => {
+    /*const DocumentList = ({ isLoading, documents }) => {
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
                 {documents.length === 0 ?
                     <div style={{ height: '50vh', display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
                         <Empty
-                            //image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                             image="../img/empty_folder.png"
                             imageStyle={{ height: 200 }}
                             description={
@@ -584,9 +567,8 @@ const DocumentManager = () => {
                                         key={`files-docs-${file?.id}-${index}`}
                                         className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
                                         style={{ backgroundColor: color?.bgFiles }}
-                                    //onDoubleClick={() => onDoubleClick_(file, index, true)}
                                     >
-                                        <div className="p-3 pb-0" onClick={() => handlePreview(file)} /*onDoubleClick={() => onDoubleClick_(file, index, true)}*/>
+                                        <div className="p-3 pb-0" onClick={() => handlePreview(file)}>
                                             {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
                                                 <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
                                                     <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
@@ -595,9 +577,8 @@ const DocumentManager = () => {
                                         <div className="p-3 pt-2">
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center min-w-0">
-                                                    <span className="font-medium text-xs text-gray-800 truncate line-clamp-1" /*onClick={() => handlePreview(file)}*/>{file?.file_name}</span>
+                                                    <span className="font-medium text-xs text-gray-800 truncate line-clamp-1">{file?.file_name}</span>
                                                 </div>
-                                                {/*<BsThreeDotsVertical className="text-gray-400 flex-shrink-0" />*/}
                                                 <Menu isLazy>
                                                     <MenuButton _hover={{ bg: 'transparent' }} colorScheme='teal' variant='ghost' style={{ cursor: "context-menu", padding: 5 }}>
                                                         <BsThreeDotsVertical className="text-gray-400 pl-0 ml-0 flex-shrink-0" />
@@ -620,6 +601,80 @@ const DocumentManager = () => {
                     </div>
                 }
             </div>;
+    };*/
+
+    const DocumentList = ({ isLoading, documents }) => {
+        const selectedDocuments = documents.filter((file) => {
+            const isSelected = !role.startsWith('admin') ? file?.users_ids.includes(user_id) : true;
+            return isSelected;
+        });
+
+        return isLoading ? (
+            <div className="flex justify-center items-center height-icon-500">
+                <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" />
+            </div>
+        ) : (
+            <div>
+                {selectedDocuments.length === 0 ? (
+                    <div style={{ height: '50vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Empty
+                            image="../img/empty_folder.png"
+                            imageStyle={{ height: 200 }}
+                            description={
+                                <Typography.Text>
+                                    <p className="text-center font-bold text-lg text-black mt-3 mb-0">Arrastra y suelta los archivos aquí</p>
+                                    <p className="text-center text-gray-600 mt-0">o usa el botón "Subir archivo" <br /><p className="text-xxs">Máx. 10 MB</p></p>
+                                </Typography.Text>
+                            }
+                        />
+                    </div>
+                ) : (
+                    <div>
+                        <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 pb-24">
+                            {selectedDocuments.map((file, index) => (
+                                <div
+                                    key={`files-docs-${file?.id}-${index}`}
+                                    className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
+                                    style={{ backgroundColor: color?.bgFiles }}
+                                >
+                                    <div className="p-3 pb-0" onClick={() => handlePreview(file)}>
+                                        {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
+                                            <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
+                                                <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
+                                            </div>}
+                                    </div>
+                                    <div className="p-3 pt-2">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center min-w-0">
+                                                <span className="font-medium text-xs text-gray-800 truncate line-clamp-1">
+                                                    {file?.file_name}
+                                                </span>
+                                            </div>
+                                            <Menu isLazy>
+                                                <MenuButton _hover={{ bg: 'transparent' }} colorScheme='teal' variant='ghost' style={{ cursor: "context-menu", padding: 5 }}>
+                                                    <BsThreeDotsVertical className="text-gray-400 pl-0 ml-0 flex-shrink-0" />
+                                                </MenuButton>
+                                                <MenuList>
+                                                    <MenuItem icon={<FiEye />} onClick={() => onDoubleClick_(file, index, true)}>Abrir</MenuItem>
+                                                    {role.startsWith('admin') && (
+                                                        <>
+                                                            <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
+                                                            <MenuItem icon={<RiFolderSharedLine />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
+                                                            <MenuItem icon={<MdDeleteOutline />} onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
+                                                        </>
+                                                    )}
+                                                </MenuList>
+                                            </Menu>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
     };
 
     const ImageLoader = memo(({ id, className, style }) => {
@@ -679,24 +734,35 @@ const DocumentManager = () => {
 
     const [filesLoad, setFilesLoad] = useState([])
 
-    const handleDrop = async (event, mode) => {
+    const handleDrop = async (event, mode, txt) => {
         console.log("🚀 ~ handleDrop ~ event:", event)
         event.preventDefault();
         setUploadResults([])
-        const files = mode ? Array.from(event.dataTransfer.files) : Array.from(event.target.files);
+        let files = []
+        if (txt) {
+            const file = new Blob([blocContent], { type: "text/plain" });
+            const fileName = blocName + ".txt";
+            files = [new File([file], fileName, { type: "text/plain" })];
+        } else files = mode ? Array.from(event?.dataTransfer?.files) : Array.from(event?.target?.files);
         if (!files.length) return;
-        let count = 0;
-        setFilesLoad(files);
-        setVisibleDrog(false);
-        setIsLoading(true);
-        setVisibleList(true)
+
         try {
+            if (blocEdit && txt) {
+                updateDocs({ id: selectedNote?.id, file: files[0], share: true })
+                return;
+            }
+            let count = 0;
+            setFilesLoad(files);
+            setVisibleDrog(false);
+            setIsLoading(true);
+            setVisibleList(true)
             for (const file of files || []) {
                 let data = new FormData();
                 data.append("file", file);
                 data.append("name", user_id);
                 data.append("type", file.type);
-                data.append("users_ids", JSON.stringify([user_id]))
+                if (txt) data.append("users_ids", JSON.stringify(selectedShare.map((chip) => chip.id)))
+                else data.append("users_ids", JSON.stringify([user_id]))
 
                 if (level == 1) data.append("project_id", selectedProject?.id);
                 if (level == 2) {
@@ -720,6 +786,7 @@ const DocumentManager = () => {
         } finally {
             await getDocuments();
             setIsLoading(false);
+            if (txt) onCloseNote();
         }
     };
 
@@ -736,12 +803,7 @@ const DocumentManager = () => {
         setVisibleDrog(false)
     };
 
-
-
     const getFileIcon = (fileType) => icons[fileType] || icons["default"];
-    //const getFileIcon = (fileType) => icons[fileType];
-
-    //className="w-full max-h-[70vh] object-contain"
 
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [dragging, setDragging] = useState(false);
@@ -764,24 +826,7 @@ const DocumentManager = () => {
         onCloseProject();
     }
 
-    /*function transformToTree(data) {
-        const tree = { root: { documents: [], projects: {} } };
-        documents.forEach(item => {
-            const { project, department } = item;
-            if (!project) tree.root.documents.push(item);
-            else {
-                if (!tree.root.projects[project.name]) tree.root.projects[project.name] = { departments: {}, documents: [] };
-                const projectNode = tree.root.projects[project.name];
-                if (!department) projectNode.documents.push(item);
-                else {
-                    if (!projectNode.departments[department.name]) projectNode.departments[department.name] = { documents: [] };
-                    projectNode.departments[department.name].documents.push(item);
-                }
-            }
-        });
-        return tree;
-    }*/
-
+    const [maximize, setMaximize] = useState(false);
     const [view, setView] = useState({ type: 'projects', id: null });
 
     useEffect(() => {
@@ -819,6 +864,28 @@ const DocumentManager = () => {
     };
 
     const [dataSource, setdataSource] = useState(null)
+    const [blocName, setblocName] = useState("");
+    const [blocContent, setblocContent] = useState("");
+    const [blocEdit, setblocEdit] = useState(false);
+
+    const handleDelete_ = (chipToDelete) => {
+        setSelectedShare((prevChips) => prevChips.filter((chip) => chip.id !== chipToDelete.id));
+    };
+
+    const revealIds = (e) => {
+        if (!blocName) {
+            openNotification('warning', 'Añada un nombre');
+            return;
+        }
+        handleDrop(e, false, true)
+    };
+    const handleCheckboxChange = (user) => {
+        setSelectedShare((prevSelected) => {
+            const userExists = prevSelected.some((u) => u.id === user.id);
+            if (userExists) return prevSelected.filter((u) => u.id !== user.id);
+            else return [...prevSelected, user];
+        });
+    };
 
     return (
         <div className="mx-auto pb-8 bgwhite">
@@ -826,7 +893,7 @@ const DocumentManager = () => {
             <div className="flex" style={{ width: '100%' }}>
                 <div className="mx-auto pb-8 content-scroll-auto" style={{ flex: '1' }}>
                     <div className="flex justify-between items-center mb-2 pl-6 mt-8">
-                        <h2 className="text-3xl font-bold text-gray-800 mb-0 pb-0 mt-8" style={{ paddingLeft: 8 }}>Gestor de archivos {level}</h2>
+                        <h2 className="text-3xl font-bold text-gray-800 mb-0 pb-0 mt-8" style={{ paddingLeft: 8 }}>Gestor de archivos</h2>
                     </div>
                     <div className="p-4 pt-0 pb-0">
                         <Breadcrumbs
@@ -859,7 +926,7 @@ const DocumentManager = () => {
                     </div>
                 </div>
                 <div className="border-l p-3" style={{ width: '290px' }}>
-                    {previewFile ? (
+                    {previewFile ?
                         <div className="space-y-4">
                             <h3 className="text-lg font-medium">Detalles</h3>
                             <div className="aspect-video bg-gray-100 rounded overflow-hidden">
@@ -892,9 +959,9 @@ const DocumentManager = () => {
                                     <p className="font-small">
                                         <span className='font-semibold'>Usuarios con acceso</span>  <br />
                                         <Avatar.Group>
-                                            {selectedShare.map((item_) =>
-                                                <Tooltip title={`${item_?.label}`}>
-                                                    <Avatar style={{ background: colorRandom() }}>{item_?.label.charAt(0)}</Avatar>
+                                            {selectedShare.map((item_, index) =>
+                                                <Tooltip key={`selectedUsers-${item_?.id}-${index}`} title={`${item_?.label}`}>
+                                                    <Avatar style={{ background: item_?.last_name }}>{item_?.label.charAt(0)}</Avatar>
                                                 </Tooltip>
                                             )}
                                             {(selectedShare.length !== users.length && role.startsWith('admin')) &&
@@ -904,7 +971,6 @@ const DocumentManager = () => {
                                         </Avatar.Group>
                                     </p>
                                 }
-
                                 <p className="font-small">
                                     <span className='font-semibold'>Creado</span>  <br />
                                     {format(new Date(previewFile.created_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
@@ -918,50 +984,33 @@ const DocumentManager = () => {
                                 </p>
                             </div>
                         </div>
-                    ) : (
-                        <div className="flex items-center justify-center h-full text-gray-500">
+                        : <div className="flex items-center justify-center h-full text-gray-500">
                             <Empty
                                 image="../img/empty_details.png"
                                 imageStyle={{ height: 200 }}
-                                description={
-                                    <Typography.Text>
-                                        <p className="text-center text-gray-600 mt-0">Selecciona un elemento para ver los detalles</p>
-                                    </Typography.Text>
-                                }
+                                description={<Typography.Text><p className="text-center text-gray-600 mt-0">Selecciona un elemento para ver los detalles</p> </Typography.Text>}
                             />
                         </div>
-                    )}
+                    }
                 </div>
             </div>
-            <div
-                style={{
-                    position: 'absolute',
-                    right: 20,
-                    bottom: 20,
-                    backgroundColor: 'white',
-                    border: '0.5px solid gray',
-                    borderRadius: 5,
-                    display: visibleList ? 'flex' : 'none',
-                    flexDirection: 'column',
-                    width: 330
-                }}
-            >
+            <div className='modal-bottom-load-files shadow' style={{ display: visibleList ? 'flex' : 'none' }}>
                 <div className='head-bottom'>
                     <h1 style={{ fontSize: '1rem' }} className='font-semibold'>{filesLoad.length} elementos</h1>
                     <CloseOutlined onClick={() => setVisibleList(false)} />
                 </div>
-                <div>
+                <div style={{ maxHeight: 300, overflowY: 'auto' }}>
                     {filesLoad.map((file, index) => (
-                        <div key={index} className='flex items-center flex-row p-2.5 justify-between'>
-                            <div className='flex items-center flex-row'>
+                        <div key={index} className='flex flex-row items-center p-2.5 justify-between'>
+                            <div className='flex flex-row items-center'>
                                 {getFileIcon(file?.type)}
-                                <h1 style={{ fontSize: '1rem' }} className='font-semibold mb-0 pl-2.5 line-clamp-1'>
+                                <p className='flex font-semibold mb-0 pl-2.5 text-sm'>
                                     {file.name}
-                                </h1>
+                                </p>
                             </div>
-                            <h1 style={{ fontSize: '1rem' }}>
+                            <dic className='flex flex-row items-center'>
                                 {!uploadResults[index]?.success ? <FaSpinner className="animate-spin text-blue-400" /> : uploadResults[index]?.success == 1 ? <CiCircleCheck color='green' /> : <VscError color='blue' />}
-                            </h1>
+                            </dic>
                         </div>
                     ))}
                 </div>
@@ -989,7 +1038,7 @@ const DocumentManager = () => {
                                     <AiOutlineDownload className="w-5 h-5" />
                                 </button>*/}
                                 <button
-                                    onClick={/*openShare*/onOpenShare}
+                                    onClick={onOpenShare}
                                     className="p-2 hover:bg-gray-800 rounded-full text-white"
                                 >
                                     <AiOutlineShareAlt className="w-5 h-5" />
@@ -1188,10 +1237,10 @@ const DocumentManager = () => {
                                     style={{ height: 300, maxHeight: 300, overflowY: 'auto' }}
                                     //dataSource={[users.find(item => item?.id == user_id), ...selectedShare]}
                                     dataSource={selectedShare}
-                                    renderItem={(item) => (
-                                        <List.Item actions={previewFile?.name == item?.value && [<div className="pr-2">Propietario</div>]}>
+                                    renderItem={(item, index) => (
+                                        <List.Item key={`selectedShare-${item?.id}-${index}`} actions={previewFile?.name == item?.value && [<div className="pr-2">Propietario</div>]}>
                                             <List.Item.Meta
-                                                avatar={<Avatar>{item?.label && item?.label.charAt(0)}</Avatar>}
+                                                avatar={<Avatar style={{ background: item?.last_name }}>{item?.label && item?.label.charAt(0)}</Avatar>}
                                                 title={`${item?.label}`}
                                                 description={item?.email}
                                                 className='flex flex-row items-center pl-5'
@@ -1269,6 +1318,108 @@ const DocumentManager = () => {
                         </Button>
                         <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={onCloseMove}>
                             Guardar
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            <Modal closeOnOverlayClick={false} isOpen={isOpenNote} onClose={onCloseNote} isCentered scrollBehavior={'inside'} size={!maximize ? '3xl' : 'full'}>
+                <ModalOverlay />
+                <ModalContent height="500px">
+                    <ModalHeader>
+                        <div className='font-semibold w-96 pt-0'>{blocEdit ? 'Editar' : 'Nueva'} nota</div>
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    {maximize ? <FiMinimize2 onClick={() => setMaximize(!maximize)} className='absolute top-[16px] right-[46px] cursor-pointer text-[#1a202c]' /> :
+                        <FiMaximize2 onClick={() => setMaximize(!maximize)} className='absolute top-[16px] right-[46px] cursor-pointer text-[#1a202c]' />}
+                    <ModalBody className='p-0 m-0'>
+                        <div className='space-y-1.2'>
+                            <div className='flex flex-col gap-y-1.5 px-6'>
+                                <div className='flex flex-col gap-[12px]'>
+                                    <div className='mt-0.5'>
+                                        <input
+                                            type="text"
+                                            placeholder="Notas importantes, registro de reuniones..."
+                                            value={blocName}
+                                            onChange={(e) => setblocName(e.target.value)}
+                                            className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400 text-sm"
+                                        />
+                                    </div>
+                                    <div>
+                                        <div className='flex flex-row justify-between'>
+                                            <p className='pb-0 text-sm'>Compartir con:</p>
+                                            <Popover>
+                                                <PopoverTrigger>
+                                                    <div>
+                                                        <Button leftIcon={<FiPlus />} size={'xs'} /*disabled={!(selectedShare.length != users.length)}*/>
+                                                            Añadir usuarios
+                                                        </Button>
+                                                    </div>
+                                                </PopoverTrigger>
+                                                <Portal>
+                                                    <PopoverContent>
+                                                        <PopoverArrow />
+                                                        <PopoverBody>
+                                                            <p className='mb-0 py-1.5 font-bold text-center text-sm'>Miembros</p>
+                                                            <div style={{ maxHeight: 340, overflow: 'auto' }}>
+                                                                {users.map((user, index) => {
+                                                                    const isSelected = selectedShare.some((u) => u.id === user.id);
+                                                                    const isDisabled = selectedShare.some((u) => u.id === user.id && u.disabled);
+                                                                    const disabled = user?.disabled || isDisabled;
+                                                                    return (
+                                                                        <div key={`us${user?.id}${index}`} className={`flex items-center justify-between p-1.5 ${(disabled) ? 'opacity-30' : 'hover:bg-gray-200'}`} onClick={() => { if (!(disabled)) handleCheckboxChange(user) }}>
+                                                                            <div className='flex flex-row items-center gap-1.5'>
+                                                                                <Tooltip title={`${user?.label}`}>
+                                                                                    <Avatar style={{ background: user?.last_name }}>{user?.label.charAt(0)}{user?.label.split(" ")[1][0]}</Avatar>
+                                                                                </Tooltip>
+                                                                                <span className={disabled ? 'text-gray-500' : ''}>
+                                                                                    {user?.label}
+                                                                                </span>
+                                                                            </div>
+                                                                            <input type="checkbox" checked={isSelected} disabled={disabled} className="mr-2"
+                                                                            //onChange={() => handleCheckboxChange(user)}
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </PopoverBody>
+                                                    </PopoverContent>
+                                                </Portal>
+                                            </Popover>
+                                        </div>
+                                        <div className='flex flex-row flex-wrap gap-1'>
+                                            {selectedShare.map((chip) => (
+                                                <Chip
+                                                    key={chip?.id}
+                                                    label={chip?.label}
+                                                    color={chip?.last_name}
+                                                    disabled={chip?.disabled}
+                                                    onDelete={() => handleDelete_(chip)}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="relative">
+                                        <ReactQuill
+                                            value={blocContent}
+                                            onChange={setblocContent}
+                                            modules={modules_}
+                                            formats={formats_}
+                                            className="h-full"
+                                        />
+                                        {/*<div dangerouslySetInnerHTML={{ __html: blocContent }} />*/}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter className='gap-1 border-t-1 flex justify-between'>
+                        <Button variant='ghost' rounded={100} onClick={onCloseNote}>
+                            Cancelar
+                        </Button>
+                        <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={revealIds}>
+                            {blocEdit ? 'Guardar' : 'Crear'}
                         </Button>
                     </ModalFooter>
                 </ModalContent>
