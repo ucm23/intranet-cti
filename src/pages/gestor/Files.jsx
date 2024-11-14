@@ -10,6 +10,7 @@ import { FiMaximize2, FiMinimize2, FiEye } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import color from '../../color';
 import { RiFolderSharedLine, RiUpload2Line, RiStickyNoteLine } from "react-icons/ri";
+import { FaFilePdf } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import { FaPlusCircle } from "react-icons/fa";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea, Portal } from '@chakra-ui/react'
@@ -33,6 +34,7 @@ import { useSelector } from 'react-redux';
 import { indexUsers } from '../../api/users/users';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { ColorRing } from 'react-loader-spinner'
 
 const DocumentManager = () => {
     const information_user = useSelector(state => state.login.information_user);
@@ -640,7 +642,11 @@ const DocumentManager = () => {
                                     className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
                                     style={{ backgroundColor: color?.bgFiles }}
                                 >
-                                    <div className="p-3 pb-0" onClick={() => handlePreview(file)}>
+                                    <div
+                                        className="p-3 pb-0"
+                                        onClick={() => handlePreview(file)}
+                                        onDoubleClickCapture={() => onDoubleClick_(file, index, true)}
+                                    >
                                         {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
                                             <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
                                                 <span style={{ transform: 'scale(4)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
@@ -699,6 +705,25 @@ const DocumentManager = () => {
             <img src={imageUrl} alt={`img-loader-1${id * 2}`} style={style} className={className} loading="lazy" onError={(e) => { e.target.src = '../400.png'; }} />
     });
 
+    const LoaderPDF = () => {
+        return (
+            <div className={`flex flex-col justify-center items-center gap-3`}>
+                <FaFilePdf style={{ fontSize: 175 }} color="red" />
+                <ColorRing
+                    visible={true}
+                    height="45"
+                    width="45"
+                    ariaLabel="color-ring-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="color-ring-wrapper"
+                    //colors={['#e15b64', '#f47e60', '#f8b26a', , '#849b87']}
+                    //colors={[ "#34A853", "#FBBC05", "#4285F4", "#EA4335", '#abbd81']}
+                    colors={["#34A853", "#abbd81", "#0066CC", "#1A73E8", "#305F72"]}
+                />
+            </div>
+        )
+    }
+
     const PdfViewer = ({ pdfBlob }) => {
         const [pdfUrl, setPdfUrl] = useState(null);
 
@@ -709,18 +734,19 @@ const DocumentManager = () => {
             setPdfUrl(url);
             return () => URL.revokeObjectURL(url);
         }, [pdfBlob]);
-        if (!pdfUrl) return <p>Cargando PDF...</p>;
 
-        return (
+        if (!pdfUrl) return <LoaderPDF />
+        else return (
             <div className="pdf-container">
                 <embed
-                    src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                    //src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                    src={`${pdfUrl}#toolbar=0`}
                     //src={pdfUrl}
                     type="application/pdf"
                     className="pdf-embed"
                 />
             </div>
-        );
+        )
     };
 
     const PDFLoader = ({ id }) => {
@@ -733,7 +759,8 @@ const DocumentManager = () => {
             };
             loadURL()
         }, [id]);
-        return imageUrl ? <PdfViewer pdfBlob={imageUrl} /> : <p>Cargando PDF...</p>
+        if (!imageUrl) return <LoaderPDF />
+        else return <PdfViewer pdfBlob={imageUrl} />
     };
 
     const SkeletonItem = () => (
@@ -1064,7 +1091,7 @@ const DocumentManager = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className={`flex-1 flex items-center justify-center ${!selectedImage?.type.endsWith('pdf') && 'p-4'} pt-0 relative`}>
+                        <div className={`flex-1 flex justify-center ${!selectedImage?.type.endsWith('pdf') && 'p-4 items-center'} pt-0 relative`}>
                             {selectedImage?.type.startsWith('image') &&
                                 <button
                                     onClick={handlePrevious}
@@ -1072,11 +1099,11 @@ const DocumentManager = () => {
                                 >
                                     <AiOutlineLeft className="w-6 h-6" />
                                 </button>}
-                            <div className="relative w-full flex items-center justify-center">
+                            <div className={`relative w-full flex ${!selectedImage?.type.endsWith('pdf') && 'items-center'} justify-center`}>
                                 {selectedImage?.type.startsWith('image') && <ImageLoader style={{ transform: `scale(${zoom / 100})` }} id={selectedImage?.id} className="max-w-[70%] max-h-[70%] object-contain transition-transform duration-300 ease-in-out shadow-xl" />}
                                 {selectedImage?.type.endsWith('pdf') && <PDFLoader id={selectedImage?.id} />}
                                 {selectedImage?.type.startsWith('image') &&
-                                    <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4 p-3 rounded-full bg-black bg-opacity-50 position-fixed-50">
+                                    <div className={`absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4 p-3 rounded-full bg-black bg-opacity-50 position-fixed-50`}>
                                         <button
                                             onClick={handleZoomOut}
                                             className="text-white hover:text-gray-300 transition-colors"

@@ -2046,7 +2046,7 @@ svg.dropdown-search-clear-icon.gray {
 .pdf-container {
     width: 100%;
     max-width: 100vw;
-    height: 100vw;
+    /*height: 100vw;*/
     display: flex;
     justify-content: center;
 }
@@ -2060,4 +2060,8 @@ svg.dropdown-search-clear-icon.gray {
 
 .flex-1.flex.items-center.justify-center.false.pt-0.relative {
     background-color: #969595f0;
+}
+
+.flex-1.flex.justify-center.false.pt-0.relative {
+    background-color: white;
 }
