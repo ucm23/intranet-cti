@@ -486,7 +486,7 @@ const DocumentManager = () => {
     const onDoubleClick_ = (file, index, mode, share, move, again) => {
         if (mode || index || share) {
             if (!again) selectedUser()
-            handlePreview(file, true); // QUITAR IMPORTANTE
+            handlePreview(file); // QUITAR IMPORTANTE
         }
         if (move) {
             onOpenMove();
@@ -502,8 +502,11 @@ const DocumentManager = () => {
             return;
         }
         if (file.type.startsWith('image')) {
-            setImages(documents.filter(item => item.type.startsWith('image')));
-            if (!share) handlePreview(file, true, index); else onOpenShare();
+            if (share) onOpenShare();
+            else {
+                setImages(documents.filter(item => item.type.startsWith('image')));
+                handlePreview(file, true, index);
+            }
         }
         //else if (!share) handleDocs(file); else onOpenShare();
         if (share) onOpenShare();
@@ -645,7 +648,7 @@ const DocumentManager = () => {
                                     <div
                                         className="p-3 pb-0"
                                         onClick={() => handlePreview(file)}
-                                        onDoubleClickCapture={() => onDoubleClick_(file, index, true)}
+                                        //onDoubleClickCapture={() => onDoubleClick_(file, index, true)}
                                     >
                                         {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
                                             <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
