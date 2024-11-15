@@ -473,7 +473,7 @@ const DocumentManager = () => {
 
     const handleDocs = async (file) => {
         try {
-            const pdf = await indexDocumentsByID({ id: file?.id, blob: true });
+            const pdf = await indexDocumentsByID({ id: file?.id, blob: false });
             console.log("🚀 ~ handleDocs ~ pdf:", pdf)
             const docUrl = pdf?.data;
             window.open(docUrl, '_blank');
@@ -486,7 +486,7 @@ const DocumentManager = () => {
     const onDoubleClick_ = (file, index, mode, share, move, again) => {
         if (mode || index || share) {
             if (!again) selectedUser()
-            handlePreview(file); // QUITAR IMPORTANTE
+            handlePreview(file);
         }
         if (move) {
             onOpenMove();
@@ -502,14 +502,21 @@ const DocumentManager = () => {
             return;
         }
         if (file.type.startsWith('image')) {
-            if (share) onOpenShare();
+            if (share) { onOpenShare(); return; }
             else {
                 setImages(documents.filter(item => item.type.startsWith('image')));
                 handlePreview(file, true, index);
+                return;
             }
         }
         //else if (!share) handleDocs(file); else onOpenShare();
-        if (share) onOpenShare();
+        if (share) { onOpenShare(); return; }
+        if (!file.type.startsWith('text') && !file.type.startsWith('image') && !file.type.endsWith('pdf')) {
+            handleDocs(file);
+        }
+        if (file.type.endsWith('pdf')) {
+            handlePreview(file, true, index);
+        }
 
     }
 
@@ -648,7 +655,7 @@ const DocumentManager = () => {
                                     <div
                                         className="p-3 pb-0"
                                         onClick={() => handlePreview(file)}
-                                        //onDoubleClickCapture={() => onDoubleClick_(file, index, true)}
+                                    //onDoubleClickCapture={() => onDoubleClick_(file, index, true)}
                                     >
                                         {file?.type.startsWith('image') ? <ImageLoader id={file?.id} className={"w-full h-32 object-cover rounded"} /> :
                                             <div className='flex w-full h-32 object-cover rounded items-center justify-center'>
