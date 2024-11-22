@@ -590,7 +590,7 @@ const AddNews = ({ page }) => {
                 open={open}
             >
                 <div className="grid grid-cols-3 gap-4">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((banner) => (
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((banner) => (
                         <div key={`img-banner-select-${banner}`} className="relative" onClick={() => handleBannerClick(banner)}>
                             <img
                                 src={`img/news/banner/${banner}.png`}

@@ -272,14 +272,15 @@ const DiagramOrgTree = ({ xy, min }) => {
             },
             {
                 id: 17,
-                label: <div className='childrens-label-title' style={{ backgroundColor: '#1890ff' }}>Infraestructura, CiberSeguridad {min && <br />}y Mesa de Ayuda</div>,
+                //label: <div className='childrens-label-title' style={{ backgroundColor: '#1890ff' }}>Infraestructura, CiberSeguridad {min && <br />}y Mesa de Ayuda</div>,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#1890ff' }}>Infraestructura {min && <br />} y CiberSeguridad</div>,
                 children: [
                     {
                         id: 17,
                         label: <UserProfileCard
                             color="#1890ff"
                             name="Heber Argumedo"
-                            puesto="Ing. Infraestructura e ITS"
+                            puesto="Ing. CiberSeguridad"
                             urlPhoto={infra1}
                             onClickCV={() => handleDetails(17)}
                             onClickProfile={() => handleDetails(17, 'infra1.png')}

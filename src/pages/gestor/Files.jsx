@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
 import { FaFolder, FaSpinner } from "react-icons/fa";
 import { AiOutlineDelete, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight, AiOutlineShareAlt } from "react-icons/ai";
+import { FaArrowLeft, FaArrowRight, FaPlus, FaMinus, FaReply, FaTimes } from "react-icons/fa";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { CiCircleCheck } from "react-icons/ci";
 import { VscError } from "react-icons/vsc";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoChevronForwardSharp } from "react-icons/io5";
+import { IoChevronForwardSharp, IoDocumentTextOutline } from "react-icons/io5";
+import { FloatButton } from 'antd';
 import { FiMaximize2, FiMinimize2, FiEye } from "react-icons/fi";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropdown, IoMdAdd } from "react-icons/io";
 import color from '../../color';
 import { RiFolderSharedLine, RiUpload2Line, RiStickyNoteLine } from "react-icons/ri";
 import { FaFilePdf } from "react-icons/fa";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 import { FaPlusCircle } from "react-icons/fa";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea, Portal } from '@chakra-ui/react'
+import { ChakraProvider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea, Portal } from '@chakra-ui/react'
 import { Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow } from '@chakra-ui/react'
 import { CloseOutlined } from '@ant-design/icons';
 import { LuUserPlus2 } from "react-icons/lu";
@@ -35,6 +37,7 @@ import { indexUsers } from '../../api/users/users';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { ColorRing } from 'react-loader-spinner'
+import { Document, Page, pdfjs } from "react-pdf";
 
 const DocumentManager = () => {
     const information_user = useSelector(state => state.login.information_user);
@@ -734,12 +737,14 @@ const DocumentManager = () => {
         )
     }
 
-    const PdfViewer = ({ pdfBlob }) => {
+    /*const PdfViewer = ({ pdfBlob }) => {
         const [pdfUrl, setPdfUrl] = useState(null);
+        const embedRef = useRef(null); // Referencia al embed
+
 
         useEffect(() => {
-            //const pdfBlobWithType = new Blob([pdfBlob], { type: 'application/pdf' });
-            const pdfBlobWithType = new File([pdfBlob], "NombrePersonalizado.pdf", { type: "application/pdf" });
+            const pdfBlobWithType = new Blob([pdfBlob], { type: 'application/pdf' });
+            //const pdfBlobWithType = new File([pdfBlob], "NombrePersonalizado.pdf", { type: "application/pdf" });
             const url = URL.createObjectURL(pdfBlobWithType);
             setPdfUrl(url);
             return () => URL.revokeObjectURL(url);
@@ -750,13 +755,236 @@ const DocumentManager = () => {
             <div className="pdf-container">
                 <embed
                     //src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-                    src={`${pdfUrl}#toolbar=0`}
-                    //src={pdfUrl}
+                    //src={`${pdfUrl}#toolbar=0`}
+                    ref={embedRef}
+                    src={pdfUrl}
                     type="application/pdf"
                     className="pdf-embed"
+                    width="600"
+                    height="400"
+                //onLoad={handleEmbedLoad}
                 />
+                <div
+                    className='pdf-embed-notes'
+                >
+                    <div className="flex justify-between items-center m-6">
+                        <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                            <IoDocumentTextOutline className="text-blue-600" />
+                            Document Notes
+                        </h2>
+                        <button
+                            onClick={() => { }}
+                            className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                            aria-label="Add new note"
+                        >
+                            <IoMdAdd size={24} />
+                        </button>
+                    </div>
+
+                </div>
             </div>
         )
+    };*/
+
+    const PdfViewer = ({ pdfBlob }) => {
+        const [isModalOpen, setIsModalOpen] = useState(false);
+        const [newNote, setNewNote] = useState({ title: "", content: "" });
+        const [notes, setNotes] = useState([
+            {
+                id: 1,
+                title: "Important Note",
+                content: "This section discusses key concepts in chapter 1",
+                autor: 1,
+                replies: []
+            }
+        ]);
+        const [replyText, setReplyText] = useState("");
+        const [activeReplyId, setActiveReplyId] = useState(null);
+
+        const toggleReply = (noteId) => {
+            setActiveReplyId(activeReplyId === noteId ? null : noteId);
+            setReplyText("");
+        };
+
+        const handleReply = (noteId) => {
+            if (replyText.trim()) {
+                setNotes(notes.map(note => {
+                    if (note.id === noteId) {
+                        return {
+                            ...note,
+                            replies: [...note.replies, {
+                                id: Date.now(),
+                                content: replyText,
+                                timestamp: new Date().toISOString()
+                            }]
+                        };
+                    }
+                    return note;
+                }));
+                setReplyText("");
+                setActiveReplyId(null);
+            }
+        };
+
+        const handleAddNote = () => {
+            if (newNote.title.trim() && newNote.content.trim()) {
+                const newNoteObj = {
+                    id: Date.now(),
+                    title: newNote.title,
+                    content: newNote.content,
+                    replies: []
+                };
+                setNotes([...notes, newNoteObj]);
+                setNewNote({ title: "", content: "" });
+                setIsModalOpen(false);
+            }
+        };
+
+        const [pdfUrl, setPdfUrl] = useState(null);
+
+        useEffect(() => {
+            const pdfBlobWithType = new Blob([pdfBlob], { type: 'application/pdf' });
+            //const pdfBlobWithType = new File([pdfBlob], "NombrePersonalizado.pdf", { type: "application/pdf" });
+            const url = URL.createObjectURL(pdfBlobWithType);
+            setPdfUrl(url);
+            return () => URL.revokeObjectURL(url);
+        }, [pdfBlob]);
+
+        if (!pdfUrl) return <LoaderPDF />
+        else return (
+            <div className="flex flex-col md:flex-row h-screen w-full bg-gray-100">
+                <FloatButton icon={!isModalOpen ? <FiPlus /> : <FiX/>} type='primary' onClick={() => setIsModalOpen(!isModalOpen)} style={{ insetInlineEnd: 26 }} />
+                <div className="w-full md:w-[70%] h-screen flex flex-col" role="main">
+                    <iframe
+                        src={pdfUrl}
+                        className="w-full h-full"
+                        style={{ transform: `scale(1)`, transformOrigin: "top left" }}
+                        title="PDF Document Viewer"
+                        allowFullScreen
+                    />
+                </div>
+                <div className="w-full md:w-[30%] bg-white shadow-lg overflow-y-auto p-4" role="complementary">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-2xl font-bold text-gray-800">Notas</h2>
+                    </div>
+                    <div className="space-y-4">
+                        {notes.map((note) => (
+                            <div
+                                key={note.id}
+                                className="p-4 bg-white rounded shadow-md"
+                                tabIndex="0"
+                                role="article"
+                            >
+                                <h3 className="text-lg font-semibold text-gray-700 mb-2">{note.title}</h3>
+                                <p className="text-gray-600">{note.content}</p>
+                                {note.replies.length > 0 && (
+                                    <div className="mt-3 pl-4 border-l-2 border-gray-300">
+                                        {note.replies.map(reply => (
+                                            <div key={reply.id} className="mt-2 text-sm text-gray-600">
+                                                <p>{reply.content}</p>
+                                                <span className="text-xs text-gray-400">
+                                                    {new Date(reply.timestamp).toLocaleString()}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                <div className="mt-3">
+                                    <button
+                                        onClick={() => toggleReply(note.id)}
+                                        className="flex items-center text-blue-600 hover:text-blue-800 text-sm"
+                                    >
+                                        <FaReply className="mr-1" /> Responder
+                                    </button>
+
+                                    {activeReplyId === note.id && (
+                                        <div className="mt-2">
+                                            <textarea
+                                                value={replyText}
+                                                onChange={(e) => setReplyText(e.target.value)}
+                                                className="w-full p-2 border border-gray-300 rounded text-sm"
+                                                placeholder="Escriba un comentario..."
+                                                rows="2"
+                                            />
+                                            <div className="mt-2 flex justify-end space-x-2">
+                                                <button
+                                                    onClick={() => toggleReply(note.id)}
+                                                    className="px-3 py-1 text-sm text-gray-600 hover:text-gray-800"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                                <button
+                                                    onClick={() => handleReply(note.id)}
+                                                    className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+                                                >
+                                                    Añadir
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {isModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white rounded p-6 w-96">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-xl font-semibold">Agregar nota</h3>
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="text-gray-500 hover:text-gray-700"
+                                >
+                                    <FaTimes />
+                                </button>
+                            </div>
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Título
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={newNote.title}
+                                        onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
+                                        className="w-full p-2 border border-gray-300 rounded"
+                                        placeholder="Escriba el título de la nota..."
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Contenido
+                                    </label>
+                                    <textarea
+                                        value={newNote.content}
+                                        onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
+                                        className="w-full p-2 border border-gray-300 rounded"
+                                        placeholder="Escriba el contenido de la nota..."
+                                        rows="4"
+                                    />
+                                </div>
+                                <div className="flex justify-end space-x-2">
+                                    <button
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        onClick={handleAddNote}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
     };
 
     const PDFLoader = ({ id }) => {

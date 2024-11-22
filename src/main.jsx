@@ -11,6 +11,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ImageCacheProvider } from './redux/ImageCacheProvider';
 import { PreviewFileProvider } from './redux/PreviewFileContext';
 import { pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
