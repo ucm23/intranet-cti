@@ -56,7 +56,7 @@ const DocumentManager = () => {
     const { isOpen: isOpenNote, onOpen: onOpenNote, onClose: onCloseNote } = useDisclosure()
     const today = new Date();
     const tomorrow = new Date();
-    const modalRef = useRef(null);
+    //const modalRef = useRef(null);
     const [api, contextHolder] = notification.useNotification();
     const openNotification = (type, description) => openNotificationWithIcon(api, type, description)
     const [colors, setColor] = useState({});
@@ -85,7 +85,6 @@ const DocumentManager = () => {
             setMinEndDate(tomorrow.toISOString().split('T')[0]);
             console.log("🚀 ~ handleStartDateChange ~ tomorrow.toISOString().split('T')[0]:", tomorrow.toISOString().split('T')[0])
         }
-
     };
 
     const handleChange = (e) => {
@@ -1223,8 +1222,7 @@ const DocumentManager = () => {
                             </div>
                             <div className="space-y-3">
                                 <p className="font-small">
-                                    <span className='font-semibold'>Nombre</span> <br />
-                                    {previewFile.file_name}
+                                    <span className='font-semibold'>Nombre</span> <br />{previewFile?.file_name || previewFile?.name}
                                 </p>
                                 <p className="font-small">
                                     <span className='font-semibold'>Tipo</span>  <br />
