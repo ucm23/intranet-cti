@@ -38,7 +38,7 @@ const NavBarLanding = ({ mobile, backgroundColor = '#001529', children, handleMo
         <>
             <nav className={`${showShadow ? 'shadow nav-small' : 'nav'}`} style={{ backgroundColor: (showShadow || isChecked) ? 'white' : 'transparent', filter: modalShow && 'blur(1px)' }}>
                 <a href="/" className={`enlace d-flex justify-content-center align-items-center ${(mobile && showShadow) && "center-logo"}`}>
-                    <img src={(showShadow || isChecked) ? "/img/logo-blue-removebg.png" : "/img/logo-white-removebg.png"} className={showShadow ? 'logo-small' : 'logo'} />
+                    <img src={(showShadow || isChecked) ? "/img/logo-intranet-decc.png" : "/img/logo-intranet-decc-white.png"} className={showShadow ? 'logo-small' : 'logo'} />
                     <h1 className="m-0"></h1>
                 </a>
                 <input type="checkbox" id="check" onChange={handleCheckBoxChange} />

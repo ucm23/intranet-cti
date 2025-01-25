@@ -6,7 +6,7 @@ import { AiOutlineFile } from "react-icons/ai";
 import { FcFolder } from "react-icons/fc";
 import color from '../color';
 
-export const baseURL = "https://api-metrix.victum-re.online/intranet";
+export const baseURL = "https://api-metrix.victum-re.online/decc/intranet";
 
 export const headers1 = {
     'Content-Type': 'application/pdf',

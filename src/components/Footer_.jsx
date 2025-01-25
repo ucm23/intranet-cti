@@ -24,7 +24,7 @@ export default function Footer_({ modalShow }) {
                     <Stack flexDirection={direction} style={{ marginBottom: 20, display: 'flex', alignItems: 'center' }} justifyContent={'space-between'}>
                         <Stack alignItems={mobile ? 'center' : 'initial'}>
                             <img
-                                src="/img/logo-white-removebg.png"
+                                src="/img/logo-intranet-decc-white.png"
                                 alt="logo Grupo Ticonsa"
                                 style={{ width: 255 }}
                             />

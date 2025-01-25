@@ -76,8 +76,8 @@ function ModalCenter({ show, onHide, mobile, openSession }) {
                         <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                             <img
                                 className="mx-auto h-10 w-auto"
-                                src="/img/logo-blue-removebg.png"
-                                alt="/img/logo-blue-removebg.png"
+                                src="/img/logo-intranet-decc.png"
+                                alt="/img/logo-intranet-decc.png"
                                 style={{ objectFit: 'scale-down', height: 125 }}
                             />
                             <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -158,7 +158,7 @@ function ModalCenter({ show, onHide, mobile, openSession }) {
                             </div>
                         </div>
                         <h1 style={{ fontSize: 12, fontStyle: 'italic', color: 'gray', textAlign: 'center', marginBottom: 25 }}>
-                            ©Todos los derechos reservados. Grupo CTI Tech-IN POS 2024
+                           
                         </h1>
                     </div>
                 </div>
