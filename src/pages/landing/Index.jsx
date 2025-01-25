@@ -89,26 +89,9 @@ const Index = () => {
                                         rightIcon={<div />}
                                         leftIcon={<div />}
                                         fontWeight={'bold'}
-                                        title="Ver video de Introducción"
                                         className='cursor-crosshair'
                                     >
                                         Introducción
-                                    </Button>
-                                    <Button
-                                        bg={'transparent'}
-                                        rounded={50}
-                                        color="white"
-                                        fontWeight={'300'}
-                                        leftIcon={<div />}
-                                        rightIcon={<PiArrowRightThin className='text-3xl' color="white" />}
-                                        //_hover={{ bg: 'transparent' }}
-                                        _hover={"none"}
-                                        onClick={() => window.location.href = '/contacto'}
-                                        //aria-label="Redirigir a Contacto"
-                                        title="Redirigir a Contacto"
-                                        className='cursor-crosshair'
-                                    >
-                                        Más información
                                     </Button>
                                 </div>
                                 <div className="animated-accordion">

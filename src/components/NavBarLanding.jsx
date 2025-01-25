@@ -61,8 +61,6 @@ const NavBarLanding = ({ mobile, backgroundColor = '#001529', children, handleMo
                 {children}
             </main>
 
-
-
             <Footer_
                 modalShow={modalShow}
             />

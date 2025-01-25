@@ -30,15 +30,6 @@ export default function Footer_({ modalShow }) {
                             />
                             <h3 className="footer-title" style={{ fontWeight: 'normal', marginBottom: 20, textAlign: mobile ? 'center' : 'left' }}>©Todos los derechos reservados. Grupo CTI Tech-IN POS 2024.</h3>
                         </Stack>
-                        <Stack direction={direction} justifyContent={'space-between'}>
-                            <Stack paddingRight={5}>
-                                <Stack flexDirection={'column'}>
-                                    <a href="/#about-me" className="footer-link">Acerca de</a>
-                                    <a href="/#services" className="footer-link">Noticias</a>
-                                    <a href="/#services" className="footer-link">Contacto</a>
-                                </Stack>
-                            </Stack>
-                        </Stack>
                     </Stack>
                     <div style={{ background: 'white', height: 1, width: '100%', }} />
                 </Fade>

@@ -294,16 +294,16 @@ const DocumentManager = () => {
     const menus = {
         project: [
             { option: 'Proyecto nuevo', icon: <RiFolderSharedLine />, onClick: onOpenProject },
-            { option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
+            //{ option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
             { option: 'Subir archivo', icon: <RiUpload2Line />, onClick: handleButtonClick },
         ],
         department: [
             //{ option: 'Departamento nuevo', onClick: onOpenProject },
-            { option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
+            //{ option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
             { option: 'Subir archivo', icon: <RiUpload2Line />, onClick: handleButtonClick },
         ],
         documents: [
-            { option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
+            //{ option: 'Crear archivo de notas', icon: <RiStickyNoteLine />, onClick: openNote },
             { option: 'Subir archivo', icon: <RiUpload2Line />, onClick: handleButtonClick },
         ],
     }
@@ -430,7 +430,7 @@ const DocumentManager = () => {
                             </div>
                         );
                     })}
-                    {(selectedProject?.departments_ids.length !== departments.length && role != 'lector') &&
+                    {/*(selectedProject?.departments_ids.length !== departments.length && role != 'lector') &&
                         <div
                             className="flex items-center p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             style={{ backgroundColor: color?.bgFiles }}
@@ -441,7 +441,7 @@ const DocumentManager = () => {
                                 <h3 style={{ color: color.blueWord }} className="text-sm text-gray-800 pb-0 font-semibold">Agregar departamento</h3>
                             </div>
                         </div>
-                    }
+                    */}
 
                 </div>
             </div>
@@ -680,7 +680,7 @@ const DocumentManager = () => {
                                                     {role !== 'lector' && (
                                                         <>
                                                             <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
-                                                            <MenuItem icon={<RiFolderSharedLine />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
+                                                            {/*<MenuItem icon={<RiFolderSharedLine />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>*/}
                                                             <MenuItem icon={<MdDeleteOutline />} onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
                                                         </>
                                                     )}
@@ -852,8 +852,8 @@ const DocumentManager = () => {
         if (!pdfUrl) return <LoaderPDF />
         else return (
             <div className="flex flex-col md:flex-row h-screen w-full bg-gray-100">
-                <FloatButton icon={!isModalOpen ? <FiPlus /> : <FiX/>} type='primary' onClick={() => setIsModalOpen(!isModalOpen)} style={{ insetInlineEnd: 26 }} />
-                <div className="w-full md:w-[70%] h-screen flex flex-col" role="main">
+                {/*<FloatButton icon={!isModalOpen ? <FiPlus /> : <FiX/>} type='primary' onClick={() => setIsModalOpen(!isModalOpen)} style={{ insetInlineEnd: 26 }} />*/}
+                <div className="w-full md:w-[100%] h-screen flex flex-col" role="main">
                     <iframe
                         src={pdfUrl}
                         className="w-full h-full"
@@ -862,7 +862,7 @@ const DocumentManager = () => {
                         allowFullScreen
                     />
                 </div>
-                <div className="w-full md:w-[30%] bg-white shadow-lg overflow-y-auto p-4" role="complementary">
+                {/*<div className="w-full md:w-[30%] bg-white shadow-lg overflow-y-auto p-4" role="complementary">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-2xl font-bold text-gray-800">Notas</h2>
                     </div>
@@ -925,7 +925,7 @@ const DocumentManager = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div>*/}
 
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

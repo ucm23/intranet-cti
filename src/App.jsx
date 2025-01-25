@@ -69,22 +69,9 @@ function App() {
                         </Routes> :
                         <NavBarVertical>
                             <Routes>
-                                <Route path="/*" element={<Home />} />
-                                <Route path="/home" element={<Home />} />
-                                <Route path="/noticia/:id" element={<NoticiaDetalle />} />
-                                <Route path="/docs" element={<Tramites />} />
-                                <Route path="/gestor-contenidos/*" element={<Gestor />} />
-                                <Route path="/indicator" element={<Indicator />} />
-                                <Route path="/indicatorDetails" element={<IndicatorDetails />} />
-                                <Route path="/collaborator" element={<Collaborator />} />
-                                <Route path="/PerfilGral/:id/:nombreImagen" element={<PerfilGral />} />
+                                <Route path="/*" element={<Files />} />
                                 <Route path="/files" element={<Files />} />
                                 <Route path="/files_" element={<Manager />} />
-                                
-                                <Route path="/newslist" element={<NewsList />} />
-                                <Route path="/newDetails" element={<NewDetails page={'newslist'} />} />
-                                <Route path="/addnews" element={<AddNews page={'newslist'} />} />
-                                <Route path="/calendar" element={<Calendar />} />
                             </Routes>
                         </NavBarVertical>
                     }

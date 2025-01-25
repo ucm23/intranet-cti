@@ -48,52 +48,9 @@ const routes = [
 const items = [
     {
         key: '1',
-        label: 'Inicio',
-        icon: React.createElement(HomeOutlined),
-        route: '/'
-    },
-    {
-        key: '2',
-        label: 'Noticias',
-        icon: React.createElement(FormOutlined),
-        route: '/newslist',
-    },
-    {
-        key: '3',
-        label: 'Colaboradores',
-        icon: React.createElement(AppstoreOutlined),
-        route: '/collaborator',
-    },
-    /*{
-        key: '4',
-        label: 'Trámites y Servicios',
-        icon: <AppstoreOutlined />,
-        route: '/docs',
-    },
-    {
-        key: '5',
-        label: 'Gestor de Contenidos',
-        icon: <FileDoneOutlined />,
-        route: '/files',
-    },*/
-    {
-        key: '6',
         label: 'Gestor de archivos',
         icon: React.createElement(FileDoneOutlined),
         route: '/files',
-    },
-    {
-        key: '7',
-        label: 'Indicadores',
-        icon: React.createElement(GroupOutlined),
-        route: '/indicator',
-        
-    },
-    {
-        key: '8',
-        label: 'Calendario',
-        icon: React.createElement(CalendarOutlined),
-        route: '/calendar',
     },
 
 
