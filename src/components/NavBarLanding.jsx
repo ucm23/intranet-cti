@@ -60,9 +60,6 @@ const NavBarLanding = ({ mobile, backgroundColor = '#001529', children, handleMo
             <main style={{ overflowX: 'hidden', filter: modalShow && 'blur(1px)' }}>
                 {children}
             </main>
-
-
-
             <Footer_
                 modalShow={modalShow}
             />

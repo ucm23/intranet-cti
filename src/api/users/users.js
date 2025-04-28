@@ -11,13 +11,11 @@ export const login = async ({ data }) => {
             data,
             headers: headers2
         });
+
         console.log(response?.status, response?.data)
-        if (response.status === 201) {
-            fetch = { status: true, data: response?.data }
-        }
-        if (response.status === 401) {
-            fetch = { message: response?.data?.message }
-        }
+
+        if (response.status === 201) fetch = { status: true, data: response?.data }
+        if (response.status === 401) fetch = { message: response?.data?.message }
     } catch (error) {
         console.log("Error: " + error)
     } finally {

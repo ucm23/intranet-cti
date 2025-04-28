@@ -65,7 +65,6 @@ function App() {
                         <Routes>
                             <Route path="/" index element={<Index />} />
                             <Route path="*" index element={<Index />} />
-                            {/*<Route path="/noticies" element={<Noticies />} />*/}
                         </Routes> :
                         <NavBarVertical>
                             <Routes>

@@ -71,10 +71,10 @@ const Index = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <h2 className="text-shadow" style={{ lineHeight: 0, fontSize: 22, fontWeight: 'bold', textTransform: 'uppercase', }}>
+                                <h2 className="text-shadow" style={{ fontSize: 22, textAlign: 'center', fontWeight: 'bold', textTransform: 'uppercase', }}>
                                     {'Software de uso compartido sencillo y colaboración sin problemas'}
                                 </h2>
-                                <p className="text-shadow" style={{ lineHeight: 1, maxWidth: '65%', textAlign: 'center', margin: '15px 0px' }}>
+                                <p className="text-shadow" style={{ maxWidth: '65%', textAlign: 'center', margin: '15px 0px' }}>
                                     {`Comparte y administra contenido, conocimientos y aplicaciones para impulsar el trabajo en equipo,
                                     encontrar información rápidamente y colaborar con todos los miembros de la organización sin problemas.`}
                                 </p>
@@ -93,22 +93,6 @@ const Index = () => {
                                         className='cursor-crosshair'
                                     >
                                         Introducción
-                                    </Button>
-                                    <Button
-                                        bg={'transparent'}
-                                        rounded={50}
-                                        color="white"
-                                        fontWeight={'300'}
-                                        leftIcon={<div />}
-                                        rightIcon={<PiArrowRightThin className='text-3xl' color="white" />}
-                                        //_hover={{ bg: 'transparent' }}
-                                        _hover={"none"}
-                                        onClick={() => window.location.href = '/contacto'}
-                                        //aria-label="Redirigir a Contacto"
-                                        title="Redirigir a Contacto"
-                                        className='cursor-crosshair'
-                                    >
-                                        Más información
                                     </Button>
                                 </div>
                                 <div className="animated-accordion">

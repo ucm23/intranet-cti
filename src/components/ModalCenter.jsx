@@ -19,6 +19,7 @@ function ModalCenter({ show, onHide, mobile, openSession }) {
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const [api, contextHolder] = notification.useNotification();
     const openNotification = (type, description) => openNotificationForLogin(api, type, description)
+    
     const [data, setData] = useState({
         email: '',
         password: ''
@@ -28,6 +29,7 @@ function ModalCenter({ show, onHide, mobile, openSession }) {
         const { value, name } = event.currentTarget;
         setData({ ...data, [name]: value });
     }
+
     const handleLogin = async (e) => {
         try {
             e.preventDefault();

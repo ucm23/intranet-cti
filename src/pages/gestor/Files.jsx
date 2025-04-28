@@ -852,7 +852,7 @@ const DocumentManager = () => {
         if (!pdfUrl) return <LoaderPDF />
         else return (
             <div className="flex flex-col md:flex-row h-screen w-full bg-gray-100">
-                <FloatButton icon={!isModalOpen ? <FiPlus /> : <FiX/>} type='primary' onClick={() => setIsModalOpen(!isModalOpen)} style={{ insetInlineEnd: 26 }} />
+                <FloatButton icon={!isModalOpen ? <FiPlus /> : <FiX />} type='primary' onClick={() => setIsModalOpen(!isModalOpen)} style={{ insetInlineEnd: 26 }} />
                 <div className="w-full md:w-[70%] h-screen flex flex-col" role="main">
                     <iframe
                         src={pdfUrl}
@@ -1307,24 +1307,28 @@ const DocumentManager = () => {
                                 <h3 className="text-sm font-semibold text-white pb-0 mb-0">{selectedImage?.file_name || selectedImage?.name}</h3>
                             </div>
                             <div className="flex gap-2">
-                                {/*<button
+                                {role !== 'lector' && (
+                                    <>
+                                        {/*<button
                                     onClick={handleDownload}
                                     className="p-2 hover:bg-gray-800 rounded-full text-blue-400"
                                 >
                                     <AiOutlineDownload className="w-5 h-5" />
                                 </button>*/}
-                                <button
-                                    onClick={onOpenShare}
-                                    className="p-2 hover:bg-gray-800 rounded-full text-white"
-                                >
-                                    <AiOutlineShareAlt className="w-5 h-5" />
-                                </button>
-                                <button
-                                    onClick={() => handleDelete({ id: selectedImage?.id })}
-                                    className="p-2 hover:bg-gray-800 rounded-full text-white"
-                                >
-                                    <AiOutlineDelete className="w-5 h-5" />
-                                </button>
+                                        <button
+                                            onClick={onOpenShare}
+                                            className="p-2 hover:bg-gray-800 rounded-full text-white"
+                                        >
+                                            <AiOutlineShareAlt className="w-5 h-5" />
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete({ id: selectedImage?.id })}
+                                            className="p-2 hover:bg-gray-800 rounded-full text-white"
+                                        >
+                                            <AiOutlineDelete className="w-5 h-5" />
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className={`flex-1 flex justify-center ${!selectedImage?.type.endsWith('pdf') && 'p-4 items-center'} pt-0 relative`}>

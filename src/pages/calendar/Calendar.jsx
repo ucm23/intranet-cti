@@ -103,6 +103,12 @@ const Calendar = () => {
         getEvents()
     }, [])
 
+    useEffect(() => {
+        if (departaments.length > 0) {
+            setSelected
+        }
+    }, [departaments])
+
     const getEvents = async () => {
         const { status, data } = await indexEvents({})
         if (status) setEvents(data)
@@ -149,6 +155,7 @@ const Calendar = () => {
             newEvent.department_id = parseInt(newEvent.department_id)
             if (newEvent.link) newEvent.url = newEvent.link;
             delete newEvent.link;
+            if (newEvent.type == 'Cumpleaños') newEvent.title += "🥳";
             newEvent.event_type = newEvent.type;
             delete newEvent.type;
             newEvent.description = body;
@@ -415,18 +422,21 @@ const Calendar = () => {
                                     }}
                                 />
                             </div>
-                            <div className='div-container-inputs-form'>
-                                <CiVideoOn style={{ fontSize: 22, color: '#ccc', padding: 2, marginRight: 8 }} />
-                                <input
-                                    type="text"
-                                    placeholder="Liga de videoconferencia"
-                                    value={newEvent.link}
-                                    onChange={(e) => setNewEvent({ ...newEvent, link: e.target.value })}
-                                    //className='input-select-calendar'
-                                    className='input-text-form'
-                                //style={{ fontSize: 20 }}
-                                />
-                            </div>
+                            {newEvent?.type != 'Cumpleaños' &&
+                                <div className='div-container-inputs-form'>
+                                    <CiVideoOn style={{ fontSize: 22, color: '#ccc', padding: 2, marginRight: 8 }} />
+                                    <input
+                                        type="text"
+                                        placeholder="Liga de videoconferencia"
+                                        value={newEvent.link}
+                                        onChange={(e) => setNewEvent({ ...newEvent, link: e.target.value })}
+                                        //className='input-select-calendar'
+                                        className='input-text-form'
+                                    //style={{ fontSize: 20 }}
+                                    />
+                                </div>
+                            }
+
                             <div className='div-container-inputs-form'>
                                 <IoTimeOutline style={{ fontSize: 22, color: '#ccc', padding: 2, marginRight: 8 }} />
                                 <div className='div-container-inputs-form' style={{ gap: 4 }}>
