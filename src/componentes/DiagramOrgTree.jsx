@@ -5,16 +5,16 @@ import '../styles/arbol.css';
 import CEO from '../imgOrganigrama/CEO.png';
 import ceo2 from '../imgOrganigrama/ceo2.png';
 import dev1 from '../imgOrganigrama/DEV1.png';
-import dev3x from '../imgOrganigrama/DEV3X.png';
+import DEV5 from '../imgOrganigrama/DEV5.jpg';
 import dev2 from '../imgOrganigrama/DEV2.png';
 import conta1 from '../imgOrganigrama/conta1.png';
 import conta2 from '../imgOrganigrama/conta2.png';
 import calidad1 from '../imgOrganigrama/CALIDAD1.png';
 import rh1 from '../imgOrganigrama/RH1.png';
-import becaria1 from '../imgOrganigrama/becaria1.png';
+import MESA4 from '../imgOrganigrama/MESA4.jpeg';
 import juridico1 from '../imgOrganigrama/juridico1.png';
-import becaria2 from '../imgOrganigrama/becaria2.png';
 import SAP1 from '../imgOrganigrama/SAP1.png';
+import SOPORTE from '../imgOrganigrama/SOPORTE.jpg';
 import SAP2 from '../imgOrganigrama/SAP2.png';
 import IA1 from '../imgOrganigrama/IA1.png';
 import IA2 from '../imgOrganigrama/IA2.png';
@@ -22,6 +22,13 @@ import infra1 from '../imgOrganigrama/infra1.png';
 import curso1 from '../imgOrganigrama/curso1.png';
 import ITS1 from '../imgOrganigrama/ITS1.png';
 import ITS2 from '../imgOrganigrama/ITS2.png';
+import MESA1M from '../imgOrganigrama/MESA1M.jpg';
+import MESA2 from '../imgOrganigrama/MESA2.jpg';
+import MESA3 from '../imgOrganigrama/MESA3.jpg';
+import DEV3M from '../imgOrganigrama/DEV3M.jpg';
+import DEV4 from '../imgOrganigrama/DEV4.jpg';
+import LICITACIONES1 from '../imgOrganigrama/LICITACIONES1.jpg';
+import DCOMERCIAL1 from '../imgOrganigrama/DCOMERCIAL1.png';
 import UserProfileCard from '../components/UserProfileCard';
 
 
@@ -93,7 +100,7 @@ const DiagramOrgTree = ({ xy, min }) => {
                 children: [{
                     id: 5,
                     label: <UserProfileCard
-                        color="#4E3B31"
+                        color="brown"
                         name="José Luis Rangel"
                         puesto="Lic. Calidad"
                         urlPhoto={calidad1}
@@ -168,12 +175,12 @@ const DiagramOrgTree = ({ xy, min }) => {
             },
             {
                 id: 10,
-                label: <div className='childrens-label-title' style={{ backgroundColor: '#001529' }}>Desarrollo de Aplicaciones Web, Móvil y C-S</div>,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#1800ad' }}>Desarrollo de Aplicaciones Web, Móvil y C-S</div>,
                 children: [
                     {
                         id: 10,
                         label: <UserProfileCard
-                            color="#001529"
+                            color="#1800ad"
                             name="Gilberto López Antonio"
                             puesto="Dev. Web Senior"
                             urlPhoto={dev1}
@@ -181,28 +188,12 @@ const DiagramOrgTree = ({ xy, min }) => {
                             onClickProfile={() => handleDetails(10, 'DEV1.png')}
                             min={min}
                         />,
-                        children: [
-
-                            {
-                                id: 11,
-                                label: <UserProfileCard
-                                    color="#001529"
-                                    name="Ana Cristina Hernández B."
-                                    puesto="Becaria Dev. Web"
-                                    urlPhoto={becaria1}
-                                    onClickCV={() => handleDetails(11)}
-                                    onClickProfile={() => handleDetails(11, 'becaria1.png')}
-                                    min={min}
-                                />
-                                ,
-                            },
-                        ],
                     },
 
                     {
                         id: 12,
                         label: <UserProfileCard
-                            color="#001529"
+                            color="#1800ad"
                             name="Ulises Cano Martínez"
                             puesto="Dev. Web"
                             urlPhoto={dev2}
@@ -215,28 +206,38 @@ const DiagramOrgTree = ({ xy, min }) => {
                     {
                         id: 13,
                         label: <UserProfileCard
-                            color="#001529"
-                            name="Luz Adriana Castillo B."
-                            puesto="Ing. Dev.C-S Senior"
-                            urlPhoto={dev3x}
+                            color="#1800ad"
+                            name="María José Carvajal Carrera"
+                            puesto="Dev. Web"
+                            urlPhoto={DEV3M}
                             onClickCV={() => handleDetails(13)}
-                            onClickProfile={() => handleDetails(13, 'DEV3X.png')}
+                            onClickProfile={() => handleDetails(13, 'DEV3M.jpg')}
                             min={min}
-                        />,
-                        children: [
-                            {
-                                id: 14,
-                                label: <UserProfileCard
-                                    color="#001529"
-                                    name="Antonia Cortés Pérez"
-                                    puesto="Becaria Dev. Web"
-                                    urlPhoto={becaria2}
-                                    onClickCV={() => handleDetails(14)}
-                                    onClickProfile={() => handleDetails(14, 'becaria2.png')}
-                                    min={min}
-                                />
-                            },
-                        ],
+                        />
+                    },
+                    {
+                        id: 21,
+                        label: <UserProfileCard
+                            color="#1800ad"
+                            name="Sergio Cano Martínez"
+                            puesto="Dev. Web"
+                            urlPhoto={DEV4}
+                            onClickCV={() => handleDetails(21)}
+                            onClickProfile={() => handleDetails(21, 'DEV4.jpg')}
+                            min={min}
+                        />
+                    },
+                    {
+                        id: 22,
+                        label: <UserProfileCard
+                            color="#1800ad"
+                            name="Rafael Cano Martínez"
+                            puesto="Dev. Web"
+                            urlPhoto={DEV5}
+                            onClickCV={() => handleDetails(22)}
+                            onClickProfile={() => handleDetails(22, 'DEV5.jpg')}
+                            min={min}
+                        />
                     },
                 ],
             },
@@ -335,6 +336,126 @@ const DiagramOrgTree = ({ xy, min }) => {
                             },
 
                         ],
+                    },
+                ],
+            },
+            {
+                id: 23,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#4c19b0' }}>Mesa de Ayuda {min && <br />} y Soporte</div>,
+                children: [
+                    {
+                        id: 23,
+                        label: <UserProfileCard
+                            color="#4c19b0"
+                            name="Jose Manuel Bravo Valencia"
+                            puesto="Gerente de Mesa de Ayuda"
+                            urlPhoto={MESA1M}
+                            onClickCV={() => handleDetails(23)}
+                            onClickProfile={() => handleDetails(23, 'MESA1M.jpg')}
+                            min={min}
+                        />
+                    },
+                    {
+                        id: 24,
+                        label: <UserProfileCard
+                            color="#4c19b0"
+                            name="Abigail Gabriela Vilchis M."
+                            puesto="Técnico Mesa de Ayuda"
+                            urlPhoto={MESA2}
+                            onClickCV={() => handleDetails(24)}
+                            onClickProfile={() => handleDetails(24, 'MESA2.jpg')}
+                            min={min}
+                        />
+                    },
+                    {
+                        id: 25,
+                        label: <UserProfileCard
+                            color="#4c19b0"
+                            name="Nicolás Bravo Vilchis "
+                            puesto="Técnico Mesa de Ayuda"
+                            urlPhoto={MESA3}
+                            onClickCV={() => handleDetails(25)}
+                            onClickProfile={() => handleDetails(25, 'MESA3.jpg')}
+                            min={min}
+                        />
+                    },
+                    {
+                        id: 29,
+                        label: <UserProfileCard
+                            color="#4c19b0"
+                            name="Lilia Marquéz Samano"
+                            puesto="Técnico Mesa de Ayuda"
+                            urlPhoto={MESA4}
+                            onClickCV={() => handleDetails(29)}
+                            onClickProfile={() => handleDetails(29, 'MESA4.jpeg')}
+                            min={min}
+                        />
+                    },
+                ],
+            },
+            {
+                id: 30,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#E67E22' }}>Soporte en sitio</div>,
+                children: [
+                    {
+                        id: 30,
+                        label: <UserProfileCard
+                            color="#E67E22"
+                            name="Jorge Luis Olmos"
+                            puesto="Soporte en sitio"
+                            urlPhoto={SOPORTE}
+                            onClickCV={() => handleDetails(30)}
+                            onClickProfile={() => handleDetails(30, 'SOPORTE.jpg')}
+                            min={min}
+                        />
+                    },
+                ],
+            },
+            {
+                id: 26,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#8B4513' }}>Licitaciones</div>,
+                children: [
+                    {
+                        id: 26,
+                        label: <UserProfileCard
+                            color="#8B4513"
+                            name="Lidia Millán Benítez"
+                            puesto="Lic. Licitaciones"
+                            urlPhoto={LICITACIONES1}
+                            onClickCV={() => handleDetails(26)}
+                            onClickProfile={() => handleDetails(26, 'LICITACIONES1.jpg')}
+                            min={min}
+                        />
+                    },
+                ],
+            },
+            {
+                id: 27,
+                label: <div className='childrens-label-title' style={{ backgroundColor: '#2E7D32' }}>Dirección Comercial</div>,
+                children: [
+                    {
+                        id: 27,
+                        label: <UserProfileCard
+                            color="#2E7D32"
+                            name="Héctor Julián Rabadán Tapia"
+                            puesto="Dirección Comercial"
+                            urlPhoto={DCOMERCIAL1}
+                            onClickCV={() => handleDetails(27)}
+                            onClickProfile={() => handleDetails(27, 'DCOMERCIAL1.png')}
+                            min={min}
+                        />
+                    },
+                    {
+                        id: 28,
+                        label: <UserProfileCard
+                            color="#2E7D32"
+                            name="Jaime"
+                            puesto="Dirección Comercial"
+                            // urlPhoto={conta2}
+                            onClickCV={() => handleDetails(28)}
+                            // onClickProfile={() => handleDetails(28, 'conta2.png')}
+                            min={min}
+                        />
                     },
                 ],
             },
