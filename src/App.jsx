@@ -60,7 +60,18 @@ function App() {
     return (
         <Context.Provider value={authContext}>
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
+                <PersistGate
+                        loading={
+                            <div style={{
+                                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                height: '100vh', width: '100%', background: '#f0f0f0',
+                                fontSize: '18px', color: '#333'
+                            }}>
+                                Cargando...
+                            </div>
+                        }
+                        persistor={persistor}
+                    >
                     {!userToken ?
                         <Routes>
                             <Route path="/" index element={<Index />} />

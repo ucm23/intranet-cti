@@ -1,965 +1,922 @@
 [
-    {
-        "id": 1,
-        "name": "Guillermina Sámano Gaspar",
-        "email": "gsamano@consultores-cti.com.mx",
-        "phone": "8115880305",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Senior Project Manager SAP, ORACLE, MICROSOFT, PEOPLESOFT",
-            "PMO y Desarrollo de Negocios Consultoría ALM SAP y Solución de",
-            "Industria Healthcare en América Latina (SAP)"
-        ],
-        "profile": [
-            "Senior Project Manager SAP, ORACLE, MICROSOFT, PEOPLESOFT e Infraestructura",
-            "30 años de experiencia en Proyectos de TI de diferentes sectores tanto en iniciativa privada como en sector público, con equipo multidisciplinarios y multiculturales."
-        ],
-        "training": [
-            "Maestría en Dirección de Hospitales | 2015",
-            "UDEM",
-            "Maestría en Ingeniería en Sistemas | 2008",
-            "UNAM",
-            "Licenciatura en Informática | 1993",
-            "Universidad Simón Bolívar"
-        ],
-        "education": [
-            "Herramientas para Gestión de Ciclo de Vida (ALM SAP) Intellicorp / SmartShift / RevTrac",
-            "Certificación ITIL V.3.0 Certificado: 882544",
-            "Certificación SAP Procurement ECC EHP 4.0 NO.00009778322"
-        ],
-        "experience": [
-            "Directora General de Grupo CTI",
-            "Dirección de proyectos de mantenimiento y mejora continua SAP S/4HANA TIC’s Sector Privado y Sector Público",
-            "Ciberseguridad, Desarrollo de aplicaciones WEB (SAP FIORI) Y Móviles"
-        ],
-        "url": "/CV_GSamano.pdf",
-        "position": "DGeneral.pdf",
-        "post": "Dirección General"
-    },
-    {
-        "id": 2,
-        "name": "Edith Sámano Gaspar",
-        "email": "gsamano@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "CEO DECC (Desarrollo Empresarial, Consultoría y Coaching, S.C.)",
-            "Consultoría contable, fiscal y capacitación en áreas de Desarrollo Humano Industrial, Jurídico y Tecnologías de la Información"
-        ],
-        "profile": [
-            "Consultoría contable, fiscal y capacitación","Desarrollo Humano Industrial, Jurídico, Tecnologías de la Información. Gestión de Procesos de Consultoría Contable y Fiscal en Corporativos Nacionales, Personas Físicas con Actividades Empresariales y Profesionales, Profesionistas independientes."
-        ],
-        "training": [
-            "Licenciada en Contaduría Pública Posgrado en Derecho Fiscal",
-            "UNITEC"
-        ],
-        "education": [
-            "Procesos de Licitación, Contratación y Ejecución de Proyectos de Capacitación y Certificación para Dependencias del Sector Público y Privado cumpliendo con las normativas requeridas para cada caso."
-        ],
-        "experience": [
-            "Directora Suplente de GRUPO CTI"
-        ],
-        "url": "/CV_ESamanoG.pdf",
-        "position": "DGeneral.pdf",
-        "post": "Dirección General"
-    },
-    {
-        "id": 3,
-        "name": "Luis Manuel Alfaro Rivera",
-        "email": "lalfaro@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Gestionar y coordinar el seguimiento de procesos judiciales y extrajudiciales",
-            "Realizar investigaciones jurídicas y estudios de legislación aplicable en temas relacionados con las actividades de la empresa."
-        ],
-        "profile": [
-            "Jefe de Jurídico y Seguridad",
-            "Asesor de la alta dirección y de los distintos departamentos sobre riesgos legales y estrategias para mitigarlos"
-        ],
-        "training": [
-            "Licenciado en Derecho",
-            "UNITEC"
-        ],
-        "education": [
-            "Cursos de Actualización Legal. Formación continua sobre cambios en la legislación y regulaciones aplicables a la industria."
-        ],
-        "experience": [
-            "Representar a Grupo CTI en litigios judiciales, administrativos y procedimientos de arbitraje.",
-            "Preparar, revisar y presentar demandas, contestaciones, escritos, recursos y todo tipo de documentos legales necesarios para la defensa de la empresa."
-        ],
-        "url": "/CV_LMAlfaro.pdf",
-        "position": "GJuridico.pdf",
-        "post": "Lic. Jurídico"
-    },
-    {
-        "id": 4,
-        "name": "Marisela Ladrón de G.",
-        "email": "mladron@consultores-cti.com.mx",
-        "phone": "5527320382",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Coordinar con los líderes de cada departamento para asegurar la correcta implementación de proyectos y soluciones, optimizando recursos y procesos.",
-            "Liderar iniciativas de mejora continua en las operaciones y promover una cultura de eficiencia, innovación y calidad en todos los niveles de la organización."
-        ],
-        "profile": [
-            "Lic. en Recursos Humanos",
-            "Partner de Desarrollo y Clima Organizacional"
-        ],
-        "training": [
-            "Licenciatura en Psicología"
-        ],
-        "education": [
-            "Cursos de Legislación Laboral",
-            "Capacitación en Diversidad e Inclusión",
-            "Habilidades de Liderazgo y Coaching"
-        ],
-        "experience": [
-            "Evaluar el desempeño de los gerentes y equipos de trabajo, brindando retroalimentación y orientación para asegurar el logro de objetivos.",
-            "Colaborar con el director general en la definición y ejecución de la estrategia general de la empresa, asegurando el alineamiento con los objetivos de negocio a corto y largo plazo.",
-            "Liderar iniciativas de mejora continua en las operaciones y promover una cultura de eficiencia, innovación y calidad en todos los niveles de la organización."
-        ],
-        "url": "/CV_MariselaLadron.pdf",
-        "position": "GDesarrolloH.pdf",
-        "post": "Lic. Recursos Humanos"
-    },
-    {
-        "id": 5,
-        "name": "José Luis Rangel Aguilar",
-        "email": "rangela04@hotmail.com",
-        "phone": "5525176495",
-        "address": "C. Paz Montes de Oca N° 138-1,Benito Juárez,CDMX",
-        "competencies": [
-            "Consultor en Sistemas de Gestión de Calidad, Seguridad y Medio Ambiente.",
-            "Coordinador de Evaluación y Certificación.",
-            "Supervisor de proyecto, construcción y puesta en operación."
-        ],
-        "profile": [
-            "Consultor en Sistemas de Gestión de Calidad",
-            "Seguridad y Medio Ambiente en empresas de construcción en obras que serán certificadas"
-        ],
-        "training": [
-            "INGENIERO CIVIL",
-            "Consultor en Sistemas de Gestión de Calidad, Seguridad y Medio Ambiente"
-        ],
-        "education": [
-            "Curso de Actualización de la Norma ISO 9001 e ISO 14001",
-            "Formación de Auditor Interno ISO 9001",
-            "Cursos de Estadística y Probabilidad para Ingenieros",
-            "Curso de Estadística Estadísticas como Herramienta en el Sistema de Calidad"
-        ],
-        "experience": [
-            "Consultor en la Implantación, operación y mejora continua en Sistemas de Gestión de Calidad, Seguridad y Medio Ambiente, basados principalmente en la Normas ISO.",
-            "Capacitación y evaluación en Certificación de Competencias Laborales, de acuerdo con las normas emitidas por el CONOCER"
-        ],
-        "url": "/CV_JLRangel.pdf",
-        "position": "GCalidad.pdf",
-        "post": "Lic. Calidad"
-    },
-    {
-        "id": 6,
-        "name": "Carlos Fco. Sainz Ruíz",
-        "email": "csainz@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Gestión y supervisión de estados financieros.",
-            "Coordinación de la elaboración de presupuestos y pronósticos financieros.",
-            "Presentación de declaraciones mensuales y anuales."
-        ],
-        "profile": [
-            "Licenciado en Contabilidad",
-            "Encargado de la contabilidad y finanzas, incluyendo la gestión y supervisión de los estados financieros, que reflejan con precisión la situación económica de la empresa"
-        ],
-        "training": [
-            "Licenciado en Contaduría Pública",
-            "Universidad de Sonora Instituto de Capacitación Empresarial de Occidente"
-        ],
-        "education": [
-            "Maestría en Impuestos"
-        ],
-        "experience": [
-            "CEO DECC (Desarrollo Empresarial, Consultoría y Coaching, S.C.) | Director Suplente (CTI)"
-        ],
-        "url": "/CV_CFSainz.pdf",
-        "position": "GContabilidadyF.pdf",
-        "post": "Lic. Contable"
-    },
-    {
-        "id": 7,
-        "name": "Ashley M. Huerta Arias",
-        "email": "AHuerta@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Elaborar y actualizar reportes financieros básicos, como control de gastos y facturación.",
-            "Creación de publicaciones en redes sociales.Interactuar con los seguidores, respondiendo a consultas, comentarios y mensajes en las plataformas digitales."
-        ],
-        "profile": [
-            "Auxiliar y apoyo en la gestión administrativa de la oficina",
-            "Control de archivos, documentos, correspondencia y suministros de oficina"
-        ],
-        "training": [
-            "Licenciatura de Dirección Financiera y Administración",
-            "ITAM"
-        ],
-        "education": [],
-        "experience": [
-            "Elaborar y actualizar reportes financieros básicos, como control de gastos y facturación.Atender llamadas telefónicas, cGorreos electrónicos y consultas generales de clientes y proveedores.",
-            "Mantener el archivo físico y digital de la documentación administrativa actualizada y accesible.",
-            "Realizar seguimiento de pagos, facturas y contratos bajo la supervisión del área administrativa.",
-            "Gestionar las redes sociales de Grupo CTI (Facebook, LinkedIn, Twitter, Instagram, etc.), publicando contenido relevante y alineado con la estrategia de marketing digital."
-        ],
-        "url": "/CV_Ashley.pdf",
-        "position": "AuxAdmonyCob.pdf",
-        "post": "Administración y Marketing"
-    },
-    {
-        "id": 8,
-        "name": "Norma Barbosa Suarez",
-        "email": "nbarbosa@consultores-cti.com.mx",
-        "phone": "5530767294",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Recolección y análisis de las necesidades del negocio para la implementación o mejora de procesos en SAP.",
-            "Mejora la eficiencia de los procesos internos y garantiza que el sistema funcione de acuerdo con las prácticas comerciales de la organización."
-        ],
-        "profile": [
-            "Especialista SAP",
-            "Partner de Análisis, Desarrollo Funcional y Técnico para ERP SAP ECC y S/4HANA"
-        ],
-        "training": [
-            "Licenciatura en Ciencias Administrativas",
-            "Escuela Bancaria y Comercial"
-        ],
-        "education": [
-            "Formación Continua y actualización sobre nuevas funcionalidades de SAP y tendencias del sector.",
-            "Cursos de Formación SAP.",
-            "Entrenamiento en Herramientas Relacionadas."
-        ],
-        "experience": [
-            "Participar en la documentación y diseño de procesos de negocio para su implementación en SAP ECC y S/4HANA",
-            "Configurar, personalizar y mantener módulos de SAP ECC y S/4HANA según las especificaciones funcionales",
-            "Colaborar en proyectos de migración de SAP ECC a S/4HANA, asegurando la integridad de los datos y la optimización de los procesos."
-        ],
-        "url": "/CV_NBarbosa.pdf",
-        "position": "ESAP.pdf",
-        "post": "Consultor SAP MM/FI/SD"
-    },
-    {
-        "id": 9,
-        "name": "Francisco Javier Mejia Robles",
-        "email": "fmejia@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Especalista en Soluciones Empresariales de Microsoft.",
-            "Coordinación de equipo de consultores internos de SAP",
-            "Desarrollos SAP-ABAP, coordinador de equipos de desarrollo en distintos proyectos con clientes como GENTERA, AXO, PDVSA,."
-        ],
-        "profile": [
-            "Especialista SAP",
-            "Partner de Análisis y Desarrollo Funcional y Técnico para ERP SAP ECC y S/4HANA"
-        ],
-        "training": [
-            "Licenciatura en Ingeniería en Sistemas Industriales",
-            "Fundación Arturo Rosenblueth"
-        ],
-        "education": [
-            "Formación Continua y actualización sobre nuevas funcionalidades de SAP y tendencias del sector.",
-            "Cursos de Formación SAP.",
-            "Entrenamiento en Herramientas Relacionadas."
-        ],
-        "experience": [
-            "Desarrollar elementos web personalizados mediante SharePoint Framework.",
-            "Participar en la documentación y diseño de procesos de negocio para su implementación en SAP ECC y S/4HANA",
-            "Configurar, personalizar y mantener módulos de SAP ECC y S/4HANA según las especificaciones funcionales",
-            "Consultoría y desarrollos de APO, contabilidad electrónica, activos fijos, transferencias bancarias e impartiendo academias de SAP - ABAP."
-        ],
-        "url": "/CV_FJMejia.pdf",
-        "position": "ESAP.pdf",
-        "post": "Consultor Consultor SAP-ABAP"
-    },
-    {
-        "id": 10,
-        "name": "Gilberto López Antonio",
-        "email": "glopez@consultores-cti.com.mx",
-        "phone": "2361039980",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Implementación de Aplicaciones de Escritorio, Web, .Net, C# y Sharepoint.",
-            "Conocimiento de  HTML5 y scripting",
-            "Conocimiento en Selenium."
-        ],
-        "profile": [
-            "Profesional en TI",
-            "Implementación de Aplicaciones de Escritorio, Web, .Net, C# y Sharepoint, trabajando desde el 2019 en autopistas de cuota, con amplia experiencia en Instalación , Mantenimiento y Soporte a SISTEMAS DE ITS (SISTEMA DE GESTIÓN DE AUTOPISTAS, PMV, CCTV, CONTROL DE ACCESOS, ANPR, RADARES, CCO)"
-        ],
-        "training": [
-            "Licenciado en Informática",
-            "Universidad de la Cañada"
-        ],
-        "education": [
-            "Maintaining a Microsoft SQL Server 2008 Database",
-            "Microsoft Certified Professional Developer (.NetFramework 4.0 Service Communication Applications)"
-        ],
-        "experience": [
-            "Sistema de gestión de autopistas VICTUM (MRO PAQUETE NORESTE)",
-            "Sistema de gestión de autopistas VICTUM (MRO GUADALAJARA | COLIMA)",
-            "Sistema Tiempos de Cruce CD.VALLES | TAMUIN"
-        ],
-        "url": "/CV_GLAntonio.pdf",
-        "position": "DevWebSenior.pdf",
-        "post": "Dev. Web Senior"
-    },
-    {
-        "id": 12,
-        "name": "Ulises Cano Martínez",
-        "email": "ucano@consultores-cti.com.mx",
-        "phone": "2361221762",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Desarrollo de aplicaciones móviles híbridas con React-Native (iOS & Android).",
-            "Consumo de API’s Rest. Implementación de componentes personalizados.",
-            "Desarrollo de aplicaciones móviles nativas Android. "
-        ],
-        "profile": [
-            "Profesional en TI",
-            "Implementación de Aplicaciones móviles híbridas con React-Native (iOS & Android)."
-        ],
-        "training": [
-            "Licenciado en Informática",
-            "Universidad de la Cañada"
-        ],
-        "education": [
-            "iOS y Android: Swift, Kotlin, Java.",
-            "Frameworks: Flutter, React Native.",
-            "UI/UX: Diseño de interfaces y experiencia de usuario."
-        ],
-        "experience": [
-            "Servicios de consultoría y desarrollo de código fuente con tecnologías de React Native para móviles de diversos proyectos conforme a las especificaciones planteadas por los directivos y el cliente final.",
-            "Desarrollo de aplicaciones móviles híbridas con React-Native (iOS & Android).",
-            "Desarrollo de aplicaciones móviles nativas Android.",
-            "Mantenimiento y desarrollo desde cero de aplicaciones móviles modulares.",
-            "Integración de servicios de terceros."
-        ],
-        "url": "/CV_UCMartinez.pdf",
-        "position": "DevMovilSenior.pdf",
-        "post": "Dev. Aplicaciones Móviles"
-    },
-    {
-        "id": 13,
-        "name": "María José Carvajal Carrera",
-        "email": "mjcarvajal@consultores-cti.com.mx",
-        "phone": "2361117315",
-        "address": "C. Independencia 25, Col. Centro. Teotitlán de Flores Magón, Oaxaca, 68540",
-        "competencies": [
-            "Implementación y desarrollo de sitios web.",
-            "Diseño y prototipado de interfaces digitales centradas en el usuario.",
-            "Análisis de requerimientos y definición de soluciones tecnológicas.",
-            "Desarrollo y mantenimiento de plataformas web.",
-            "Gestión y estructuración de información para sistemas digitales.",
-            "Trabajo bajo metodologías ágiles y entornos colaborativos."
-        ],
-        "profile": [
-            "Profesional en TI",
-            "Implementación y desarrollo de soluciones web, diseño de interfaces digitales y prototipos, análisis de requerimientos y administración de información para plataformas digitales, trabajando en entornos colaborativos y bajo metodologías ágiles."
-        ],
-        "training": [
-            "Licenciada en Informática",
-            "Universidad de la Cañada"
-        ],
-        "education": [
-            "Congreso Estatal de Género, Ciencia, Humanidades, Tecnología e Innovación (2025). Presentación de cartel académico.",
-            "Taller “Diseño de Interfaces con Sketching y Prototipos en Papel” (2025).",
-            "Foro de Lenguas (2024). Participación en el proyecto ICHITU.",
-            "Scrum Foundation Professional Certificate (SFPC) (2023).",
-            "Jira Scrum Foundation (2023)."
-        ],
-        "experience": [
-            "Desarrollo de proyectos web, participando en las distintas etapas del proceso: análisis, diseño, desarrollo e implementación.",
-            "Colaboración en proyectos tecnológicos enfocados en la funcionalidad, usabilidad y experiencia del usuario.",
-            "Diseño de prototipos digitales y validación de soluciones mediante pruebas y retroalimentación.",
-            "Mantenimiento y mejora de sistemas existentes para optimizar su desempeño y estructura.",
-            "Trabajo en equipo para el cumplimiento de objetivos, tiempos y calidad de los entregables.",
-            "Implementación de capacitación en sistemas tecnológicos, orientada a la adopción y uso correcto de plataformas como Conecta AIFA y Victum Centinela.",
-            "Implementación de procesos de acompañamiento y soporte a usuarios durante la operación de sistemas tecnológicos.",
-            "Implementación de desarrollo web en rol de programadora junior, participando en la creación y mantenimiento de funcionalidades.",
-            "Implementación de desarrollo web utilizando lenguajes y frameworks como Node.js y React, bajo entornos colaborativos y de aprendizaje continuo."
-        ],
-        "url": "/CV_LACB.pdf",
-        "position": "DevClienteServSenior.pdf",
-        "post": "Dev. Web"
-    },
-    {
-        "id": 15,
-        "name": "Pablo Tlaxcoapan Lucas",
-        "email": "pablo.tlaxcoapan@aiformers.com",
-        "phone": "7223502242",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Automatice los procesos comerciales con flujos de trabajo, chatbots e IA utilizando Microsoft Power.",
-            "Implementar soluciones de colaboración y gestión de documentos utilizando Microsoft Office 365 "
-        ],
-        "profile": [
-            "Ing. IA",
-            "Desarrollo de Aplicaciones Web, de Escritorio e IA"
-        ],
-        "training": [
-            "Especialista Técnico En Programación De Computadoras",
-            "Centro De Estudios Científicos Y Tecnológicos IPN"
-        ],
-        "education": [
-            "Programación: Python, R, o Java.",
-            "Modelos de IA: Aprendizaje automático y profundo.",
-            "Manejo de Datos: Procesamiento y análisis. "
-        ],
-        "experience": [
-            "Definir y liderar la estrategia de inteligencia artificial dentro de Grupo CTI, identificando áreas clave donde la IA puede generar valor y eficiencia.",
-            "Colaborar con equipos multidisciplinarios para el diseño y desarrollo de productos basados en IA, incluyendo sistemas de aprendizaje automático (machine learning), procesamiento de lenguaje natural (NLP) y visión por computadora.",
-            "Supervisar proyectos de desarrollo de IA, garantizando la calidad, escalabilidad y seguridad de las soluciones."
-        ],
-        "url": "/CV_PTlaxco.pdf",
-        "position": "PartnerDevIA.pdf",
-        "post": "Ing. Dev. IA"
-    },
-    {
-        "id": 16,
-        "name": "Josue Tlaxcoapan Lucas",
-        "email": "josue.tlaxcoapan@aiformers.com",
-        "phone": "7223502242",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Automatice los procesos comerciales con flujos de trabajo, chatbots e IA utilizando Microsoft Power.",
-            "Implementar soluciones de colaboración y gestión de documentos utilizando Microsoft Office 365 "
-        ],
-        "profile": [
-            "Ing. IA",
-            "Desarrollo de Aplicaciones Web, de Escritorio e IA"
-        ],
-        "training": [
-            "Especialista Técnico En Programación De Computadoras",
-            "Centro De Estudios Científicos Y Tecnológicos IPN"
-        ],
-        "education": [
-            "Programación: Python, R, o Java.",
-            "Modelos de IA: Aprendizaje automático y profundo.",
-            "Manejo de Datos: Procesamiento y análisis."
-        ],
-        "experience": [
-            "Definir y liderar la estrategia de inteligencia artificial dentro de Grupo CTI, identificando áreas clave donde la IA puede generar valor y eficiencia.",
-            "Colaborar con equipos multidisciplinarios para el diseño y desarrollo de productos basados en IA, incluyendo sistemas de aprendizaje automático (machine learning), procesamiento de lenguaje natural (NLP) y visión por computadora.",
-            "Supervisar proyectos de desarrollo de IA, garantizando la calidad, escalabilidad y seguridad de las soluciones."
-        ],
-        "url": "/CV_PTlaxco.pdf",
-        "position": "PartnerDevIA.pdf",
-        "post": "Ing. Dev. IA"
-    },
-    {
-        "id": 17,
-        "name": "Heber Argumedo Marroquín",
-        "email": "hargumedo@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Monitoreo y ejecución de prueba de pentesting automatizada",
-            "*Seguridad de sistemas, redes.",
-            "Mantenimiento y administración a equipos de cómputo"
-        ],
-        "profile": [
-            "Ingeniero de Infraestructura",
-            "ITS-PEAJE-TELEPEAJE"
-        ],
-        "training": [
-            "Licenciatura En Ingenieria En Sistemas Computacionales",
-            "Universidad Tecnológica de México"
-        ],
-        "education": [
-            "Sistemas ITS: Implementación y gestión de Sistemas de Transporte Inteligente.",
-            "Conocimiento en tecnologías de cobro electrónico.",
-            "Redes y Comunicaciones: Configuración y gestión de redes de datos."
-        ],
-        "experience": [
-            "Diseño de Infraestructura: Crear arquitecturas para sistemas ITS y telepeaje.| Implementación de Proyectos: Supervisar la instalación de hardware y software.",
-            "Mantenimiento y Soporte: Asegurar el funcionamiento óptimo y realizar mantenimiento.",
-            "Integración de Sistemas: Colaborar con otros departamentos para la integración tecnológica.",
-            "Documentación: Generar documentación técnica y manuales de usuario."
-        ],
-        "url": "/CV_HebertA.pdf",
-        "position": "GInfraestructuraITS.pdf",
-        "post": "Ing. Infraestructura e ITS"
-    },
-    {
-        "id": 18,
-        "name": "Luis Alberto Ruíz Aguilar",
-        "email": "lruiz@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Dominio de herramientas y plataformas de gestión de aprendizaje (LMS) y recursos digitales de formación.",
-            "Conocimiento avanzado en técnicas de evaluación de competencias y desarrollo de habilidades."
-        ],
-        "profile": [
-            "Director Corporativo de Desarrollo de Sistemas",
-            "Soporte a proyectos"
-        ],
-        "training": [
-            "Ingeniería Electrónica",
-            "Instituto Técnologico Superior De Apatzingan"
-        ],
-        "education": [
-            "Desarrollo Organizacional, Gestión del Talento o Educación Corporativa",
-            "Conocimiento en evaluación de competencias y metodologías de formación continua."
-        ],
-        "experience": [
-            "Director de Desarrollo de Sistemas y Soporte a proyectos.",
-            "Peaje Telepeaje ITS SGA CCTV"
-        ],
-        "url": "/CV_LuisRuizA.pdf",
-        "position": "GInfraestructuraITS.pdf",
-        "post": "Ing. Capacitación"
-    },
-    {
-        "id": 19,
-        "name": "Victor Ricardo Mojica Leines",
-        "email": "vmojica@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Dominio de herramientas y plataformas de gestión de aprendizaje (LMS) y recursos digitales de formación.",
-            "Conocimiento avanzado en técnicas de evaluación de competencias y desarrollo de habilidades."
-        ],
-        "profile": [
-            "Ingeniero de ITS",
-            "PEAJE-TELEPEAJE"
-        ],
-        "training": [
-            "Ingenieria En Sistemas Computacionales"
-        ],
-        "education": [
-            "Sistemas ITS: Implementación y gestión de Sistemas de Transporte Inteligente.",
-            "Conocimiento en tecnologías de cobro electrónico.",
-            "Redes y Comunicaciones: Configuración y gestión de redes de datos."
-        ],
-        "experience": [
-            "Diseño de Infraestructura: Crear arquitecturas para sistemas ITS y telepeaje.| Implementación de Proyectos: Supervisar la instalación de hardware y software.",
-            "Mantenimiento y Soporte: Asegurar el funcionamiento óptimo y realizar mantenimiento.",
-            "Integración de Sistemas: Colaborar con otros departamentos para la integración tecnológica.",
-            "Documentación: Generar documentación técnica y manuales de usuario."
-        ],
-        "url": "/CV_VRMojica.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. ITS y Peaje"
-    },
-    {
-        "id": 20,
-        "name": "Julio César Castillo Zamora",
-        "email": "jcastilloz@consultores-cti.com.mx",
-        "phone": "-- No disponible --",
-        "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
-        "competencies": [
-            "Cumplimiento de calidad de los proyectos en ejecución desde su inicio, hasta el cierre y seguimiento para fines de calidad.",
-            "Desarrollo de KPI ‘s tiempo-costo-calidad de proyectos GRUPO CTI."
-        ],
-        "profile": [
-            "Epecialista en Peaje",
-            "Telepeaje, Comunicaciones e ITS"
-        ],
-        "training": [
-            "Ingenierio En Sistemas Computacionales",
-            "Instituto Técnologico Superior De Apatzingan"
-        ],
-        "education": [
-            "Conocimiento de Sistemas de Peaje e ITS: Implementación y gestión de Sistemas de Transporte Inteligente.",
-            "Conocimiento en tecnologías de cobro electrónico.",
-            "Redes y Comunicaciones: Configuración y gestión de redes de datos."
-        ],
-        "experience": [
-            "Supervisión de el cobro de peaje en vías exclusivas de telepeaje o Mejorar el armado automático de cruces.",
-            "Buscar alternativas para mejorar la tasa de lectura de tags y placas, con la finalidad de incrementar la eficiencia de idenHficación de cruces.",
-            "Seguimiento a las conciliaciones con los operadores de Telepeaje",
-            "Organización del personal, así como diseñar estrategias de crecimiento basadas en resultados con una metodología basada en estándares de calidad en el servicio."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 21,
-        "name": "Sergio Cano Martínez",
-        "email": "canomsergio13@gmail.com",
-        "phone": "287 1250 420",
-        "address": "Pendiente",
-        "competencies": [
-            "Implementación de plataformas web y comercio electrónico.",
-            "Implementación de componentes y funcionalidades para aplicaciones digitales.",
-            "Implementación de integraciones con servicios y sistemas externos.",
-            "Implementación de mejoras de rendimiento, usabilidad y experiencia del usuario.",
-            "Implementación de mantenimiento y optimización de sistemas existentes.",
-            "Implementación de soluciones bajo metodologías ágiles y trabajo colaborativo."
-        ],
-        "profile": [
-            "Profesional en TI",
-            "Implementación de soluciones web y plataformas de comercio electrónico, abarcando el desarrollo, configuración, mantenimiento y optimización de aplicaciones digitales, así como la integración de servicios, análisis de requerimientos y trabajo en entornos colaborativos orientados a la experiencia del usuario."
-        ],
-        "training": [
-            "Licenciado en Informática",
-            "Universidad de la Cañada"
-        ],
-        "education": [
-            "VTEX IO – Accredited (EICOM Institute)",
-            "VTEX 101 – Accredited (EICOM Institute).",
-            "FastStore – Accredited (EICOM Institute)"
-        ],
-        "experience": [
-            "Implementación de plataformas de comercio electrónico para distintos sectores y mercados.",
-            "Implementación de soluciones front-end para aplicaciones web y sistemas digitales.",
-            "Implementación de integraciones y servicios para el correcto funcionamiento de plataformas digitales.",
-            "Implementación de mejoras, rediseños y mantenimiento de sistemas existentes.",
-            "Implementación de soluciones tecnológicas alineadas a requerimientos funcionales y del negocio."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 22,
-        "name": "Rafael Cano Martínez",
-        "email": "canorafa13@gmail.com",
-        "phone": "561117697",
-        "address": "Calle Tornado Retorno 30, MZ 25 LT 95 D, San Jerónimo Cuatro Vientos, Ixtapaluca",
-        "competencies": [
-            "Implementación de desarrollo móvil multiplataforma y nativo.",
-            "Implementación de soluciones web y full stack.",
-            "Implementación de liderazgo técnico y gestión de equipos de desarrollo.",
-            "Implementación de patrones de diseño y buenas prácticas de desarrollo.",
-            "Implementación de procesos de calidad, seguridad y análisis de código.",
-            "Implementación de integración de servicios, bases de datos y servicios en la nube."
-        ],
-        "profile": [
-            "Profesional en TI",
-            "Implementación de soluciones tecnológicas móviles y web, abarcando el desarrollo, mantenimiento y optimización de aplicaciones, así como la integración de servicios, liderazgo técnico y coordinación de equipos, con enfoque en calidad, seguridad, escalabilidad y cumplimiento de requerimientos del negocio."
-        ],
-        "training": [
-            "Licenciado en Informática",
-            "Universidad de la Cañada"
-        ],
-        "education": [
-            "Curso Seguridad en el Ciclo de Vida del Desarrollo de Software – Asociación de Bancos de México (ABM).",
-            "Curso Fundamentos de la Programación Segura – Asociación de Bancos de México (ABM).",
-            "Curso Seguridad en Aplicaciones Web – Asociación de Bancos de México (ABM).",
-            "Curso Desarrollo Seguro de Aplicaciones Móviles – Asociación de Bancos de México (ABM).",
-            "Curso Desarrollo Seguro de APIs – Asociación de Bancos de México (ABM).",
-            "Curso Seguridad y Operaciones – Asociación de Bancos de México (ABM).",
-            "OWASP Top 10 Mobile – Riesgos de las Aplicaciones Móviles – Udemy.",
-            "Ciberseguridad Básico 3.0 – Asociación de Bancos de México (ABM)."
-        ],
-        "experience": [
-            "Implementación y gestión de mesas de ayuda y sistemas de tickets para la atención y seguimiento de incidencias tecnológicas.",
-            "Implementación de procesos de supervisión y coordinación de equipos de trabajo en entornos operativos y administrativos.",
-            "Implementación de procesos administrativos de facturación, cobranza y relación con clientes.",
-            "Implementación de soporte técnico interno y remoto, mantenimiento de equipos de cómputo e infraestructura básica de TI.",
-            "Implementación de administración de servicios generales, control de presupuestos y gestión de proveedores.",
-            "Implementación de estrategias de comunicación interna y actualización de contenidos digitales."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 23,
-        "name": "Jose Manuel Bravo Valencia",
-        "email": "jmbraval@gmail.com",
-        "phone": "55 2244 2718",
-        "address": "Tulunquies No. 2, Tlalpan, CDMX",
-        "competencies": [
-            "Implementación de servicios de soporte técnico y atención a usuarios.",
-            "Implementación de procesos administrativos, facturación electrónica y control documental.",
-            "Implementación de sistemas de gestión, control de almacenes y recursos.",
-            "Implementación de soporte en infraestructura tecnológica y mantenimiento de equipos.",
-            "Implementación de procesos de comunicación interna y coordinación operativa.",
-            "Implementación de control, seguimiento y mejora de procesos organizacionales."
-        ],
-        "profile": [
-            "Mesa de Ayuda y Soporte",
-            "Implementación y gestión de servicios de mesa de ayuda, atención a usuarios y coordinación de equipos de soporte, integrando procesos administrativos, tecnológicos y de comunicación interna, con enfoque en la continuidad operativa, el control de incidencias y la eficiencia organizacional."
-        ],
-        "training": [
-            "Lic. Comunicación y Periodismo México",
-            "Universidad Insurgentes"
-        ],
-        "education": [
-            "Implementación y operación de sistemas CONTPAQi (Facturación, Contabilidad y Comercial).",
-            "Implementación y uso de SAP R/3 MM para gestión de materiales, almacenes y compras.",
-            "Implementación de Help Desk y sistemas de tickets para soporte operativo."
-        ],
-        "experience": [
-            "Implementación de soluciones móviles para plataformas Android e iOS, incluyendo desarrollo desde cero, mantenimiento y evolución de aplicaciones productivas.",
-            "Implementación de liderazgo técnico y coordinación de equipos de desarrollo para la planeación, seguimiento y entrega de soluciones tecnológicas.",
-            "Implementación de sistemas y servicios tecnológicos en entornos empresariales, financieros y operativos.",
-            "Implementación de integraciones con servicios externos, consumo de APIs y manejo de datos para aplicaciones móviles y web.",
-            "Implementación de mantenimiento, análisis y mejora de código, aplicando buenas prácticas y estándares de calidad y seguridad.",
-            "Implementación de documentación técnica, análisis de requerimientos y apoyo en procesos de publicación y despliegue de aplicaciones."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 24,
-        "name": "Abigail Gabriela Vilchis M.",
-        "email": "abigailvilchismtz@gmail.com",
-        "phone": "55 3670 8207",
-        "address": "Tulunquies No. 2, Tlalpan, CDMX",
-        "competencies": [
-            "Implementación de servicios de atención a clientes y soporte operativo.",
-            "Implementación de procesos administrativos y gestión de documentación.",
-            "Implementación de control y seguimiento de incidencias.",
-            "Implementación de operación con altos flujos de usuarios.",
-            "Implementación de habilidades de comunicación, trato al cliente y resolución de conflictos."
-        ],
-        "profile": [
-            "Mesa de Ayuda y Soporte",
-            "Implementación de servicios de atención a usuarios y soporte operativo, integrando seguimiento de incidencias, gestión administrativa y control de documentación, con enfoque en la calidad del servicio, la eficiencia operativa y la experiencia del cliente."
-        ],
-        "training": [
-           "Bachillerato General",
-            "CCH SUR"
-        ],
-        "education": [
-            "Capacitación en atención al cliente y hospitalidad.",
-            "Manejo de sistemas POS (Point of Sale)."
-        ],
-        "experience": [
-            "Implementación de atención y soporte a usuarios mediante mesa de ayuda y sistemas de tickets.",
-            "Implementación de seguimiento y control de incidencias para asegurar una atención oportuna.",
-            "Implementación de apoyo administrativo y gestión documental en entornos operativos.",
-            "Implementación de procesos de servicio al cliente en contextos de alta demanda.",
-            "Implementación de coordinación operativa y supervisión de actividades para la continuidad del servicio."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 25,
-        "name": "Nicolás Bravo Vilchis.",
-        "email": "nicobravovilchis@gmail.com",
-        "phone": "5611920005",
-        "address": "Tulunquies No. 2, Tlalpan, CDMX",
-        "competencies": [
-            "Implementación de soporte técnico y atención a usuarios en distintos niveles.",
-            "Implementación de administración de hardware y software.",
-            "Implementación de redes, conectividad y seguridad básica.",
-            "Implementación de gestión documental técnica.",
-            "Implementación de automatización y mejora de procesos tecnológicos."
-        ],
-        "profile": [
-            "Mesa de Ayuda y Soporte",
-            "Implementación de soluciones tecnológicas en sistemas de cómputo, integrando soporte técnico, administración de hardware y software, redes y seguridad, con enfoque en la continuidad operativa y la eficiencia de los servicios de TI."
-        ],
-        "training": [
-            "Ingenieria en Computación",
-            "UNAM"
-        ],
-        "education": [
-    
-        ],
-        "experience": [
-            "Implementación de mantenimiento y administración de equipos de cómputo.",
-            "Implementación de soporte técnico de primer, segundo y tercer nivel (N1, N2 y N3).",
-            "Implementación de gestión y control de documentación técnica y manuales.",
-            "Implementación de apoyo en redes, seguridad y automatización de procesos tecnológicos."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 26,
-        "name": "Lidia Millán Benitez",
-        "email": "lidiamillan@hotmail.com",
-        "phone": "777 153 7735",
-        "address": "Rio Bravo #18A 62766,Emiliano Zapata, Benito Juarez",
-        "competencies": [
-            "Implementación de procesos administrativos y financieros.",
-            "Implementación de políticas, procedimientos y sistemas de control interno.",
-            "Implementación de auditoría administrativa y control presupuestal.",
-            "Implementación de gestión de inventarios, recursos materiales y activos.",
-            "Implementación de desarrollo humano, trabajo colaborativo y liderazgo operativo.",
-            "Implementación de estrategias comerciales y de apoyo a la toma de decisiones."
-        ],
-        "profile": [
-            "Licitaciones",
-            "Implementación de procesos administrativos, financieros y de gestión organizacional, integrando control de gastos, auditoría, administración de recursos, desarrollo humano y cumplimiento de políticas, con enfoque en la eficiencia operativa, la mejora continua y el soporte a la toma de decisiones."
-        ],
-        "training": [
-            "Licenciatura en Administración de Empresas",
-            "UMED",
-            "Posgrado en Sistemas de Calidad",
-            "UMED"
-        ],
-        "education": [
-
-        ],
-        "experience": [
-            "Implementación de procesos de administración y control de cuentas por pagar, facturación y relación con proveedores.",
-            "Implementación de control de gastos, nómina, inventarios y recursos materiales en entornos gubernamentales y privados.",
-            "Implementación de auditorías y verificación de procesos administrativos y financieros.",
-            "Implementación de procesos de contratación, capacitación y gestión de personal.",
-            "Implementación de supervisión operativa, logística y control de sucursales.",
-            "Implementación de atención a clientes, gestión administrativa y soporte a áreas comerciales."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 27,
-        "name": "Hector Julián Rabadán Tapia",
-        "email": "hectorrabadan@gmail.com",
-        "phone": "55 5402 4206",
-        "address": "Cielito Lindo 206 Rancho Tetela, Cuernavaca 62160, Mor.",
-        "competencies": [
-            "Implementación de dirección y gerencia de proyectos de infraestructura.",
-            "Implementación de planeación estratégica y control financiero de proyectos.",
-            "Implementación de gestión de obra pública y privada.",
-            "Implementación de liderazgo, negociación y coordinación institucional.",
-            "Implementación de control de calidad, normatividad y gestión de riesgos.",
-            "Implementación de comunicación efectiva y relaciones interinstitucionales."
-        ],
-        "profile": [
-            "Dirección Comercial",
-            "Implementación y dirección de proyectos de infraestructura, desarrollo urbano, vivienda y desarrollos turísticos de gran escala, integrando planeación estratégica, gestión financiera, liderazgo de equipos multidisciplinarios y coordinación institucional, con enfoque en resultados, control de inversión y cumplimiento de objetivos técnicos y sociales."
-        ],
-        "training": [
-            "Ingeniería Civil",
-            "UNAM",
-            "Maestría en Administración",
-            "Universidad Politécnica de Cataluña, Barcelona"
-        ],
-        "education": [
-            "Project Management – Project Management Institute (PMI).",
-            "Diplomado en Finanzas – Posgrado de Administración, UNAM."
-        ],
-        "experience": [
-            "Implementación y dirección técnica de proyectos de infraestructura carretera, urbana y de transporte a nivel nacional.",
-            "Implementación de planeación, control y ejecución de proyectos de obra pública y privada de gran escala.",
-            "Implementación de gestión integral de proyectos turísticos, hoteleros, residenciales y de servicios.",
-            "Implementación de coordinación con organismos gubernamentales, concesionarios y desarrolladores privados.",
-            "Implementación de supervisión técnica, control de calidad y administración de contratos de obra.",
-            "Implementación de liderazgo y gestión de equipos multidisciplinarios en entornos multiculturales."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 28,
-        "name": "Jaime",
-        "email": "",
-        "phone": "",
-        "address": "",
-        "competencies": [
-            ""
-        ],
-        "profile": [
-            "Dirección Comercial",
-            ""
-        ],
-     "training": [
-            "",
-            "",
-            "",
-            ""
-        ],
-        "education": [
-            "",
-            ""
-        ],
-        "experience": [
-            ""
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 29,
-        "name": "Lilia Marquéz Samano",
-        "email": "lilimarquezc1r@gmail.com",
-        "phone": "55-7295-6868",
-        "address": "Valle de Cuernavaca 518, San Javier, 42086",
-        "competencies": [
-            "Implementación de desarrollo humano y cultura organizacional.",
-            "Implementación de liderazgo consciente y bienestar organizacional.",
-            "Implementación de procesos de coaching y acompañamiento.",
-            "Implementación de comunicación empática y facilitación de grupos.",
-            "Implementación de alineación del bienestar con resultados empresariales"
-        ],
-        "profile": [
-            "Mesa de Ayuda y Soporte",
-            "Implementación de estrategias de desarrollo humano, cultura organizacional y experiencia de las personas, alineando bienestar, liderazgo consciente y resultados empresariales mediante experiencias formativas estructuradas y procesos de acompañamiento organizacional."
-        ],
-        "training": [
-            "Licenciatura en Nutición",
-            "Universidad Autónoma del Estado de Hidalgo",
-            "Licenciatura en Negocios y Liderazgo",
-            "Universidad Anahuác México"
-        ],
-        "education": [
-            "Integrative Nutrition Health Coach – Institute for Integrative Nutrition of New York.",
-            "Certificación Internacional de Coaching Ideal – Florida Global University.",
-            "Certificación Maestro en Neuro-Semántica y PNL – International Society of Neuro-Semantics.",
-            "Certificación Meta Coaching – International Society of Neuro-Semantics.",
-            "Curso en Fitness, Entrenamiento y Alimentación – ECEP Colombia."
-        ],
-        "experience": [
-            "Implementación de programas de desarrollo humano, liderazgo y cultura organizacional.",
-            "Implementación de diagnósticos humano–organizacionales para detección de necesidades.",
-            "Implementación de experiencias formativas y rutas de capacitación alineadas a objetivos estratégicos.",
-            "Implementación de procesos de coaching, facilitación y acompañamiento individual y grupal.",
-            "Implementación de atención y soporte a usuarios en entornos estructurados de servicio."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    },
-    {
-        "id": 30,
-        "name": "Jorge Luis Olmos Cruz",
-        "email": "olmos_jorge@yahoo.com.mx.",
-        "phone": "712 2991066",
-        "address": "C. Enrique Nieto, Col. El calvario, Atlacomulco, Estado de México",
-        "competencies": [
-            "Implementación de sistemas de gestión de calidad y control documental.",
-            "Implementación de auditorías internas y verificación de cumplimiento normativo.",
-            "Implementación de inspección y control de procesos productivos.",
-            "Implementación de elaboración y actualización de procedimientos y reportes.",
-            "Implementación de aplicación de normas de calidad, medio ambiente y seguridad.",
-            "Implementación de control administrativo, inventarios y seguimiento operativo."
-        ],
-        "profile": [
-            "Soporte en sitio",
-            "Implementación de procesos de control de calidad y gestión documental, integrando auditoría interna, cumplimiento de normas, mejora continua y soporte administrativo, con experiencia en sectores industriales, automotriz, farmacéutico e infraestructura."
-        ],
-        "training": [
-            "Técnico en computación, Técnico en calidad"
-        ],
-        "education": [
-            "Auditor Interno ISO 9001:2008 – Bureau Veritas Mexicana S.A. de C.V.",
-            "Curso de Inglés – JTS Languages Center / Harmon Hall.",
-            "Cinta Negra 1er Dan en Karate Do – Japan Karate Association."
-        ],
-        "experience": [
-            "Implementación de control y seguimiento de sistemas de calidad en proyectos de infraestructura.",
-            "Implementación de auditoría interna y apoyo en auditorías externas bajo normas ISO.",
-            "Implementación de inspección y verificación de productos y procesos industriales.",
-            "Implementación de control documental y análisis de información estadística.",
-            "Implementación de apoyo administrativo y control de recursos operativos."
-        ],
-        "url": "CV_JCastillo.pdf",
-        "position": "GITSTelepeaje.pdf",
-        "post": "Ing. Integración"
-    }
+  {
+    "id": 1,
+    "name": "Guillermina Sámano Gaspar",
+    "email": "gsamano@consultores-cti.com.mx",
+    "phone": "8115880305",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Senior Project Manager SAP, ORACLE, MICROSOFT, PEOPLESOFT",
+      "PMO y Desarrollo de Negocios Consultoría ALM SAP y Solución de",
+      "Industria Healthcare en América Latina (SAP)"
+    ],
+    "profile": [
+      "Senior Project Manager SAP, ORACLE, MICROSOFT, PEOPLESOFT e Infraestructura",
+      "30 años de experiencia en Proyectos de TI de diferentes sectores tanto en iniciativa privada como en sector público, con equipo multidisciplinarios y multiculturales."
+    ],
+    "training": [
+      "Maestría en Dirección de Hospitales | 2015",
+      "UDEM",
+      "Maestría en Ingeniería en Sistemas | 2008",
+      "UNAM",
+      "Licenciatura en Informática | 1993",
+      "Universidad Simón Bolívar"
+    ],
+    "education": [
+      "Herramientas para Gestión de Ciclo de Vida (ALM SAP) Intellicorp / SmartShift / RevTrac",
+      "Certificación ITIL V.3.0 Certificado: 882544",
+      "Certificación SAP Procurement ECC EHP 4.0 NO.00009778322"
+    ],
+    "experience": [
+      "Directora General de Grupo CTI",
+      "Dirección de proyectos de mantenimiento y mejora continua SAP S/4HANA TIC’s Sector Privado y Sector Público",
+      "Ciberseguridad, Desarrollo de aplicaciones WEB (SAP FIORI) Y Móviles"
+    ],
+    "url": "/CV_GSG.pdf",
+    "position": "DGeneral.pdf",
+    "post": "Dirección General"
+  },
+  {
+    "id": 2,
+    "name": "Edith Sámano Gaspar",
+    "email": "gsamano@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "CEO DECC (Desarrollo Empresarial, Consultoría y Coaching, S.C.)",
+      "Consultoría contable, fiscal y capacitación en áreas de Desarrollo Humano Industrial, Jurídico y Tecnologías de la Información"
+    ],
+    "profile": [
+      "Consultoría contable, fiscal y capacitación",
+      "Desarrollo Humano Industrial, Jurídico, Tecnologías de la Información. Gestión de Procesos de Consultoría Contable y Fiscal en Corporativos Nacionales, Personas Físicas con Actividades Empresariales y Profesionales, Profesionistas independientes."
+    ],
+    "training": [
+      "Licenciada en Contaduría Pública Posgrado en Derecho Fiscal",
+      "UNITEC"
+    ],
+    "education": [
+      "Procesos de Licitación, Contratación y Ejecución de Proyectos de Capacitación y Certificación para Dependencias del Sector Público y Privado cumpliendo con las normativas requeridas para cada caso."
+    ],
+    "experience": ["Directora Suplente de GRUPO CTI"],
+    "url": "/CV_ESG.pdf",
+    "position": "DGeneral.pdf",
+    "post": "Dirección General"
+  },
+  {
+    "id": 3,
+    "name": "Luis Manuel Alfaro Rivera",
+    "email": "lalfaro@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Gestionar y coordinar el seguimiento de procesos judiciales y extrajudiciales",
+      "Realizar investigaciones jurídicas y estudios de legislación aplicable en temas relacionados con las actividades de la empresa."
+    ],
+    "profile": [
+      "Jefe de Jurídico y Seguridad",
+      "Asesor de la alta dirección y de los distintos departamentos sobre riesgos legales y estrategias para mitigarlos"
+    ],
+    "training": ["Licenciado en Derecho", "UNITEC"],
+    "education": [
+      "Cursos de Actualización Legal. Formación continua sobre cambios en la legislación y regulaciones aplicables a la industria."
+    ],
+    "experience": [
+      "Representar a Grupo CTI en litigios judiciales, administrativos y procedimientos de arbitraje.",
+      "Preparar, revisar y presentar demandas, contestaciones, escritos, recursos y todo tipo de documentos legales necesarios para la defensa de la empresa."
+    ],
+    "url": "/CV_LMA.pdf",
+    "position": "GJuridico.pdf",
+    "post": "Lic. Jurídico"
+  },
+  {
+    "id": 4,
+    "name": "Marisela Ladrón de G.",
+    "email": "mladron@consultores-cti.com.mx",
+    "phone": "5527320382",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Coordinar con los líderes de cada departamento para asegurar la correcta implementación de proyectos y soluciones, optimizando recursos y procesos.",
+      "Liderar iniciativas de mejora continua en las operaciones y promover una cultura de eficiencia, innovación y calidad en todos los niveles de la organización."
+    ],
+    "profile": [
+      "Lic. en Recursos Humanos",
+      "Partner de Desarrollo y Clima Organizacional"
+    ],
+    "training": ["Licenciatura en Psicología"],
+    "education": [
+      "Cursos de Legislación Laboral",
+      "Capacitación en Diversidad e Inclusión",
+      "Habilidades de Liderazgo y Coaching"
+    ],
+    "experience": [
+      "Evaluar el desempeño de los gerentes y equipos de trabajo, brindando retroalimentación y orientación para asegurar el logro de objetivos.",
+      "Colaborar con el director general en la definición y ejecución de la estrategia general de la empresa, asegurando el alineamiento con los objetivos de negocio a corto y largo plazo.",
+      "Liderar iniciativas de mejora continua en las operaciones y promover una cultura de eficiencia, innovación y calidad en todos los niveles de la organización."
+    ],
+    "url": "/CV_ML.pdf",
+    "position": "GDesarrolloH.pdf",
+    "post": "Lic. Recursos Humanos"
+  },
+  {
+    "id": 5,
+    "name": "José Luis Rangel Aguilar",
+    "email": "rangela04@hotmail.com",
+    "phone": "5525176495",
+    "address": "C. Paz Montes de Oca N° 138-1,Benito Juárez,CDMX",
+    "competencies": [
+      "Consultor en Sistemas de Gestión de Calidad, Seguridad y Medio Ambiente.",
+      "Coordinador de Evaluación y Certificación.",
+      "Supervisor de proyecto, construcción y puesta en operación."
+    ],
+    "profile": [
+      "Consultor en Sistemas de Gestión de Calidad",
+      "Seguridad y Medio Ambiente en empresas de construcción en obras que serán certificadas"
+    ],
+    "training": [
+      "INGENIERO CIVIL",
+      "Consultor en Sistemas de Gestión de Calidad, Seguridad y Medio Ambiente"
+    ],
+    "education": [
+      "Curso de Actualización de la Norma ISO 9001 e ISO 14001",
+      "Formación de Auditor Interno ISO 9001",
+      "Cursos de Estadística y Probabilidad para Ingenieros",
+      "Curso de Estadística Estadísticas como Herramienta en el Sistema de Calidad"
+    ],
+    "experience": [
+      "Consultor en la Implantación, operación y mejora continua en Sistemas de Gestión de Calidad, Seguridad y Medio Ambiente, basados principalmente en la Normas ISO.",
+      "Capacitación y evaluación en Certificación de Competencias Laborales, de acuerdo con las normas emitidas por el CONOCER"
+    ],
+    "url": "/CV_JLR.pdf",
+    "position": "GCalidad.pdf",
+    "post": "Lic. Calidad"
+  },
+  {
+    "id": 6,
+    "name": "Carlos Fco. Sainz Ruíz",
+    "email": "csainz@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Gestión y supervisión de estados financieros.",
+      "Coordinación de la elaboración de presupuestos y pronósticos financieros.",
+      "Presentación de declaraciones mensuales y anuales."
+    ],
+    "profile": [
+      "Licenciado en Contabilidad",
+      "Encargado de la contabilidad y finanzas, incluyendo la gestión y supervisión de los estados financieros, que reflejan con precisión la situación económica de la empresa"
+    ],
+    "training": [
+      "Licenciado en Contaduría Pública",
+      "Universidad de Sonora Instituto de Capacitación Empresarial de Occidente"
+    ],
+    "education": ["Maestría en Impuestos"],
+    "experience": [
+      "CEO DECC (Desarrollo Empresarial, Consultoría y Coaching, S.C.) | Director Suplente (CTI)"
+    ],
+    "url": "/CV_CF_SAINZ.pdf",
+    "position": "GContabilidadyF.pdf",
+    "post": "Lic. Contable"
+  },
+  {
+    "id": 7,
+    "name": "Ashley M. Huerta Arias",
+    "email": "AHuerta@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Elaborar y actualizar reportes financieros básicos, como control de gastos y facturación.",
+      "Creación de publicaciones en redes sociales.Interactuar con los seguidores, respondiendo a consultas, comentarios y mensajes en las plataformas digitales."
+    ],
+    "profile": [
+      "Auxiliar y apoyo en la gestión administrativa de la oficina",
+      "Control de archivos, documentos, correspondencia y suministros de oficina"
+    ],
+    "training": [
+      "Licenciatura de Dirección Financiera y Administración",
+      "ITAM"
+    ],
+    "education": [],
+    "experience": [
+      "Elaborar y actualizar reportes financieros básicos, como control de gastos y facturación.Atender llamadas telefónicas, cGorreos electrónicos y consultas generales de clientes y proveedores.",
+      "Mantener el archivo físico y digital de la documentación administrativa actualizada y accesible.",
+      "Realizar seguimiento de pagos, facturas y contratos bajo la supervisión del área administrativa.",
+      "Gestionar las redes sociales de Grupo CTI (Facebook, LinkedIn, Twitter, Instagram, etc.), publicando contenido relevante y alineado con la estrategia de marketing digital."
+    ],
+    "url": "/CV_ASHLEY.pdf",
+    "position": "AuxAdmonyCob.pdf",
+    "post": "Administración y Marketing"
+  },
+  {
+    "id": 8,
+    "name": "Norma Barbosa Suarez",
+    "email": "nbarbosa@consultores-cti.com.mx",
+    "phone": "5530767294",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Recolección y análisis de las necesidades del negocio para la implementación o mejora de procesos en SAP.",
+      "Mejora la eficiencia de los procesos internos y garantiza que el sistema funcione de acuerdo con las prácticas comerciales de la organización."
+    ],
+    "profile": [
+      "Especialista SAP",
+      "Partner de Análisis, Desarrollo Funcional y Técnico para ERP SAP ECC y S/4HANA"
+    ],
+    "training": [
+      "Licenciatura en Ciencias Administrativas",
+      "Escuela Bancaria y Comercial"
+    ],
+    "education": [
+      "Formación Continua y actualización sobre nuevas funcionalidades de SAP y tendencias del sector.",
+      "Cursos de Formación SAP.",
+      "Entrenamiento en Herramientas Relacionadas."
+    ],
+    "experience": [
+      "Participar en la documentación y diseño de procesos de negocio para su implementación en SAP ECC y S/4HANA",
+      "Configurar, personalizar y mantener módulos de SAP ECC y S/4HANA según las especificaciones funcionales",
+      "Colaborar en proyectos de migración de SAP ECC a S/4HANA, asegurando la integridad de los datos y la optimización de los procesos."
+    ],
+    "url": "/CV_NB.pdf",
+    "position": "ESAP.pdf",
+    "post": "Consultor SAP MM/FI/SD"
+  },
+  {
+    "id": 9,
+    "name": "Francisco Javier Mejia Robles",
+    "email": "fmejia@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Especalista en Soluciones Empresariales de Microsoft.",
+      "Coordinación de equipo de consultores internos de SAP",
+      "Desarrollos SAP-ABAP, coordinador de equipos de desarrollo en distintos proyectos con clientes como GENTERA, AXO, PDVSA,."
+    ],
+    "profile": [
+      "Especialista SAP",
+      "Partner de Análisis y Desarrollo Funcional y Técnico para ERP SAP ECC y S/4HANA"
+    ],
+    "training": [
+      "Licenciatura en Ingeniería en Sistemas Industriales",
+      "Fundación Arturo Rosenblueth"
+    ],
+    "education": [
+      "Formación Continua y actualización sobre nuevas funcionalidades de SAP y tendencias del sector.",
+      "Cursos de Formación SAP.",
+      "Entrenamiento en Herramientas Relacionadas."
+    ],
+    "experience": [
+      "Desarrollar elementos web personalizados mediante SharePoint Framework.",
+      "Participar en la documentación y diseño de procesos de negocio para su implementación en SAP ECC y S/4HANA",
+      "Configurar, personalizar y mantener módulos de SAP ECC y S/4HANA según las especificaciones funcionales",
+      "Consultoría y desarrollos de APO, contabilidad electrónica, activos fijos, transferencias bancarias e impartiendo academias de SAP - ABAP."
+    ],
+    "url": "/CV_FJM.pdf",
+    "position": "ESAP.pdf",
+    "post": "Consultor Consultor SAP-ABAP"
+  },
+  {
+    "id": 10,
+    "name": "Gilberto López Antonio",
+    "email": "glopez@consultores-cti.com.mx",
+    "phone": "2361039980",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Implementación de Aplicaciones de Escritorio, Web, .Net, C# y Sharepoint.",
+      "Conocimiento de  HTML5 y scripting",
+      "Conocimiento en Selenium."
+    ],
+    "profile": [
+      "Profesional en TI",
+      "Implementación de Aplicaciones de Escritorio, Web, .Net, C# y Sharepoint, trabajando desde el 2019 en autopistas de cuota, con amplia experiencia en Instalación , Mantenimiento y Soporte a SISTEMAS DE ITS (SISTEMA DE GESTIÓN DE AUTOPISTAS, PMV, CCTV, CONTROL DE ACCESOS, ANPR, RADARES, CCO)"
+    ],
+    "training": ["Licenciado en Informática", "Universidad de la Cañada"],
+    "education": [
+      "Maintaining a Microsoft SQL Server 2008 Database",
+      "Microsoft Certified Professional Developer (.NetFramework 4.0 Service Communication Applications)"
+    ],
+    "experience": [
+      "Sistema de gestión de autopistas VICTUM (MRO PAQUETE NORESTE)",
+      "Sistema de gestión de autopistas VICTUM (MRO GUADALAJARA | COLIMA)",
+      "Sistema Tiempos de Cruce CD.VALLES | TAMUIN"
+    ],
+    "url": "/CV_GLA.pdf",
+    "position": "DevWebSenior.pdf",
+    "post": "Dev. Web Senior"
+  },
+  {
+    "id": 12,
+    "name": "Ulises Cano Martínez",
+    "email": "ucano@consultores-cti.com.mx",
+    "phone": "2361221762",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Desarrollo de aplicaciones móviles híbridas con React-Native (iOS & Android).",
+      "Consumo de API’s Rest. Implementación de componentes personalizados.",
+      "Desarrollo de aplicaciones móviles nativas Android. "
+    ],
+    "profile": [
+      "Profesional en TI",
+      "Implementación de Aplicaciones móviles híbridas con React-Native (iOS & Android)."
+    ],
+    "training": ["Licenciado en Informática", "Universidad de la Cañada"],
+    "education": [
+      "iOS y Android: Swift, Kotlin, Java.",
+      "Frameworks: Flutter, React Native.",
+      "UI/UX: Diseño de interfaces y experiencia de usuario."
+    ],
+    "experience": [
+      "Servicios de consultoría y desarrollo de código fuente con tecnologías de React Native para móviles de diversos proyectos conforme a las especificaciones planteadas por los directivos y el cliente final.",
+      "Desarrollo de aplicaciones móviles híbridas con React-Native (iOS & Android).",
+      "Desarrollo de aplicaciones móviles nativas Android.",
+      "Mantenimiento y desarrollo desde cero de aplicaciones móviles modulares.",
+      "Integración de servicios de terceros."
+    ],
+    "url": "/CV_UCM.pdf",
+    "position": "DevMovilSenior.pdf",
+    "post": "Dev. Aplicaciones Móviles"
+  },
+  {
+    "id": 13,
+    "name": "María José Carvajal Carrera",
+    "email": "mjcarvajal@consultores-cti.com.mx",
+    "phone": "2361117315",
+    "address": "C. Independencia 25, Col. Centro. Teotitlán de Flores Magón, Oaxaca, 68540",
+    "competencies": [
+      "Implementación y desarrollo de sitios web.",
+      "Diseño y prototipado de interfaces digitales centradas en el usuario.",
+      "Análisis de requerimientos y definición de soluciones tecnológicas.",
+      "Desarrollo y mantenimiento de plataformas web.",
+      "Gestión y estructuración de información para sistemas digitales.",
+      "Trabajo bajo metodologías ágiles y entornos colaborativos."
+    ],
+    "profile": [
+      "Profesional en TI",
+      "Implementación y desarrollo de soluciones web, diseño de interfaces digitales y prototipos, análisis de requerimientos y administración de información para plataformas digitales, trabajando en entornos colaborativos y bajo metodologías ágiles."
+    ],
+    "training": ["Licenciada en Informática", "Universidad de la Cañada"],
+    "education": [
+      "Congreso Estatal de Género, Ciencia, Humanidades, Tecnología e Innovación (2025). Presentación de cartel académico.",
+      "Taller “Diseño de Interfaces con Sketching y Prototipos en Papel” (2025).",
+      "Foro de Lenguas (2024). Participación en el proyecto ICHITU.",
+      "Scrum Foundation Professional Certificate (SFPC) (2023).",
+      "Jira Scrum Foundation (2023)."
+    ],
+    "experience": [
+      "Desarrollo de proyectos web, participando en las distintas etapas del proceso: análisis, diseño, desarrollo e implementación.",
+      "Colaboración en proyectos tecnológicos enfocados en la funcionalidad, usabilidad y experiencia del usuario.",
+      "Diseño de prototipos digitales y validación de soluciones mediante pruebas y retroalimentación.",
+      "Mantenimiento y mejora de sistemas existentes para optimizar su desempeño y estructura.",
+      "Trabajo en equipo para el cumplimiento de objetivos, tiempos y calidad de los entregables.",
+      "Implementación de capacitación en sistemas tecnológicos, orientada a la adopción y uso correcto de plataformas como Conecta AIFA y Victum Centinela.",
+      "Implementación de procesos de acompañamiento y soporte a usuarios durante la operación de sistemas tecnológicos.",
+      "Implementación de desarrollo web en rol de programadora junior, participando en la creación y mantenimiento de funcionalidades.",
+      "Implementación de desarrollo web utilizando lenguajes y frameworks como Node.js y React, bajo entornos colaborativos y de aprendizaje continuo."
+    ],
+    "url": "/CV_MJCC.pdf",
+    "position": "DevWebJunior.pdf",
+    "post": "Dev. Web"
+  },
+  {
+    "id": 15,
+    "name": "Pablo Tlaxcoapan Lucas",
+    "email": "pablo.tlaxcoapan@aiformers.com",
+    "phone": "7223502242",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Automatice los procesos comerciales con flujos de trabajo, chatbots e IA utilizando Microsoft Power.",
+      "Implementar soluciones de colaboración y gestión de documentos utilizando Microsoft Office 365 "
+    ],
+    "profile": [
+      "Ing. IA",
+      "Desarrollo de Aplicaciones Web, de Escritorio e IA"
+    ],
+    "training": [
+      "Especialista Técnico En Programación De Computadoras",
+      "Centro De Estudios Científicos Y Tecnológicos IPN"
+    ],
+    "education": [
+      "Programación: Python, R, o Java.",
+      "Modelos de IA: Aprendizaje automático y profundo.",
+      "Manejo de Datos: Procesamiento y análisis. "
+    ],
+    "experience": [
+      "Definir y liderar la estrategia de inteligencia artificial dentro de Grupo CTI, identificando áreas clave donde la IA puede generar valor y eficiencia.",
+      "Colaborar con equipos multidisciplinarios para el diseño y desarrollo de productos basados en IA, incluyendo sistemas de aprendizaje automático (machine learning), procesamiento de lenguaje natural (NLP) y visión por computadora.",
+      "Supervisar proyectos de desarrollo de IA, garantizando la calidad, escalabilidad y seguridad de las soluciones."
+    ],
+    "url": "/CV_PT.pdf",
+    "position": "PartnerDevIA.pdf",
+    "post": "Ing. Dev. IA"
+  },
+  {
+    "id": 16,
+    "name": "Josue Tlaxcoapan Lucas",
+    "email": "josue.tlaxcoapan@aiformers.com",
+    "phone": "7223502242",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Automatice los procesos comerciales con flujos de trabajo, chatbots e IA utilizando Microsoft Power.",
+      "Implementar soluciones de colaboración y gestión de documentos utilizando Microsoft Office 365 "
+    ],
+    "profile": [
+      "Ing. IA",
+      "Desarrollo de Aplicaciones Web, de Escritorio e IA"
+    ],
+    "training": [
+      "Especialista Técnico En Programación De Computadoras",
+      "Centro De Estudios Científicos Y Tecnológicos IPN"
+    ],
+    "education": [
+      "Programación: Python, R, o Java.",
+      "Modelos de IA: Aprendizaje automático y profundo.",
+      "Manejo de Datos: Procesamiento y análisis."
+    ],
+    "experience": [
+      "Definir y liderar la estrategia de inteligencia artificial dentro de Grupo CTI, identificando áreas clave donde la IA puede generar valor y eficiencia.",
+      "Colaborar con equipos multidisciplinarios para el diseño y desarrollo de productos basados en IA, incluyendo sistemas de aprendizaje automático (machine learning), procesamiento de lenguaje natural (NLP) y visión por computadora.",
+      "Supervisar proyectos de desarrollo de IA, garantizando la calidad, escalabilidad y seguridad de las soluciones."
+    ],
+    "url": "/CV_PTlaxco.pdf",
+    "position": "PartnerDevIA.pdf",
+    "post": "Ing. Dev. IA"
+  },
+  {
+    "id": 17,
+    "name": "Heber Argumedo Marroquín",
+    "email": "hargumedo@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Monitoreo y ejecución de prueba de pentesting automatizada",
+      "*Seguridad de sistemas, redes.",
+      "Mantenimiento y administración a equipos de cómputo"
+    ],
+    "profile": ["Ingeniero de Infraestructura", "ITS-PEAJE-TELEPEAJE"],
+    "training": [
+      "Licenciatura En Ingenieria En Sistemas Computacionales",
+      "Universidad Tecnológica de México"
+    ],
+    "education": [
+      "Sistemas ITS: Implementación y gestión de Sistemas de Transporte Inteligente.",
+      "Conocimiento en tecnologías de cobro electrónico.",
+      "Redes y Comunicaciones: Configuración y gestión de redes de datos."
+    ],
+    "experience": [
+      "Diseño de Infraestructura: Crear arquitecturas para sistemas ITS y telepeaje.| Implementación de Proyectos: Supervisar la instalación de hardware y software.",
+      "Mantenimiento y Soporte: Asegurar el funcionamiento óptimo y realizar mantenimiento.",
+      "Integración de Sistemas: Colaborar con otros departamentos para la integración tecnológica.",
+      "Documentación: Generar documentación técnica y manuales de usuario."
+    ],
+    "url": "/CV_HA.pdf",
+    "position": "GInfraestructuraITS.pdf",
+    "post": "Ing. Infraestructura e ITS"
+  },
+  {
+    "id": 18,
+    "name": "Luis Alberto Ruíz Aguilar",
+    "email": "lruiz@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Dominio de herramientas y plataformas de gestión de aprendizaje (LMS) y recursos digitales de formación.",
+      "Conocimiento avanzado en técnicas de evaluación de competencias y desarrollo de habilidades."
+    ],
+    "profile": [
+      "Director Corporativo de Desarrollo de Sistemas",
+      "Soporte a proyectos"
+    ],
+    "training": [
+      "Ingeniería Electrónica",
+      "Instituto Técnologico Superior De Apatzingan"
+    ],
+    "education": [
+      "Desarrollo Organizacional, Gestión del Talento o Educación Corporativa",
+      "Conocimiento en evaluación de competencias y metodologías de formación continua."
+    ],
+    "experience": [
+      "Director de Desarrollo de Sistemas y Soporte a proyectos.",
+      "Peaje Telepeaje ITS SGA CCTV"
+    ],
+    "url": "/CV_LRA.pdf",
+    "position": "GInfraestructuraITS.pdf",
+    "post": "Ing. Capacitación"
+  },
+  {
+    "id": 19,
+    "name": "Victor Ricardo Mojica Leines",
+    "email": "vmojica@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Dominio de herramientas y plataformas de gestión de aprendizaje (LMS) y recursos digitales de formación.",
+      "Conocimiento avanzado en técnicas de evaluación de competencias y desarrollo de habilidades."
+    ],
+    "profile": ["Ingeniero de ITS", "PEAJE-TELEPEAJE"],
+    "training": ["Ingenieria En Sistemas Computacionales"],
+    "education": [
+      "Sistemas ITS: Implementación y gestión de Sistemas de Transporte Inteligente.",
+      "Conocimiento en tecnologías de cobro electrónico.",
+      "Redes y Comunicaciones: Configuración y gestión de redes de datos."
+    ],
+    "experience": [
+      "Diseño de Infraestructura: Crear arquitecturas para sistemas ITS y telepeaje.| Implementación de Proyectos: Supervisar la instalación de hardware y software.",
+      "Mantenimiento y Soporte: Asegurar el funcionamiento óptimo y realizar mantenimiento.",
+      "Integración de Sistemas: Colaborar con otros departamentos para la integración tecnológica.",
+      "Documentación: Generar documentación técnica y manuales de usuario."
+    ],
+    "url": "/CV_VRM.pdf",
+    "position": "GITSTelepeaje.pdf",
+    "post": "Ing. ITS y Peaje"
+  },
+  {
+    "id": 20,
+    "name": "Julio César Castillo Zamora",
+    "email": "jcastilloz@consultores-cti.com.mx",
+    "phone": "-- No disponible --",
+    "address": "Av. Ejército Nacional Mexicano 769, Granada, Miguel Hidalgo, 11520, CDMX",
+    "competencies": [
+      "Cumplimiento de calidad de los proyectos en ejecución desde su inicio, hasta el cierre y seguimiento para fines de calidad.",
+      "Desarrollo de KPI ‘s tiempo-costo-calidad de proyectos GRUPO CTI."
+    ],
+    "profile": ["Epecialista en Peaje", "Telepeaje, Comunicaciones e ITS"],
+    "training": [
+      "Ingenierio En Sistemas Computacionales",
+      "Instituto Técnologico Superior De Apatzingan"
+    ],
+    "education": [
+      "Conocimiento de Sistemas de Peaje e ITS: Implementación y gestión de Sistemas de Transporte Inteligente.",
+      "Conocimiento en tecnologías de cobro electrónico.",
+      "Redes y Comunicaciones: Configuración y gestión de redes de datos."
+    ],
+    "experience": [
+      "Supervisión de el cobro de peaje en vías exclusivas de telepeaje o Mejorar el armado automático de cruces.",
+      "Buscar alternativas para mejorar la tasa de lectura de tags y placas, con la finalidad de incrementar la eficiencia de idenHficación de cruces.",
+      "Seguimiento a las conciliaciones con los operadores de Telepeaje",
+      "Organización del personal, así como diseñar estrategias de crecimiento basadas en resultados con una metodología basada en estándares de calidad en el servicio."
+    ],
+    "url": "CV_JCZ.pdf",
+    "position": "GITSTelepeaje.pdf",
+    "post": "Ing. Integración"
+  },
+  {
+    "id": 21,
+    "name": "Sergio Cano Martínez",
+    "email": "canomsergio13@gmail.com",
+    "phone": "287 1250 420",
+    "address": "Pendiente",
+    "competencies": [
+      "Implementación de plataformas web y comercio electrónico.",
+      "Implementación de componentes y funcionalidades para aplicaciones digitales.",
+      "Implementación de integraciones con servicios y sistemas externos.",
+      "Implementación de mejoras de rendimiento, usabilidad y experiencia del usuario.",
+      "Implementación de mantenimiento y optimización de sistemas existentes.",
+      "Implementación de soluciones bajo metodologías ágiles y trabajo colaborativo."
+    ],
+    "profile": [
+      "Profesional en TI",
+      "Implementación de soluciones web y plataformas de comercio electrónico, abarcando el desarrollo, configuración, mantenimiento y optimización de aplicaciones digitales, así como la integración de servicios, análisis de requerimientos y trabajo en entornos colaborativos orientados a la experiencia del usuario."
+    ],
+    "training": ["Licenciado en Informática", "Universidad de la Cañada"],
+    "education": [
+      "VTEX IO – Accredited (EICOM Institute)",
+      "VTEX 101 – Accredited (EICOM Institute).",
+      "FastStore – Accredited (EICOM Institute)"
+    ],
+    "experience": [
+      "Implementación de plataformas de comercio electrónico para distintos sectores y mercados.",
+      "Implementación de soluciones front-end para aplicaciones web y sistemas digitales.",
+      "Implementación de integraciones y servicios para el correcto funcionamiento de plataformas digitales.",
+      "Implementación de mejoras, rediseños y mantenimiento de sistemas existentes.",
+      "Implementación de soluciones tecnológicas alineadas a requerimientos funcionales y del negocio."
+    ],
+    "url": "CV_SCM.pdf",
+    "position": "DevWebSenior.pdf",
+    "post": "Dev. Web Senior"
+  },
+  {
+    "id": 22,
+    "name": "Rafael Cano Martínez",
+    "email": "canorafa13@gmail.com",
+    "phone": "561117697",
+    "address": "Calle Tornado Retorno 30, MZ 25 LT 95 D, San Jerónimo Cuatro Vientos, Ixtapaluca",
+    "competencies": [
+      "Implementación de desarrollo móvil multiplataforma y nativo.",
+      "Implementación de soluciones web y full stack.",
+      "Implementación de liderazgo técnico y gestión de equipos de desarrollo.",
+      "Implementación de patrones de diseño y buenas prácticas de desarrollo.",
+      "Implementación de procesos de calidad, seguridad y análisis de código.",
+      "Implementación de integración de servicios, bases de datos y servicios en la nube."
+    ],
+    "profile": [
+      "Profesional en TI",
+      "Implementación de soluciones tecnológicas móviles y web, abarcando el desarrollo, mantenimiento y optimización de aplicaciones, así como la integración de servicios, liderazgo técnico y coordinación de equipos, con enfoque en calidad, seguridad, escalabilidad y cumplimiento de requerimientos del negocio."
+    ],
+    "training": ["Licenciado en Informática", "Universidad de la Cañada"],
+    "education": [
+      "Curso Seguridad en el Ciclo de Vida del Desarrollo de Software – Asociación de Bancos de México (ABM).",
+      "Curso Fundamentos de la Programación Segura – Asociación de Bancos de México (ABM).",
+      "Curso Seguridad en Aplicaciones Web – Asociación de Bancos de México (ABM).",
+      "Curso Desarrollo Seguro de Aplicaciones Móviles – Asociación de Bancos de México (ABM).",
+      "Curso Desarrollo Seguro de APIs – Asociación de Bancos de México (ABM).",
+      "Curso Seguridad y Operaciones – Asociación de Bancos de México (ABM).",
+      "OWASP Top 10 Mobile – Riesgos de las Aplicaciones Móviles – Udemy.",
+      "Ciberseguridad Básico 3.0 – Asociación de Bancos de México (ABM)."
+    ],
+    "experience": [
+      "Implementación y gestión de mesas de ayuda y sistemas de tickets para la atención y seguimiento de incidencias tecnológicas.",
+      "Implementación de procesos de supervisión y coordinación de equipos de trabajo en entornos operativos y administrativos.",
+      "Implementación de procesos administrativos de facturación, cobranza y relación con clientes.",
+      "Implementación de soporte técnico interno y remoto, mantenimiento de equipos de cómputo e infraestructura básica de TI.",
+      "Implementación de administración de servicios generales, control de presupuestos y gestión de proveedores.",
+      "Implementación de estrategias de comunicación interna y actualización de contenidos digitales."
+    ],
+    "url": "CV_RCM.pdf",
+    "position": "DevWebSenior.pdf",
+    "post": "Dev. Web Senior"
+  },
+  {
+    "id": 23,
+    "name": "Jose Manuel Bravo Valencia",
+    "email": "jmbraval@gmail.com",
+    "phone": "55 2244 2718",
+    "address": "Tulunquies No. 2, Tlalpan, CDMX",
+    "competencies": [
+      "Implementación de servicios de soporte técnico y atención a usuarios.",
+      "Implementación de procesos administrativos, facturación electrónica y control documental.",
+      "Implementación de sistemas de gestión, control de almacenes y recursos.",
+      "Implementación de soporte en infraestructura tecnológica y mantenimiento de equipos.",
+      "Implementación de procesos de comunicación interna y coordinación operativa.",
+      "Implementación de control, seguimiento y mejora de procesos organizacionales."
+    ],
+    "profile": [
+      "Mesa de Ayuda y Soporte",
+      "Implementación y gestión de servicios de mesa de ayuda, atención a usuarios y coordinación de equipos de soporte, integrando procesos administrativos, tecnológicos y de comunicación interna, con enfoque en la continuidad operativa, el control de incidencias y la eficiencia organizacional."
+    ],
+    "training": [
+      "Lic. Comunicación y Periodismo México",
+      "Universidad Insurgentes"
+    ],
+    "education": [
+      "Implementación y operación de sistemas CONTPAQi (Facturación, Contabilidad y Comercial).",
+      "Implementación y uso de SAP R/3 MM para gestión de materiales, almacenes y compras.",
+      "Implementación de Help Desk y sistemas de tickets para soporte operativo."
+    ],
+    "experience": [
+      "Implementación de soluciones móviles para plataformas Android e iOS, incluyendo desarrollo desde cero, mantenimiento y evolución de aplicaciones productivas.",
+      "Implementación de liderazgo técnico y coordinación de equipos de desarrollo para la planeación, seguimiento y entrega de soluciones tecnológicas.",
+      "Implementación de sistemas y servicios tecnológicos en entornos empresariales, financieros y operativos.",
+      "Implementación de integraciones con servicios externos, consumo de APIs y manejo de datos para aplicaciones móviles y web.",
+      "Implementación de mantenimiento, análisis y mejora de código, aplicando buenas prácticas y estándares de calidad y seguridad.",
+      "Implementación de documentación técnica, análisis de requerimientos y apoyo en procesos de publicación y despliegue de aplicaciones."
+    ],
+    "url": "CV_JMBV.pdf",
+    "position": ".pdf",
+    "post": "Gerente de Mesa de Ayuda"
+  },
+  {
+    "id": 24,
+    "name": "Abigail Gabriela Vilchis M.",
+    "email": "abigailvilchismtz@gmail.com",
+    "phone": "55 3670 8207",
+    "address": "Tulunquies No. 2, Tlalpan, CDMX",
+    "competencies": [
+      "Implementación de servicios de atención a clientes y soporte operativo.",
+      "Implementación de procesos administrativos y gestión de documentación.",
+      "Implementación de control y seguimiento de incidencias.",
+      "Implementación de operación con altos flujos de usuarios.",
+      "Implementación de habilidades de comunicación, trato al cliente y resolución de conflictos."
+    ],
+    "profile": [
+      "Mesa de Ayuda y Soporte",
+      "Implementación de servicios de atención a usuarios y soporte operativo, integrando seguimiento de incidencias, gestión administrativa y control de documentación, con enfoque en la calidad del servicio, la eficiencia operativa y la experiencia del cliente."
+    ],
+    "training": ["Bachillerato General", "CCH SUR"],
+    "education": [
+      "Capacitación en atención al cliente y hospitalidad.",
+      "Manejo de sistemas POS (Point of Sale)."
+    ],
+    "experience": [
+      "Implementación de atención y soporte a usuarios mediante mesa de ayuda y sistemas de tickets.",
+      "Implementación de seguimiento y control de incidencias para asegurar una atención oportuna.",
+      "Implementación de apoyo administrativo y gestión documental en entornos operativos.",
+      "Implementación de procesos de servicio al cliente en contextos de alta demanda.",
+      "Implementación de coordinación operativa y supervisión de actividades para la continuidad del servicio."
+    ],
+    "url": "CV_AGVM.pdf",
+    "position": "",
+    "post": "Mesa de Ayuda"
+  },
+  {
+    "id": 25,
+    "name": "Nicolás Bravo Vilchis.",
+    "email": "nicobravovilchis@gmail.com",
+    "phone": "5611920005",
+    "address": "Tulunquies No. 2, Tlalpan, CDMX",
+    "competencies": [
+      "Implementación de soporte técnico y atención a usuarios en distintos niveles.",
+      "Implementación de administración de hardware y software.",
+      "Implementación de redes, conectividad y seguridad básica.",
+      "Implementación de gestión documental técnica.",
+      "Implementación de automatización y mejora de procesos tecnológicos."
+    ],
+    "profile": [
+      "Mesa de Ayuda y Soporte",
+      "Implementación de soluciones tecnológicas en sistemas de cómputo, integrando soporte técnico, administración de hardware y software, redes y seguridad, con enfoque en la continuidad operativa y la eficiencia de los servicios de TI."
+    ],
+    "training": ["Ingenieria en Computación", "UNAM"],
+    "education": [],
+    "experience": [
+      "Implementación de mantenimiento y administración de equipos de cómputo.",
+      "Implementación de soporte técnico de primer, segundo y tercer nivel (N1, N2 y N3).",
+      "Implementación de gestión y control de documentación técnica y manuales.",
+      "Implementación de apoyo en redes, seguridad y automatización de procesos tecnológicos."
+    ],
+    "url": "CV_NBV.pdf",
+    "position": "",
+    "post": "Mesa de Ayuda"
+  },
+  {
+    "id": 26,
+    "name": "Lidia Millán Benitez",
+    "email": "lidiamillan@hotmail.com",
+    "phone": "777 153 7735",
+    "address": "Rio Bravo #18A 62766,Emiliano Zapata, Benito Juarez",
+    "competencies": [
+      "Implementación de procesos administrativos y financieros.",
+      "Implementación de políticas, procedimientos y sistemas de control interno.",
+      "Implementación de auditoría administrativa y control presupuestal.",
+      "Implementación de gestión de inventarios, recursos materiales y activos.",
+      "Implementación de desarrollo humano, trabajo colaborativo y liderazgo operativo.",
+      "Implementación de estrategias comerciales y de apoyo a la toma de decisiones."
+    ],
+    "profile": [
+      "Licitaciones",
+      "Implementación de procesos administrativos, financieros y de gestión organizacional, integrando control de gastos, auditoría, administración de recursos, desarrollo humano y cumplimiento de políticas, con enfoque en la eficiencia operativa, la mejora continua y el soporte a la toma de decisiones."
+    ],
+    "training": [
+      "Licenciatura en Administración de Empresas",
+      "UMED",
+      "Posgrado en Sistemas de Calidad",
+      "UMED"
+    ],
+    "education": [],
+    "experience": [
+      "Implementación de procesos de administración y control de cuentas por pagar, facturación y relación con proveedores.",
+      "Implementación de control de gastos, nómina, inventarios y recursos materiales en entornos gubernamentales y privados.",
+      "Implementación de auditorías y verificación de procesos administrativos y financieros.",
+      "Implementación de procesos de contratación, capacitación y gestión de personal.",
+      "Implementación de supervisión operativa, logística y control de sucursales.",
+      "Implementación de atención a clientes, gestión administrativa y soporte a áreas comerciales."
+    ],
+    "url": "CV_LMB.pdf",
+    "position": "",
+    "post": "Licitaciones"
+  },
+  {
+    "id": 27,
+    "name": "Hector Julián Rabadán Tapia",
+    "email": "hectorrabadan@gmail.com",
+    "phone": "55 5402 4206",
+    "address": "Cielito Lindo 206 Rancho Tetela, Cuernavaca 62160, Mor.",
+    "competencies": [
+      "Implementación de dirección y gerencia de proyectos de infraestructura.",
+      "Implementación de planeación estratégica y control financiero de proyectos.",
+      "Implementación de gestión de obra pública y privada.",
+      "Implementación de liderazgo, negociación y coordinación institucional.",
+      "Implementación de control de calidad, normatividad y gestión de riesgos.",
+      "Implementación de comunicación efectiva y relaciones interinstitucionales."
+    ],
+    "profile": [
+      "Dirección Comercial",
+      "Implementación y dirección de proyectos de infraestructura, desarrollo urbano, vivienda y desarrollos turísticos de gran escala, integrando planeación estratégica, gestión financiera, liderazgo de equipos multidisciplinarios y coordinación institucional, con enfoque en resultados, control de inversión y cumplimiento de objetivos técnicos y sociales."
+    ],
+    "training": [
+      "Ingeniería Civil",
+      "UNAM",
+      "Maestría en Administración",
+      "Universidad Politécnica de Cataluña, Barcelona"
+    ],
+    "education": [
+      "Project Management – Project Management Institute (PMI).",
+      "Diplomado en Finanzas – Posgrado de Administración, UNAM."
+    ],
+    "experience": [
+      "Implementación y dirección técnica de proyectos de infraestructura carretera, urbana y de transporte a nivel nacional.",
+      "Implementación de planeación, control y ejecución de proyectos de obra pública y privada de gran escala.",
+      "Implementación de gestión integral de proyectos turísticos, hoteleros, residenciales y de servicios.",
+      "Implementación de coordinación con organismos gubernamentales, concesionarios y desarrolladores privados.",
+      "Implementación de supervisión técnica, control de calidad y administración de contratos de obra.",
+      "Implementación de liderazgo y gestión de equipos multidisciplinarios en entornos multiculturales."
+    ],
+    "url": "CV_HJRT.pdf",
+    "position": "",
+    "post": "Dirección Comercial"
+  },
+  {
+    "id": 28,
+    "name": "Jaime García Ángel",
+    "email": "hyamle@hotmail.com",
+    "phone": "7712357908",
+    "address": "Calle Citlalli 239, fraccionamiento La Colonia, Mineral de la Reforma, Hidalgo, código postal 42185",
+    "competencies": [
+      "Implementación de estrategias comerciales y operativas.",
+      "Implementación de gestión de recursos y control administrativo.",
+      "Implementación de análisis de información para toma de decisiones.",
+      "Implementación de trabajo colaborativo y comunicación efectiva.",
+      "Implementación de habilidades de relacionamiento comercial y negociación.",
+      "Implementación de uso de herramientas informáticas."
+    ],
+    "profile": [
+      "Dirección Comercial",
+      "Implementación de estrategias comerciales y operativas, integrando gestión de recursos, control de procesos y análisis de información para la optimización de resultados en entornos administrativos e industriales."
+    ],
+    "training": [
+      "Ingeniería en Sistemas de Cómputo",
+      "Instituto Técnico de Computación Avanzada de Uruapan."
+    ],
+    "education": [],
+    "experience": [
+      "Implementación de asesoría estratégica para el desarrollo de planes y estrategias organizacionales en el sector de infraestructura carretera.",
+      "Implementación de administración y operación de sistemas de cobro en casetas de autopista, garantizando control y eficiencia en los ingresos.",
+      "Implementación de supervisión y control de parámetros operativos en entornos industriales, asegurando el correcto funcionamiento de equipos y procesos productivos.",
+      "Implementación de registro, análisis y seguimiento de datos técnicos para prevención y mantenimiento operativo."
+    ],
+    "url": "CV_JGA.pdf",
+    "position": "",
+    "post": "Dirección Comercial"
+  },
+  {
+    "id": 29,
+    "name": "Lilia Marquéz Samano",
+    "email": "lilimarquezc1r@gmail.com",
+    "phone": "55-7295-6868",
+    "address": "Valle de Cuernavaca 518, San Javier, 42086",
+    "competencies": [
+      "Implementación de desarrollo humano y cultura organizacional.",
+      "Implementación de liderazgo consciente y bienestar organizacional.",
+      "Implementación de procesos de coaching y acompañamiento.",
+      "Implementación de comunicación empática y facilitación de grupos.",
+      "Implementación de alineación del bienestar con resultados empresariales"
+    ],
+    "profile": [
+      "Mesa de Ayuda y Soporte",
+      "Implementación de estrategias de desarrollo humano, cultura organizacional y experiencia de las personas, alineando bienestar, liderazgo consciente y resultados empresariales mediante experiencias formativas estructuradas y procesos de acompañamiento organizacional."
+    ],
+    "training": [
+      "Licenciatura en Nutición",
+      "Universidad Autónoma del Estado de Hidalgo",
+      "Licenciatura en Negocios y Liderazgo",
+      "Universidad Anahuác México"
+    ],
+    "education": [
+      "Integrative Nutrition Health Coach – Institute for Integrative Nutrition of New York.",
+      "Certificación Internacional de Coaching Ideal – Florida Global University.",
+      "Certificación Maestro en Neuro-Semántica y PNL – International Society of Neuro-Semantics.",
+      "Certificación Meta Coaching – International Society of Neuro-Semantics.",
+      "Curso en Fitness, Entrenamiento y Alimentación – ECEP Colombia."
+    ],
+    "experience": [
+      "Implementación de programas de desarrollo humano, liderazgo y cultura organizacional.",
+      "Implementación de diagnósticos humano–organizacionales para detección de necesidades.",
+      "Implementación de experiencias formativas y rutas de capacitación alineadas a objetivos estratégicos.",
+      "Implementación de procesos de coaching, facilitación y acompañamiento individual y grupal.",
+      "Implementación de atención y soporte a usuarios en entornos estructurados de servicio."
+    ],
+    "url": "CV_LMS.pdf",
+    "position": "",
+    "post": "Mesa de Ayuda"
+  },
+  {
+    "id": 30,
+    "name": "Jorge Luis Olmos Cruz",
+    "email": "olmos_jorge@yahoo.com.mx.",
+    "phone": "712 2991066",
+    "address": "C. Enrique Nieto, Col. El calvario, Atlacomulco, Estado de México",
+    "competencies": [
+      "Implementación de sistemas de gestión de calidad y control documental.",
+      "Implementación de auditorías internas y verificación de cumplimiento normativo.",
+      "Implementación de inspección y control de procesos productivos.",
+      "Implementación de elaboración y actualización de procedimientos y reportes.",
+      "Implementación de aplicación de normas de calidad, medio ambiente y seguridad.",
+      "Implementación de control administrativo, inventarios y seguimiento operativo."
+    ],
+    "profile": [
+      "Soporte en sitio",
+      "Implementación de procesos de control de calidad y gestión documental, integrando auditoría interna, cumplimiento de normas, mejora continua y soporte administrativo, con experiencia en sectores industriales, automotriz, farmacéutico e infraestructura."
+    ],
+    "training": ["Técnico en computación, Técnico en calidad"],
+    "education": [
+      "Auditor Interno ISO 9001:2008 – Bureau Veritas Mexicana S.A. de C.V.",
+      "Curso de Inglés – JTS Languages Center / Harmon Hall.",
+      "Cinta Negra 1er Dan en Karate Do – Japan Karate Association."
+    ],
+    "experience": [
+      "Implementación de control y seguimiento de sistemas de calidad en proyectos de infraestructura.",
+      "Implementación de auditoría interna y apoyo en auditorías externas bajo normas ISO.",
+      "Implementación de inspección y verificación de productos y procesos industriales.",
+      "Implementación de control documental y análisis de información estadística.",
+      "Implementación de apoyo administrativo y control de recursos operativos."
+    ],
+    "url": "CV_JLO.pdf",
+    "position": "IngSoporteSitio.pdf",
+    "post": "Soporte en sitio"
+  }
 ]

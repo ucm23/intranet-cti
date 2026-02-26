@@ -24,7 +24,7 @@ const Colaborador = () => {
         setIsDragging(true);
         setPrevX(e.clientX);
         setPrevY(e.clientY);
-        containerRef.current.style.cursor = 'grabbing';
+        if (containerRef.current) containerRef.current.style.cursor = 'grabbing';
     };
 
     const handleMouseMove = (e) => {
@@ -39,10 +39,11 @@ const Colaborador = () => {
 
     const handleMouseUp = () => {
         setIsDragging(false);
-        containerRef.current.style.cursor = 'grab';
+        if (containerRef.current) containerRef.current.style.cursor = 'grab';
     };
 
     const handleWheel = (e) => {
+        if (!containerRef.current) return;
         e.preventDefault();
         const zoomIntensity = 0.1;
         let newScale = scale + (e.deltaY > 0 ? -zoomIntensity : zoomIntensity);
@@ -77,7 +78,7 @@ const Colaborador = () => {
     };
 
     return (
-        <div ref={divRef}>
+        <div ref={divRef} style={{ width: '100%', minHeight: 'calc(100vh - 48px)', position: 'relative' }}>
             <Box
                 position="absolute"
                 top="68px"
@@ -172,10 +173,11 @@ const Colaborador = () => {
                 <div
                     ref={contentRef}
                     style={{
-                        width: scale != 1 && `${2000 * scale}px`,
-                        height: scale != 1 && `${500 * scale}px`,
+                        width: scale !== 1 ? `${2000 * scale}px` : '100%',
+                        minWidth: 1200,
+                        minHeight: scale !== 1 ? `${500 * scale}px` : 600,
                         transform: `scale(${scale})`,
-                        transformOrigin: 'bottom',
+                        transformOrigin: 'top left',
                         position: 'absolute',
                         padding: 20,
                         top: 0,

@@ -27,6 +27,7 @@ import MESA2 from '../imgOrganigrama/MESA2.jpg';
 import MESA3 from '../imgOrganigrama/MESA3.jpg';
 import DEV3M from '../imgOrganigrama/DEV3M.jpg';
 import DEV4 from '../imgOrganigrama/DEV4.jpg';
+import DCOMERCIAL2 from '../imgOrganigrama/DCOMERCIAL2.jpg';
 import LICITACIONES1 from '../imgOrganigrama/LICITACIONES1.jpg';
 import DCOMERCIAL1 from '../imgOrganigrama/DCOMERCIAL1.png';
 import UserProfileCard from '../components/UserProfileCard';
@@ -449,11 +450,11 @@ const DiagramOrgTree = ({ xy, min }) => {
                         id: 28,
                         label: <UserProfileCard
                             color="#2E7D32"
-                            name="Jaime"
+                            name="Jaime García Ángel"
                             puesto="Dirección Comercial"
-                            // urlPhoto={conta2}
+                            urlPhoto={DCOMERCIAL2}
                             onClickCV={() => handleDetails(28)}
-                            // onClickProfile={() => handleDetails(28, 'conta2.png')}
+                            onClickProfile={() => handleDetails(28, 'DCOMERCIAL2.jpg')}
                             min={min}
                         />
                     },

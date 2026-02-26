@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/ContentWithImage.css';
-import dato from '../../assets/cvs.json';
+import datoStatic from '../../assets/cvs.json';
 import '../../styles/perfil.css';
 import { FaUser, FaBriefcase, FaGraduationCap, FaCertificate, FaPrint, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import { MdAlternateEmail } from "react-icons/md";
@@ -10,17 +10,36 @@ import { MdAlternateEmail } from "react-icons/md";
 const PerfilGral = () => {
     const { id, nombreImagen } = useParams();
 
-    const [position, setPosition] = useState(null)
+    const [position, setPosition] = useState(null);
+    const [loader, setLoader] = useState(false);
 
-    const [loader, setLoader] = useState(false)
     useEffect(() => {
-        getInformation()
-    }, []);
+        let cancelled = false;
+        const idNum = parseInt(id, 10);
 
-    const getInformation = () => {
-        setPosition(dato.find((item) => item?.id === parseInt(id)));
-        setLoader(true)
-    }
+        if (import.meta.hot) {
+            const url = new URL('../../assets/cvs.json', import.meta.url).href;
+            fetch(url + '?t=' + Date.now())
+                .then((r) => r.json())
+                .then((dato) => {
+                    if (!cancelled) {
+                        setPosition(dato.find((item) => item?.id === idNum) ?? null);
+                        setLoader(true);
+                    }
+                })
+                .catch(() => {
+                    if (!cancelled) {
+                        setPosition(datoStatic.find((item) => item?.id === idNum) ?? null);
+                        setLoader(true);
+                    }
+                });
+        } else {
+            setPosition(datoStatic.find((item) => item?.id === idNum) ?? null);
+            setLoader(true);
+        }
+
+        return () => { cancelled = true; };
+    }, [id]);
 
     const [activeTab, setActiveTab] = useState(0);
     const personalRef = useRef(null);
