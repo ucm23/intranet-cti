@@ -72,7 +72,7 @@ const Index = () => {
                                 }}
                             >
                                 <h2 className="text-shadow" style={{ fontSize: 22, textAlign: 'center', fontWeight: 'bold', textTransform: 'uppercase', }}>
-                                    {'Software de uso compartido sencillo y colaboración sin problemas'}
+                                    {'Software de uso compartido sencillo y colaboración'}
                                 </h2>
                                 <p className="text-shadow" style={{ maxWidth: '65%', textAlign: 'center', margin: '15px 0px' }}>
                                     {`Comparte y administra contenido, conocimientos y aplicaciones para impulsar el trabajo en equipo,
