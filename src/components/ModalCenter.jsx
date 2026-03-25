@@ -21,8 +21,8 @@ function ModalCenter({ show, onHide, mobile, openSession }) {
     const openNotification = (type, description) => openNotificationForLogin(api, type, description)
     
     const [data, setData] = useState({
-        email: '',
-        password: ''
+        //email: '', password: '',
+        email: 'eziocano23@hotmail.com', password: '1523',
     });
 
     const handleChange = (event) => {

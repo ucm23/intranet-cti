@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import { FaFolder, FaSpinner } from "react-icons/fa";
 import { AiOutlineDelete, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight, AiOutlineShareAlt } from "react-icons/ai";
 import { FaArrowLeft, FaArrowRight, FaPlus, FaMinus, FaReply, FaTimes } from "react-icons/fa";
@@ -38,6 +38,12 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { ColorRing } from 'react-loader-spinner'
 import { Document, Page, pdfjs } from "react-pdf";
+
+//import { Document, Page, pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+import { Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 
 const DocumentManager = () => {
     const information_user = useSelector(state => state.login.information_user);
@@ -279,6 +285,12 @@ const DocumentManager = () => {
         return [];
     };
 
+    const filteredDocumentsFolder = (id) => {
+        if (level === 0) return documents.filter(doc => doc.project_id === id && doc.department_id === null);
+        if (level === 1) return documents.filter(doc => doc.department_id === id && doc.project_id === selectedProject?.id);
+        //return [];
+    };
+
     const handleButtonClick = () => {
         if (inputFileRef.current) {
             inputFileRef.current.click();
@@ -375,7 +387,7 @@ const DocumentManager = () => {
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
                 <h2 className="text-sm font-semibold text-gray-800 mb-3">Proyectos</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 max-[900px]:grid-cols-1 lg:grid-cols-3 gap-2.5">
                     {projects.map((folder, index) => (
                         <div
                             key={`files-projects-${folder.id}-${index}`}
@@ -388,10 +400,10 @@ const DocumentManager = () => {
                             }}
                         >
                             <div className="flex items-center space-x-2">
-                                <FaFolder style={{ fontSize: 18 }} className="text-yellow-400" />
+                                <FaFolder className="text-yellow-400 text-[16px] flex-shrink-0" />
                                 <div className="flex-1">
                                     <h3 className="font-normal text-sm text-gray-800 line-clamp-1">{folder.name}</h3>
-                                    <p className="text-sm text-gray-500 pb-0 line-clamp-1">{folder?.departments_ids.length} elementos</p>
+                                    <p className="text-sm text-gray-500 pb-0 line-clamp-1">{folder?.departments_ids.length + (filteredDocumentsFolder(folder?.id).length) || 0} elementos</p>
                                 </div>
                             </div>
                         </div>
@@ -407,7 +419,7 @@ const DocumentManager = () => {
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
                 <h2 className="text-sm font-semibold text-gray-800 mb-3">Departamentos</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 max-[900px]:grid-cols-1 lg:grid-cols-3 gap-2.5">
                     {departments.map((folder, index) => {
                         const linkedDocs = documents.filter((doc) => doc.department_id === folder.id && doc.project_id === project_id).length || null;
                         const isSelected = selectedProject?.departments_ids.includes(folder?.id);
@@ -421,7 +433,7 @@ const DocumentManager = () => {
                                 onDoubleClick={() => onDepartmentSelect(folder)}
                             >
                                 <div className="flex flex-row items-center space-x-2">
-                                    <FaFolder style={{ fontSize: 18, color: '#008080' }} />
+                                    <FaFolder style={{ fontSize: 18, color: '#008080' }} className='flex-shrink-0' />
                                     <div>
                                         <h3 className="font-normal text-sm text-gray-800 line-clamp-1 pb-0">{folder?.name}</h3>
                                         {linkedDocs && <p className="text-sm text-gray-500 pb-0 line-clamp-1">{linkedDocs} elementos</p>}
@@ -434,7 +446,7 @@ const DocumentManager = () => {
                         <div
                             className="flex items-center p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             style={{ backgroundColor: color?.bgFiles }}
-                        //onClick={() => handleFilePreview(folder)}
+                            onClick={() => addDepa(selectedProject)}
                         >
                             <div className="flex items-center space-x-2">
                                 <FaPlusCircle style={{ fontSize: 30, color: color.blueWord }} />
@@ -442,13 +454,18 @@ const DocumentManager = () => {
                             </div>
                         </div>
                     }
-
                 </div>
             </div>
     };
 
+    const addDepa = (folder) => {
+        console.log("🚀 ~ addDepa ~ folder:", folder)
+
+    }
+
     const { previewFile, setPreviewFile } = usePreviewFile()
     const handleFilePreview = (file) => {
+        console.log("🚀 ~ handleFilePreview ~ file:", file)
         setPreviewFile(null)
         setPreviewFile(file);
     };
@@ -512,7 +529,10 @@ const DocumentManager = () => {
             }
         }
         //else if (!share) handleDocs(file); else onOpenShare();
-        if (share) { onOpenShare(); return; }
+        if (share) {
+            onOpenShare();
+            return;
+        }
         if (!file.type.startsWith('text') && !file.type.startsWith('image') && !file.type.endsWith('pdf')) {
             handleDocs(file);
         }
@@ -647,7 +667,7 @@ const DocumentManager = () => {
                 ) : (
                     <div>
                         <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 pb-24">
+                        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 pb-24">
                             {selectedDocuments.map((file, index) => (
                                 <div
                                     key={`files-docs-${file?.id}-${index}`}
@@ -693,6 +713,29 @@ const DocumentManager = () => {
                         </div>
                     </div>
                 )}
+            </div>
+        );
+    };
+
+    const DocumentListPlain = ({ documents }) => {
+        const selectedDocuments = documents.filter((file) => {
+            const isSelected = !role.startsWith('admin') ? file?.users_ids.includes(user_id) : true;
+            return isSelected;
+        });
+
+        return (
+            <div className='space-y-0 mt-0 pb-10'>
+                {selectedDocuments.map((file, index) => (
+                    <div
+                        key={`files-docs-${file?.id}-${index}`}
+                        className='flex flex-row items-center space-x-2 space-y-1'
+                    >
+                        <span style={{ transform: 'scale(1)', display: 'inline-block' }}>{getFileIcon(file?.type)}</span>
+                        <span className="font-medium text-xs text-gray-800 truncate line-clamp-1">
+                            {file?.file_name}
+                        </span>
+                    </div>
+                ))}
             </div>
         );
     };
@@ -841,6 +884,10 @@ const DocumentManager = () => {
 
         const [pdfUrl, setPdfUrl] = useState(null);
 
+        console.log("🚀 ~ PdfViewer ~ pdfBlob:", pdfBlob)
+        console.log(pdfBlob instanceof Blob);
+        console.log(pdfBlob.type);
+        console.log(pdfBlob.size);
         useEffect(() => {
             const pdfBlobWithType = new Blob([pdfBlob], { type: 'application/pdf' });
             //const pdfBlobWithType = new File([pdfBlob], "NombrePersonalizado.pdf", { type: "application/pdf" });
@@ -849,18 +896,21 @@ const DocumentManager = () => {
             return () => URL.revokeObjectURL(url);
         }, [pdfBlob]);
 
+        console.log("🚀 ~ PdfViewer ~ pdfUrl:", pdfUrl)
         if (!pdfUrl) return <LoaderPDF />
         else return (
             <div className="flex flex-col md:flex-row h-screen w-full bg-gray-100">
                 <FloatButton icon={!isModalOpen ? <FiPlus /> : <FiX />} type='primary' onClick={() => setIsModalOpen(!isModalOpen)} style={{ insetInlineEnd: 26 }} />
                 <div className="w-full md:w-[70%] h-screen flex flex-col" role="main">
-                    <iframe
+                    <Viewer fileUrl={pdfUrl} />
+                    
+                    {/*<iframe
                         src={pdfUrl}
                         className="w-full h-full"
                         style={{ transform: `scale(1)`, transformOrigin: "top left" }}
                         title="PDF Document Viewer"
                         allowFullScreen
-                    />
+                    />*/}
                 </div>
                 <div className="w-full md:w-[30%] bg-white shadow-lg overflow-y-auto p-4" role="complementary">
                     <div className="flex justify-between items-center mb-6">
@@ -1202,7 +1252,7 @@ const DocumentManager = () => {
                         </Box>
                     </div>
                 </div>
-                <div className="border-l p-3" style={{ width: '290px' }}>
+                <div className="border-l p-3 content-scroll-auto" style={{ width: '290px' }}>
                     {previewFile ?
                         <div className="space-y-4">
                             <h3 className="text-lg font-medium">Detalles</h3>
@@ -1251,13 +1301,39 @@ const DocumentManager = () => {
                                     <span className='font-semibold'>Creado</span>  <br />
                                     {format(new Date(previewFile.created_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
                                 </p>
-                                <p className="font-small">
+                                {/*<p className="font-small">
                                     <span className='font-semibold'>Modificado</span>
                                     <div className='flex flex-row items-center gap-1'>
                                         {format(new Date(previewFile.updated_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
                                         <FaClockRotateLeft style={{ fontSize: 15 }} color="gray" />
                                     </div>
-                                </p>
+                                </p>*/}
+                                {(Object.hasOwn(previewFile, 'departments_ids') && level == 0) && //max-h-[300px] overflow-y-auto
+                                    <p className="font-small flex flex-col">
+                                        <span className='font-semibold'>Vista previa del contenido</span>
+                                        {departments.map((folder, index) => {
+                                            const isSelected = previewFile?.departments_ids.includes(folder?.id);
+                                            return isSelected && (
+                                                <div key={`files-departaments-${folder.id}-${index}`} className="flex flex-row items-center space-x-2">
+                                                    <FaFolder style={{ fontSize: 14, color: '#008080' }} />
+                                                    <div>
+                                                        <h3 className="font-normal text-sm text-gray line-clamp-1 pb-0">{folder?.name}</h3>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                        <DocumentListPlain documents={filteredDocumentsFolder(previewFile?.id)} />
+                                    </p>
+                                }
+
+                                {(Object.hasOwn(previewFile, 'label') && level == 1) && //max-h-[300px] overflow-y-auto
+                                    <p className="font-small flex flex-col">
+                                        <span className='font-semibold'>Vista previa del lave</span>
+                                        <DocumentListPlain documents={filteredDocumentsFolder(previewFile?.id)} />
+                                    </p>
+                                }
+
+
                             </div>
                         </div>
                         : <div className="flex items-center justify-center h-full text-gray-500">
