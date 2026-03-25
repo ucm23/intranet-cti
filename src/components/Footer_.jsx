@@ -27,7 +27,7 @@ export default function Footer_({ modalShow }) {
                                 alt="logo Grupo Ticonsa"
                                 style={{ width: 255 }}
                             />
-                            <h3 className="footer-title" style={{ fontWeight: 'normal', marginBottom: 20, textAlign: mobile ? 'center' : 'left' }}>©Todos los derechos reservados. Grupo CTI Tech-IN POS 2024.</h3>
+                            <h3 className="footer-title" style={{ fontWeight: 'normal', marginBottom: 20, textAlign: mobile ? 'center' : 'left' }}>©Todos los derechos reservados. Grupo CTI Tech-IN POS 2026.</h3>
                         </Stack>
                         {/*<Stack direction={direction} justifyContent={'space-between'}>
                             <Stack paddingRight={5}>
