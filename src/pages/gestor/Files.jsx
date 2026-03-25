@@ -884,10 +884,6 @@ const DocumentManager = () => {
 
         const [pdfUrl, setPdfUrl] = useState(null);
 
-        console.log("🚀 ~ PdfViewer ~ pdfBlob:", pdfBlob)
-        console.log(pdfBlob instanceof Blob);
-        console.log(pdfBlob.type);
-        console.log(pdfBlob.size);
         useEffect(() => {
             const pdfBlobWithType = new Blob([pdfBlob], { type: 'application/pdf' });
             //const pdfBlobWithType = new File([pdfBlob], "NombrePersonalizado.pdf", { type: "application/pdf" });
@@ -896,21 +892,18 @@ const DocumentManager = () => {
             return () => URL.revokeObjectURL(url);
         }, [pdfBlob]);
 
-        console.log("🚀 ~ PdfViewer ~ pdfUrl:", pdfUrl)
         if (!pdfUrl) return <LoaderPDF />
         else return (
             <div className="flex flex-col md:flex-row h-screen w-full bg-gray-100">
                 <FloatButton icon={!isModalOpen ? <FiPlus /> : <FiX />} type='primary' onClick={() => setIsModalOpen(!isModalOpen)} style={{ insetInlineEnd: 26 }} />
                 <div className="w-full md:w-[70%] h-screen flex flex-col" role="main">
-                    <Viewer fileUrl={pdfUrl} />
-                    
-                    {/*<iframe
+                    <iframe
                         src={pdfUrl}
                         className="w-full h-full"
                         style={{ transform: `scale(1)`, transformOrigin: "top left" }}
                         title="PDF Document Viewer"
                         allowFullScreen
-                    />*/}
+                    />
                 </div>
                 <div className="w-full md:w-[30%] bg-white shadow-lg overflow-y-auto p-4" role="complementary">
                     <div className="flex justify-between items-center mb-6">
