@@ -9,7 +9,7 @@ const LabelProfile = ({ collapsed, signOut }) => {
     const { first_name, email, position } = information_user;
 
     useEffect(() => {
-        console.log("🚀 ~ LabelProfile ~ information_user:", information_user)
+        //console.log("🚀 ~ LabelProfile ~ information_user:", information_user)
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);

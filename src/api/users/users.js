@@ -50,3 +50,50 @@ export const indexUsers = async ({ }) => {
         return response;
     }
 }
+
+export const dailtCheck = async ({ id }) => {
+    let response = { status: false }
+    try {
+        const fetch = await Fetcher({
+            method: 'GET',
+            url: `/daily_checks/verify/${id}`
+        })
+        // https://api-metrix.victum-re.online/intranet/daily_checks/verify/1
+        // https://api-metrix.victum-re.online/intranet/intranet/daily_checks/verify/1
+        console.log("🚀 ~ dailtCheck ~ fetch:", fetch)
+        if (fetch.status == 200) {
+            response = { data: fetch?.data, status: true };
+        }
+    } catch (error) {
+        console.error("🚀 ~ indeDocuments ~ error:", error)
+    } finally {
+        return response;
+    }
+}
+
+export const get_daily_checks = async ({ params }) => {
+    let response = { status: false }
+    try {
+        let params = {
+            user_id: params?.user_id || null,
+            page: params?.page || null,
+            pageSize: params?.pageSize || null,
+        }
+        const fetch = await Fetcher({
+            method: 'GET',
+            url: `/daily_checks`,
+            params
+        })
+        
+        console.log("🚀 ~ dailtCheck ~ fetch:", fetch)
+        if (fetch.status == 200) {
+            response = { data: fetch?.data?.data, status: true };
+        }
+    } catch (error) {
+        console.error("🚀 ~ indeDocuments ~ error:", error)
+    } finally {
+        return response;
+    }
+}
+
+

@@ -25,6 +25,8 @@ import PerfilGral from './pages/perfiles/PerfilGral';
 import Indicator from './pages/indicador/Indicator';
 import IndicatorDetails from './pages/indicador/IndicatorDetails';
 import Manager from './pages/gestor/Manager';
+import DailyCheckRegister from './components/DailyCheckRegister';
+import AttendanceLogs from './pages/logs/AttendanceLogs';
 
 /*const LayoutWithNavBar = ({ }) => (
     <NavBarVertical>
@@ -35,6 +37,7 @@ import Manager from './pages/gestor/Manager';
 function App() {
     const initialTokenState = localStorage.getItem('userToken') === 'true';
     const [userToken, setUserToken] = useState(initialTokenState);
+
 
     const authContext = useMemo(() => {
         return {
@@ -95,6 +98,8 @@ function App() {
                                 <Route path="/addnews" element={<AddNews page={'newslist'} />} />
                                 <Route path="/calendar" element={<Calendar />} />
                                 <Route path="/*" element={<Home />} />
+                                <Route path="/logs" element={<AttendanceLogs />} />
+                                
                             </Routes>
                         </NavBarVertical>
                     }
