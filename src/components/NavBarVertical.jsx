@@ -236,37 +236,6 @@ const NavBarVertical = ({ children, menu }) => {
             // 4. Obtener IP
             const ipAddress = await getIpAddress();
 
-            // 5. Registrar en Supabase
-            /*const result = await registrarCheck({
-                id: id,
-                photoBase64: photoBase64,
-                latitude: coordinates.latitude,
-                longitude: coordinates.longitude,
-                accuracy: coordinates.accuracy,
-                ipAddress: ipAddress,
-                userAgent: navigator.userAgent
-            });*/
-
-            // https://api-metrix.victum-re.online/intranet/daily_checks
-            // https://api-metrix.victum-re.online/intranet/daily_checks
-            // https://api-metrix.victum-re.online/intranet/daily_checks
-            // https://api-metrix.victum-re.online/intranet/daily_checks
-
-            //const body = JSON.stringify()
-            //console.log("🚀 ~ handleTakePhotoAndRegister ~ body:", JSON.stringify(body, null, 4))
-
-            /*
-user_id (integer): Identificador del usuario ,
-latitude (number, optional): Latitud ,
-longitude (number, optional): Longitud ,
-accuracy (number, optional): Precisión ,
-ip_address (string, optional): Dirección IP ,
-user_agent (string, optional): Info del navegador ,
-photo_url (string, optional): URL de la foto ,
-is_base64 (boolean, optional): Indica si la foto es en base64
-}
-            **/
-
             const result = await Fetcher({
                 method: 'POST',
                 url: `/daily_checks`,
@@ -361,13 +330,11 @@ is_base64 (boolean, optional): Indica si la foto es en base64
                                 <Link to={item?.route}><span>{item?.icon}&nbsp;<span>{item?.label}</span></span></Link>
                             </Menu.Item>
                         )}
-                        {/*information_user?.role == 'administrador' && (
-                            <>
-                                <Menu.Item key={`item-menu-admin`}>
-                                    <Link to={`/logs`}><span><SettingOutlined />&nbsp;<span>Logs</span></span></Link>
-                                </Menu.Item>
-                            </>
-                        )*/}
+                        {information_user?.role == 'administrador' &&
+                            <Menu.Item key={`item-menu-admin`}>
+                                <Link to={`/logs`}><span><SettingOutlined />&nbsp;<span>Logs</span></span></Link>
+                            </Menu.Item>
+                        }
                     </Menu>
                     {!hasChecked ? collapsed ?
                         <div className="relative flex flex-col items-center justify-center mt-1">
