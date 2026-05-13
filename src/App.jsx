@@ -26,7 +26,7 @@ import Indicator from './pages/indicador/Indicator';
 import IndicatorDetails from './pages/indicador/IndicatorDetails';
 import Manager from './pages/gestor/Manager';
 import DailyCheckRegister from './components/DailyCheckRegister';
-import AttendanceLogs from './pages/logs/AttendanceLogs';
+import AttendanceLogs from './pages/admin/AttendanceLogs';
 
 /*const LayoutWithNavBar = ({ }) => (
     <NavBarVertical>
