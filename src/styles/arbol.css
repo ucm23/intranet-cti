@@ -79,14 +79,313 @@
   justify-content: flex-start;
   transform-origin: top center;
   box-sizing: border-box;
-  white-space: nowrap;
-  display: inline-block;
+  white-space: normal;
+  display: block;
   margin: 0;
   padding: 0;
   min-height: 400px;
   min-width: 100%;
-  background-image: linear-gradient(90deg, rgba(209, 213, 219, 0.2) 1px, transparent 1px), linear-gradient(180deg, rgba(209, 213, 219, 0.2) 1px, transparent 1px);
+  background-color: rgba(255, 253, 245, 0.6);
+  background-image: linear-gradient(90deg, rgba(209, 213, 219, 0.35) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(209, 213, 219, 0.35) 1px, transparent 1px);
   background-size: 14px 14px;
+}
+
+/* Tarjetas de perfil (base; en holding se fuerza tamaño jurídico abajo) */
+.org-profile-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 186px;
+  min-width: 156px;
+  min-height: 252px;
+  max-height: 268px;
+  padding: 10px 10px 8px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.org-profile-card--compact {
+  min-height: auto;
+  max-height: none;
+  max-width: 186px;
+  min-width: 140px;
+}
+
+.org-profile-card__name {
+  line-height: 1.25;
+  font-size: 0.8125rem !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.5em;
+}
+
+.org-profile-card__puesto {
+  max-width: 100% !important;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.35em;
+  flex-shrink: 0;
+}
+
+.org-profile-card:not(.org-profile-card--compact) .image-img-profile {
+  width: 96px !important;
+  height: 96px !important;
+  max-width: 96px !important;
+  margin: 4px auto 0;
+  flex-shrink: 0;
+}
+
+.org-profile-card:not(.org-profile-card--compact) .flex.items-center.justify-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  max-height: 104px;
+}
+
+/* Holding: columnas al ancho exacto de tarjeta + bloque centrado (sin huecos extra de 1fr). */
+.holding-org .org-tree-exec-cards-grid > .org-tree-exec-span2 {
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org .org-tree-exec-cards-grid:not(.holding-org__pmo-grid-3):not(.holding-org__cti-card-grid) {
+  grid-template-columns: repeat(2, 186px) !important;
+  justify-content: center !important;
+  column-gap: 14px !important;
+  row-gap: 14px !important;
+}
+
+/* react-org-tree suele renderizar tablas: dejar crecer el ancho y separar celdas */
+.org-tree-container table {
+  table-layout: auto !important;
+  border-collapse: separate !important;
+  border-spacing: 12px 16px !important;
+}
+
+.org-tree-container td,
+.org-tree-container th {
+  white-space: normal !important;
+  vertical-align: top !important;
+}
+
+.org-tree-container .org-tree-node-label,
+.org-tree-container .org-tree-node-label-inner {
+  white-space: normal !important;
+  overflow: visible !important;
+  max-width: none !important;
+}
+
+/* Bloques con varias tarjetas (evitar que la tabla compacte tanto que las tarjetas se enciman) */
+.org-tree-panel--exec {
+  min-width: clamp(860px, 94vw, 1320px);
+}
+
+.org-tree-panel--finance {
+  min-width: clamp(720px, 94vw, 1180px);
+}
+
+.org-tree-finance-with-side {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.org-tree-finance-with-side > .org-tree-finance-grid {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.org-tree-finance-side {
+  flex: 0 1 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: min(220px, 100%);
+  box-sizing: border-box;
+}
+
+.org-tree-finance-side > div.p-2 {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.org-tree-panel--pmo {
+  min-width: clamp(420px, 92vw, 720px);
+}
+
+.org-tree-panel--pmo .org-tree-exec-cards-grid > div.p-2 {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.org-tree-panel--pmo .org-tree-exec-cards-grid h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.org-tree-panel--pmo .org-tree-exec-cards-grid .text-xxs {
+  max-width: 100% !important;
+}
+
+.org-tree-panel--pmo .org-tree-exec-cards-grid .image-img-profile {
+  width: 112px;
+  height: 112px;
+  max-width: min(112px, 100%);
+}
+
+.org-tree-panel--finance .org-tree-panel--finance-title {
+  padding: 8px 10px !important;
+}
+
+/* Dirección General: tarjetas un poco más anchas para nombres y fotos */
+.org-tree-dg-profile-cards > div {
+  min-width: 212px;
+  max-width: 260px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.org-tree-dg-profile-cards > div .text-xxs {
+  max-width: 100% !important;
+}
+
+.org-tree-dg-profile-cards > div .image-img-profile {
+  width: 128px;
+  height: 128px;
+  max-width: min(128px, 100%);
+}
+
+.org-tree-panel .childrens-label-title {
+  line-height: 1.25;
+}
+
+/* Matriz 3×2 — columnas no colapsan debajo del ancho de dos tarjetas */
+.org-tree-exec-matrix {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  column-gap: 24px;
+  row-gap: 24px;
+  width: 100%;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+/* Subgrillas dentro de CTO / COO / CX / IA / SAP / Comercial — reparte ancho sin solapamiento */
+.org-tree-exec-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 18px;
+  row-gap: 18px;
+  width: 100%;
+  justify-items: stretch;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+.org-tree-exec-cards-grid > * {
+  min-width: 0;
+}
+
+.org-tree-panel--exec .org-tree-exec-cards-grid > div.p-2 {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.org-tree-panel--exec .org-tree-exec-cards-grid h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.org-tree-panel--exec .org-tree-exec-cards-grid .text-xxs {
+  max-width: 100% !important;
+}
+
+.org-tree-panel--exec .org-tree-exec-cards-grid .image-img-profile {
+  width: 112px;
+  height: 112px;
+  max-width: min(112px, 100%);
+}
+
+/* Fila que cruza las dos columnas: centrar tarjeta sin estirarla al 100% */
+.org-tree-panel--exec .org-tree-exec-cards-grid > .org-tree-exec-span2 > div.p-2 {
+  width: auto;
+  max-width: min(260px, 100%);
+}
+
+.org-tree-panel--finance .org-tree-finance-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  justify-content: stretch !important;
+  justify-items: stretch !important;
+  column-gap: 12px !important;
+  row-gap: 12px !important;
+}
+
+.org-tree-panel--finance .org-tree-finance-grid.holding-org__finance-grid-4 {
+  grid-template-columns: repeat(4, 186px) !important;
+  justify-content: center !important;
+  column-gap: 14px !important;
+  row-gap: 14px !important;
+}
+
+.holding-org__pmo-grid-3 {
+  grid-template-columns: repeat(3, 186px) !important;
+  justify-content: center !important;
+  column-gap: 14px !important;
+  row-gap: 14px !important;
+}
+
+.org-tree-panel--finance .org-tree-finance-grid.holding-org__finance-grid-4 > * {
+  min-width: 0;
+}
+
+.holding-org__pmo-grid-3 > * {
+  min-width: 0;
+}
+
+.org-tree-panel--finance .org-tree-finance-grid > * {
+  min-width: 0;
+}
+
+.org-tree-panel--finance .org-tree-finance-grid > div.p-2 {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.org-tree-panel--finance .org-tree-finance-grid .image-img-profile {
+  width: 112px;
+  height: 112px;
+  max-width: min(112px, 100%);
+}
+
+.org-tree-exec-infra {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 8px;
 }
 
 
@@ -193,4 +492,462 @@
 .progress {
   background-color: #4caf50;
   height: 20px;
+}
+
+/* —— Organigrama tipo holding (DiagramOrgTree) —— */
+.holding-org {
+  --holding-org-card-w: 186px;
+  --holding-org-card-gap: 14px;
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  padding: 8px 8px 20px;
+  /* Lienzo ancho: fila corporativa (PMO + jurídica + admin 4 tarjetas) sin scroll interno */
+  width: max(100%, 2280px);
+  max-width: none;
+}
+
+/* Encabezado = mismo ancho que el bloque de tarjetas (N columnas + gaps) */
+.holding-org__headed-slice {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-inline: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__headed-slice--cards-cols-1 {
+  width: var(--holding-org-card-w);
+}
+
+.holding-org__headed-slice--cards-cols-2 {
+  width: calc(2 * var(--holding-org-card-w) + var(--holding-org-card-gap));
+}
+
+.holding-org__headed-slice--cards-cols-3 {
+  width: calc(3 * var(--holding-org-card-w) + 2 * var(--holding-org-card-gap));
+}
+
+.holding-org__headed-slice--cards-cols-4 {
+  width: calc(4 * var(--holding-org-card-w) + 3 * var(--holding-org-card-gap));
+}
+
+.holding-org__headed-slice--dg-row {
+  width: calc(2 * var(--holding-org-card-w) + var(--holding-org-card-gap));
+}
+
+.holding-org__headed-slice--dg-col {
+  width: var(--holding-org-card-w);
+}
+
+.holding-org__headed-slice > .childrens-label-title,
+.holding-org__headed-slice > .holding-org__title-pmo {
+  width: 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__headed-slice > .org-tree-exec-cards-grid,
+.holding-org__headed-slice > .org-tree-finance-grid,
+.holding-org__headed-slice > .holding-org__dg-cards,
+.holding-org__headed-slice > .holding-org__jur-card-wrap {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org .org-tree-panel--pmo.holding-org__panel-inner,
+.holding-org .org-tree-panel--finance.holding-org__panel-inner {
+  align-items: center !important;
+}
+
+.holding-org__jur-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  gap: 6px;
+}
+
+.holding-org__main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.holding-org__dg {
+  width: 100%;
+}
+
+.holding-org__dg-inner {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.holding-org__dg-banner {
+  max-width: 100%;
+}
+
+.holding-org__dg-cards {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
+  gap: 14px;
+}
+
+.holding-org__dg-cards--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.holding-org__dg-cards--col {
+  flex-direction: column;
+  align-items: center;
+}
+
+.holding-org__title-pmo {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  font-size: clamp(0.58rem, 0.45rem + 0.55vw, 0.72rem);
+  line-height: 1.15;
+  padding: 7px 8px !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.holding-org__dg-card-wrap {
+  flex: 1 1 0;
+  display: flex;
+  min-height: 256px;
+}
+
+.holding-org__dg-card-wrap--compact {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.holding-org__dg-profile-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  max-width: 186px;
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.holding-org__dg-profile-card .image-img-profile {
+  width: 96px !important;
+  height: 96px !important;
+  max-width: 96px !important;
+}
+
+/* CTI: 4 columnas; COO/CX/IA apilan comercial/SAP/infra debajo para aprovechar alto */
+.holding-org__cti-panel {
+  gap: 8px;
+}
+
+.holding-org__cti-unified {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 12px;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__cti-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.holding-org__cti-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__cti-row {
+  display: grid;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__cti-row--primary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 10px;
+}
+
+.holding-org__cti-row--secondary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 12px;
+  padding-top: 10px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(11, 61, 145, 0.14);
+}
+
+.holding-org__cti-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.holding-org__cti-cell-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 6px 5px !important;
+  line-height: 1.2 !important;
+  font-size: clamp(0.6rem, 0.48rem + 0.38vw, 0.74rem) !important;
+}
+
+.holding-org__cti-cell-title-sub {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  opacity: 0.92;
+  letter-spacing: 0.01em;
+}
+
+.holding-org .holding-org__cti-matrix .holding-org__cti-card-grid.holding-org__cti-card-grid--single {
+  grid-template-columns: 186px !important;
+  justify-content: center !important;
+}
+
+.holding-org .holding-org__cti-matrix .holding-org__cti-card-grid.holding-org__cti-card-grid--single > .org-tree-exec-span2 {
+  grid-column: 1 / -1 !important;
+}
+
+.holding-org .holding-org__cti-matrix .holding-org__cti-card-grid {
+  grid-template-columns: repeat(2, 186px) !important;
+  justify-content: center !important;
+  column-gap: 14px !important;
+  row-gap: 14px !important;
+}
+
+.holding-org__cti-matrix .org-tree-exec-cards-grid > .org-tree-exec-span2 > div.p-2 {
+  width: 186px;
+  max-width: 186px !important;
+}
+
+.holding-org__corporate-band {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.holding-org__corporate-band .holding-org__cti {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.holding-org__corporate-band .holding-org__cti-panel {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__corporate-band .holding-org__cti-unified {
+  column-gap: 12px;
+}
+
+.holding-org__cti-main-band {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__cti-main-title {
+  width: 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 12px 10px !important;
+  line-height: 1.25;
+}
+
+.holding-org__corporate {
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  column-gap: 16px;
+  row-gap: 12px;
+  width: auto;
+  max-width: 100%;
+  align-items: start;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+
+.holding-org__corporate > .holding-org__panel {
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.holding-org__panel--jur {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.holding-org__jur-title {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0;
+  padding: 10px 8px !important;
+  flex-shrink: 0;
+}
+
+.holding-org__jur-card-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.holding-org__panel-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.holding-org__callout {
+  border: 2px solid #43a047;
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: #f8fff8;
+  font-size: 13px;
+  line-height: 1.45;
+  max-width: 760px;
+  margin: 2px auto 6px;
+  text-align: center;
+  color: #1e293b;
+}
+
+.holding-org__footnote {
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+  margin: 4px 0 0;
+  padding: 0 8px;
+  line-height: 1.45;
+}
+
+/* Tarjetas = mismo tamaño que jurídica (caja fija) + anular 112px de PMO/exec/finance */
+.holding-org .org-profile-card:not(.org-profile-card--compact) {
+  width: 186px !important;
+  min-width: 186px !important;
+  max-width: 186px !important;
+  height: 256px !important;
+  min-height: 256px !important;
+  max-height: 256px !important;
+  padding: 10px 12px 8px !important;
+}
+
+.holding-org .org-profile-card__name {
+  min-height: 2.75em;
+  -webkit-line-clamp: 2;
+}
+
+.holding-org .org-profile-card__puesto {
+  min-height: 2.1em;
+  font-size: 0.6875rem;
+}
+
+.holding-org .org-tree-panel--pmo .org-tree-exec-cards-grid > div.p-2,
+.holding-org .org-tree-panel--exec .org-tree-exec-cards-grid > div.p-2,
+.holding-org .org-tree-panel--finance .org-tree-finance-grid > div.p-2 {
+  width: 186px !important;
+  max-width: 186px !important;
+  min-width: 186px !important;
+}
+
+.holding-org .org-tree-panel--pmo .org-tree-exec-cards-grid .image-img-profile,
+.holding-org .org-tree-panel--exec .org-tree-exec-cards-grid .image-img-profile,
+.holding-org .org-tree-panel--finance .org-tree-finance-grid .image-img-profile {
+  width: 96px !important;
+  height: 96px !important;
+  max-width: 96px !important;
+}
+
+.holding-org .org-tree-panel--exec {
+  min-width: 0 !important;
+  max-width: 100%;
+}
+
+.holding-org .org-tree-panel--finance {
+  /* 4×186px + 3×14px gap + padding horizontal */
+  min-width: 808px !important;
+  max-width: none;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.holding-org .org-tree-panel--pmo {
+  min-width: 0 !important;
+  max-width: 100%;
+}
+
+/* Cuatro columnas dentro del ancho del panel, sin barra horizontal propia */
+.holding-org .org-tree-panel--finance .holding-org__finance-grid-4 {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1080px) {
+  .holding-org {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .holding-org__corporate-band {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .holding-org__corporate {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .holding-org__corporate > .holding-org__panel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .holding-org__cti-unified {
+    grid-template-columns: 1fr;
+  }
 }

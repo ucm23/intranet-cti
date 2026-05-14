@@ -11,8 +11,8 @@
       "Industria Healthcare en América Latina (SAP)"
     ],
     "profile": [
-      "Senior Project Manager SAP, ORACLE, MICROSOFT, PEOPLESOFT e Infraestructura",
-      "30 años de experiencia en Proyectos de TI de diferentes sectores tanto en iniciativa privada como en sector público, con equipo multidisciplinarios y multiculturales."
+      "Dirección General",
+      "Senior Project Manager SAP, ORACLE, MICROSOFT, PEOPLESOFT e Infraestructura. 30 años de experiencia en Proyectos de TI de diferentes sectores tanto en iniciativa privada como en sector público, con equipo multidisciplinarios y multiculturales."
     ],
     "training": [
       "Maestría en Dirección de Hospitales | 2015",
@@ -47,8 +47,8 @@
       "Consultoría contable, fiscal y capacitación en áreas de Desarrollo Humano Industrial, Jurídico y Tecnologías de la Información"
     ],
     "profile": [
-      "Consultoría contable, fiscal y capacitación",
-      "Desarrollo Humano Industrial, Jurídico, Tecnologías de la Información. Gestión de Procesos de Consultoría Contable y Fiscal en Corporativos Nacionales, Personas Físicas con Actividades Empresariales y Profesionales, Profesionistas independientes."
+      "Dirección General",
+      "Consultoría contable, fiscal y capacitación. Desarrollo Humano Industrial, Jurídico, Tecnologías de la Información. Gestión de Procesos de Consultoría Contable y Fiscal en Corporativos Nacionales, Personas Físicas con Actividades Empresariales y Profesionales, Profesionistas independientes."
     ],
     "training": [
       "Licenciada en Contaduría Pública Posgrado en Derecho Fiscal",
@@ -99,8 +99,8 @@
       "Liderar iniciativas de mejora continua en las operaciones y promover una cultura de eficiencia, innovación y calidad en todos los niveles de la organización."
     ],
     "profile": [
-      "Lic. en Recursos Humanos",
-      "Partner de Desarrollo y Clima Organizacional"
+      "Dirección Administrativa y Finanzas",
+      "Lic. en Recursos Humanos. Partner de Desarrollo y Clima Organizacional"
     ],
     "training": ["Licenciatura en Psicología"],
     "education": [
@@ -115,7 +115,7 @@
     ],
     "url": "/CV_ML.pdf",
     "position": "GDesarrolloH.pdf",
-    "post": "Lic. Recursos Humanos"
+    "post": "Recursos Humanos"
   },
   {
     "id": 5,
@@ -129,8 +129,8 @@
       "Supervisor de proyecto, construcción y puesta en operación."
     ],
     "profile": [
-      "Consultor en Sistemas de Gestión de Calidad",
-      "Seguridad y Medio Ambiente en empresas de construcción en obras que serán certificadas"
+      "Dirección Administrativa y Finanzas",
+      "Consultor en Sistemas de Gestión de Calidad. Seguridad y Medio Ambiente en empresas de construcción en obras que serán certificadas"
     ],
     "training": [
       "INGENIERO CIVIL",
@@ -148,7 +148,7 @@
     ],
     "url": "/CV_JLR.pdf",
     "position": "GCalidad.pdf",
-    "post": "Lic. Calidad"
+    "post": "Calidad"
   },
   {
     "id": 6,
@@ -162,8 +162,8 @@
       "Presentación de declaraciones mensuales y anuales."
     ],
     "profile": [
-      "Licenciado en Contabilidad",
-      "Encargado de la contabilidad y finanzas, incluyendo la gestión y supervisión de los estados financieros, que reflejan con precisión la situación económica de la empresa"
+      "Dirección Administrativa y Finanzas",
+      "Licenciado en Contabilidad. Encargado de la contabilidad y finanzas, incluyendo la gestión y supervisión de los estados financieros, que reflejan con precisión la situación económica de la empresa"
     ],
     "training": [
       "Licenciado en Contaduría Pública",
@@ -175,7 +175,7 @@
     ],
     "url": "/CV_CF_SAINZ.pdf",
     "position": "GContabilidadyF.pdf",
-    "post": "Lic. Contable"
+    "post": "Contabilidad"
   },
   {
     "id": 7,
@@ -188,8 +188,8 @@
       "Creación de publicaciones en redes sociales.Interactuar con los seguidores, respondiendo a consultas, comentarios y mensajes en las plataformas digitales."
     ],
     "profile": [
-      "Auxiliar y apoyo en la gestión administrativa de la oficina",
-      "Control de archivos, documentos, correspondencia y suministros de oficina"
+      "Dirección Administrativa y Finanzas",
+      "Auxiliar y apoyo en la gestión administrativa de la oficina. Control de archivos, documentos, correspondencia y suministros de oficina"
     ],
     "training": [
       "Licenciatura de Dirección Financiera y Administración",
@@ -204,7 +204,7 @@
     ],
     "url": "/CV_ASHLEY.pdf",
     "position": "AuxAdmonyCob.pdf",
-    "post": "Administración y Marketing"
+    "post": "Administración / Cobranza"
   },
   {
     "id": 8,
@@ -748,6 +748,7 @@
       "Implementación de estrategias comerciales y de apoyo a la toma de decisiones."
     ],
     "profile": [
+      "PMO – Control y Supervisión de Proyectos",
       "Licitaciones",
       "Implementación de procesos administrativos, financieros y de gestión organizacional, integrando control de gastos, auditoría, administración de recursos, desarrollo humano y cumplimiento de políticas, con enfoque en la eficiencia operativa, la mejora continua y el soporte a la toma de decisiones."
     ],
@@ -918,5 +919,93 @@
     "url": "CV_JLO.pdf",
     "position": "IngSoporteSitio.pdf",
     "post": "Soporte en sitio"
+  },
+  {
+    "id": 31,
+    "name": "Carlos Arvizu Hernández",
+    "email": "arvizu42501@gmail.com",
+    "phone": "55 3727 6915",
+    "address": "Ciudad de México",
+    "competencies": [
+      "Implementación de diseño mecánico y desarrollo automotriz.",
+      "Implementación de simulación y validación estructural.",
+      "Implementación de automatización industrial y control de procesos.",
+      "Implementación de programación de sistemas industriales y robóticos.",
+      "Implementación de manufactura y optimización de componentes.",
+      "Implementación de metodologías de calidad y análisis técnico."
+    ],
+    "profile": [
+      "Supervisor de Proyectos",
+      "Implementación de soluciones de ingeniería automotriz, integrando diseño mecánico, validación de sistemas, automatización industrial y optimización de procesos orientados al desempeño técnico y mejora continua.."
+    ],
+    "training": [
+      "Ingeniería Mecatrónica con concentración en Ingeniería Automotriz",
+      "Tecnológico de Monterrey"
+    ],
+    "education": [
+      "Simulación y Validación de Sistemas Automotrices (CAE).",
+      "Diseño Mecánico y Desarrollo Automotriz.",
+      "Programación y Automatización Industrial con PLCs Siemens y Allen Bradley.",
+      "Programación y Automatización con Robots ABB.",
+      "Modelado y Simulación con MATLAB y Simulink.",
+      "Análisis de Ingeniería y Simulación Estructural con Ansys.",
+      "Metodologías de Calidad y Análisis Técnico (FMEA, DFM/DFA, 8D)."
+    ],
+    "experience": [
+      "Implementación de desarrollo y validación de trenes de potencia para vehículos eléctricos y de combustión.",
+      "Implementación de simulación y análisis estructural de chasis automotrices.",
+      "Implementación de automatización industrial mediante PLCs y robots industriales.",
+      "Implementación de diseño de laboratorios tecnológicos y sistemas de supply chain.",
+      "Implementación de diseño, simulación y manufactura de componentes automotrices de alto desempeño."
+    ],
+    "url": "",
+    "position": "",
+    "post": "Supervisor de Proyectos"
+  },
+  {
+    "id": 32,
+    "name": "Osiris Ricardo Torres",
+    "email": "oricardo@consultores-cti.com.mx ",
+    "phone": "55 7843 1109",
+    "address": "Ciudad de México",
+    "competencies": [
+      "Implementación de gestión de operaciones e infraestructura.",
+      "Implementación de dirección de proyectos estratégicos (PMO).",
+      "Implementación de análisis de datos y KPIs.",
+      "Implementación de transformación digital y adopción tecnológica.",
+      "Implementación de sistemas de calidad y normatividad (ISO).",
+      "Implementación de coordinación institucional y vinculación público-privada."
+    ],
+    "profile": [
+      "PMO – Control y Supervisión de Proyectos",
+      "Implementación de estrategias de operación e ingeniería en proyectos de infraestructura, integrando gestión de proyectos (PMO), análisis de datos, optimización de procesos y soluciones tecnológicas orientadas al desempeño operativo y mejora continua."
+    ],
+    "training": [
+      "Doctorado en Ingeniería",
+      "UNAM",
+      "Maestría en Ingeniería",
+      "UNAM",
+      "Licenciatura en Ingeniería Mecatrónica",
+      "UNAM"
+    ],
+    "education": [
+      "Sistemas de Gestión de Calidad ISO 9001.",
+      "Sistemas de Gestión de Innovación ISO 56002.",
+      "Sistemas de Gestión de Laboratorios ISO 17025.",
+      "Metodologías Ágiles Scrum, Lean y Design Thinking.",
+      "Gestión de Proyectos Estratégicos (PMO).",
+      "Analítica de Datos y KPIs para Desempeño Operativo.",
+      "Transformación Digital y Optimización de Procesos."
+    ],
+    "experience": [
+      "Implementación de seguimiento y control de proyectos estratégicos de infraestructura carretera.",
+      "Implementación de operación y optimización de infraestructura concesionada.",
+      "Implementación de sistemas de monitoreo y análisis operativo mediante KPIs.",
+      "Implementación de soluciones tecnológicas para operaciones e infraestructura.",
+      "Implementación de proyectos de ingeniería, innovación y desarrollo tecnológico."
+    ],
+    "url": "",
+    "position": "",
+    "post": "PMO – Control y Supervisión de Proyectos"
   }
 ]
