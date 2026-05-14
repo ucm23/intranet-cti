@@ -2,11 +2,10 @@ import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DiagramOrgTree from '../../componentes/DiagramOrgTree';
 
-import { Box, IconButton, Tooltip, Divider } from "@chakra-ui/react";
-import { MdDragIndicator, MdTouchApp, MdSwipe } from "react-icons/md";
-import { FiMinimize, FiMaximize, FiMaximize2, FiMinimize2 } from "react-icons/fi";
-import { BsMouse } from "react-icons/bs";
-import { MdRotate90DegreesCw } from "react-icons/md";
+import { Box, IconButton, Tooltip } from '@chakra-ui/react';
+import { MdTouchApp, MdRotate90DegreesCw } from 'react-icons/md';
+import { FiMinimize, FiMaximize, FiMaximize2, FiMinimize2 } from 'react-icons/fi';
+import { BsMouse } from 'react-icons/bs';
 
 const Colaborador = () => {
     const containerRef = useRef(null);
@@ -28,7 +27,7 @@ const Colaborador = () => {
     };
 
     const handleMouseMove = (e) => {
-        if (!isDragging) return;
+        if (!isDragging || !containerRef.current) return;
         const dx = e.clientX - prevX;
         const dy = e.clientY - prevY;
         containerRef.current.scrollLeft -= dx;
@@ -43,7 +42,6 @@ const Colaborador = () => {
     };
 
     const handleWheel = (e) => {
-        if (!containerRef.current) return;
         e.preventDefault();
         const zoomIntensity = 0.1;
         let newScale = scale + (e.deltaY > 0 ? -zoomIntensity : zoomIntensity);
@@ -54,10 +52,12 @@ const Colaborador = () => {
         const dx = offsetX / scale;
         const dy = offsetY / scale;
         setScale(newScale);
-        containerRef.current.scrollLeft += dx * (newScale - scale);
-        containerRef.current.scrollTop += dy * (newScale - scale);
-        containerRef.current.style.overflow = 'scroll';
-        containerRef.current.style.cursor = 'all-scroll';
+        if (containerRef.current) {
+            containerRef.current.scrollLeft += dx * (newScale - scale);
+            containerRef.current.scrollTop += dy * (newScale - scale);
+            containerRef.current.style.overflow = 'scroll';
+            containerRef.current.style.cursor = 'all-scroll';
+        }
     };
 
     const divRef = useRef(null);
@@ -74,81 +74,83 @@ const Colaborador = () => {
             else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
             else if (document.msExitFullscreen) document.msExitFullscreen();
         }
-        setmax(!max)
+        setmax(!max);
     };
 
     return (
-        <div ref={divRef} style={{ width: '100%', minHeight: 'calc(100vh - 48px)', position: 'relative' }}>
+        <div ref={divRef} style={{ position: 'relative' }}>
             <Box
-                position="absolute"
+                position="fixed"
                 top="68px"
-                right="38px"
-                bg="gray.600"
+                right="24px"
+                bg="#1e3a5f"
                 p="3"
                 rounded="lg"
                 shadow="lg"
-                zIndex="999"
+                zIndex={999}
                 display="flex"
                 flexDirection="row"
                 alignItems="center"
                 gap="3"
             >
-                <Tooltip label="Para zoom +/-, use scroll" placement='top-end' hasArrow>
+                <Tooltip label="Zoom +/- con la rueda del ratón" placement="top-end" hasArrow>
                     <IconButton
                         icon={<BsMouse size="18px" />}
                         bg="white"
                         color="gray.700"
-                        _hover={{ bg: "gray.100" }}
+                        _hover={{ bg: 'gray.100' }}
                         isRound
-                        size={'sm'}
-                    //onClick={handleWheel}
+                        size="sm"
+                        aria-label="Zoom con rueda"
                     />
                 </Tooltip>
-                <Tooltip label="Para mover, mantener click y arrastrar" placement='top-start' hasArrow>
+                <Tooltip label="Mantén clic y arrastra para mover la vista" placement="top-start" hasArrow>
                     <IconButton
                         icon={<MdTouchApp size="18px" />}
                         bg="white"
                         color="gray.700"
-                        _hover={{ bg: "gray.100" }}
+                        _hover={{ bg: 'gray.100' }}
                         isRound
-                        size={'sm'}
+                        size="sm"
+                        aria-label="Arrastrar"
                     />
                 </Tooltip>
-                <div className="bg-gray-300" style={{ width: 1, height: 40 }} />
-                <Tooltip label="Rotar vista" placement='top-end' hasArrow>
+                <Box w="1px" h="40px" bg="whiteAlpha.400" flexShrink={0} />
+                <Tooltip label="Rotar vista" placement="top-end" hasArrow>
                     <IconButton
                         icon={<MdRotate90DegreesCw size="18px" />}
                         bg="white"
                         color="gray.700"
-                        _hover={{ bg: "gray.100" }}
+                        _hover={{ bg: 'gray.100' }}
                         isRound
                         onClick={() => setHorizontal(!horizontal)}
-                        size={'sm'}
+                        size="sm"
+                        aria-label="Rotar vista"
                     />
                 </Tooltip>
-                <Tooltip label={!collapsable ? 'Maximizar' : 'Minimizar'} placement='top-start' hasArrow>
+                <Tooltip label={!collapsable ? 'Maximizar tarjetas' : 'Minimizar tarjetas'} placement="top-start" hasArrow>
                     <IconButton
-                        aria-label="Mantener clic y arrastrar"
+                        aria-label="Minimizar o maximizar tarjetas"
                         icon={!collapsable ? <FiMaximize size="18px" /> : <FiMinimize size="18px" />}
                         bg="white"
                         color="gray.700"
-                        _hover={{ bg: "gray.100" }}
+                        _hover={{ bg: 'gray.100' }}
                         isRound
                         onClick={() => setCollapsable(!collapsable)}
-                        size={'sm'}
+                        size="sm"
                     />
                 </Tooltip>
-                <div className="bg-gray-300" style={{ width: 1, height: 40 }} />
-                <Tooltip label={'Pantalla completa'} placement='top-start' hasArrow>
+                <Box w="1px" h="40px" bg="whiteAlpha.400" flexShrink={0} />
+                <Tooltip label="Pantalla completa" placement="top-start" hasArrow>
                     <IconButton
                         aria-label="Pantalla completa"
                         icon={max ? <FiMaximize2 size="18px" /> : <FiMinimize2 size="18px" />}
                         bg="white"
                         color="gray.700"
-                        _hover={{ bg: "gray.100" }}
+                        _hover={{ bg: 'gray.100' }}
                         isRound
                         onClick={handleFullscreen}
-                        size={'sm'}
+                        size="sm"
                     />
                 </Tooltip>
             </Box>
@@ -162,52 +164,32 @@ const Colaborador = () => {
                 style={{
                     width: '100%',
                     height: 'calc(100vh - 48px)',
-                    //overflow: 'auto',
                     overflowY: 'auto',
                     overflowX: 'auto',
                     backgroundColor: '#f8f7f7',
                     position: 'relative',
-                    cursor: 'default'
+                    cursor: 'grab',
                 }}
             >
                 <div
                     ref={contentRef}
                     style={{
-                        width: scale !== 1 ? `${2000 * scale}px` : '100%',
-                        minWidth: 1200,
-                        minHeight: scale !== 1 ? `${500 * scale}px` : 600,
-                        transform: `scale(${scale})`,
+                        width: scale === 1 ? 'max-content' : `${2000 * scale}px`,
+                        minHeight: scale !== 1 ? `${Math.max(1200, 800 * scale)}px` : undefined,
+                        transform: scale !== 1 ? `scale(${scale})` : undefined,
                         transformOrigin: 'top left',
-                        position: 'absolute',
+                        position: scale !== 1 ? 'absolute' : 'relative',
                         padding: 20,
                         top: 0,
                         left: 0,
+                        boxSizing: 'border-box',
                     }}
                 >
                     <DiagramOrgTree xy={horizontal} min={collapsable} />
                 </div>
             </div>
         </div>
-
     );
-    /*return (
-        <div
-            className='overView'
-            ref={containerRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            style={{
-                overflow: 'hidden',
-                cursor: 'grab', // Cursor en forma de mano
-                backgroundColor: '#f0f0f0',
-            }}
-        >
-            <h1 style={{ textAlign: 'center', color: 'black', fontSize: '22px', marginLeft: '10px' }}>Colaboradores de Grupo CTI</h1>
-            
-        </div>
-    );*/
-}
+};
 
-export default Colaborador
+export default Colaborador;
