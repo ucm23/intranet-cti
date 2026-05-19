@@ -71,13 +71,13 @@ export const dailtCheck = async ({ id }) => {
     }
 }
 
-export const get_daily_checks = async ({ params }) => {
+export const get_daily_checks = async ({ user_id, page, pageSize}) => {
     let response = { status: false }
     try {
         let params = {
-            user_id: params?.user_id || null,
-            page: params?.page || null,
-            pageSize: params?.pageSize || null,
+            user_id: user_id || null,
+            page: page || null,
+            pageSize
         }
         const fetch = await Fetcher({
             method: 'GET',
@@ -87,7 +87,7 @@ export const get_daily_checks = async ({ params }) => {
         
         console.log("🚀 ~ dailtCheck ~ fetch:", fetch)
         if (fetch.status == 200) {
-            response = { data: fetch?.data?.data, status: true };
+            response = { data: fetch?.data, status: true };
         }
     } catch (error) {
         console.error("🚀 ~ indeDocuments ~ error:", error)
