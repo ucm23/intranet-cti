@@ -272,7 +272,7 @@ const DiagramOrgTree = ({ xy: _xy, min }) => {
                                     </div>
                                 </div>
 
-                                <div className="holding-org__cti-cell holding-org__cti-cell--stacked">
+                                <div className="holding-org__cti-cell">
                                     <div className="holding-org__headed-slice holding-org__headed-slice--cards-cols-2">
                                         <div className="childrens-label-title holding-org__cti-cell-title" style={{ backgroundColor: AREA_IA, textAlign: 'center', boxSizing: 'border-box' }}>
                                             IA / Data - Victum AI
@@ -282,19 +282,20 @@ const DiagramOrgTree = ({ xy: _xy, min }) => {
                                             <UserProfileCard color={AREA_IA} name="Josue Tlaxcoapan" puesto="Ing. Dev. IA" urlPhoto={IA2} onClickCV={() => handleDetails(16)} onClickProfile={() => handleDetails(16, 'IA2.png')} min={min} />
                                         </div>
                                     </div>
-                                    <div className="holding-org__headed-slice holding-org__headed-slice--cards-cols-2">
+                                </div>
+
+                                <div className="holding-org__cti-cell holding-org__cti-cell--single">
+                                    <div className="holding-org__headed-slice holding-org__headed-slice--cards-cols-1">
                                         <div className="childrens-label-title holding-org__cti-cell-title" style={{ backgroundColor: AREA_INFRA, textAlign: 'center', boxSizing: 'border-box' }}>
                                             Infraestructura
                                         </div>
-                                        <div className="org-tree-exec-cards-grid holding-org__cti-card-grid">
-                                            <div className="org-tree-exec-span2" style={{ gridColumn: '1 / 3', display: 'flex', justifyContent: 'center' }}>
-                                                <UserProfileCard color={AREA_INFRA} name="Heber Argumedo" puesto="Ing. CiberSeguridad" urlPhoto={infra1} onClickCV={() => handleDetails(17)} onClickProfile={() => handleDetails(17, 'infra1.png')} min={min} />
-                                            </div>
+                                        <div className="org-tree-exec-cards-grid holding-org__cti-card-grid holding-org__cti-card-grid--single">
+                                            <UserProfileCard color={AREA_INFRA} name="Heber Argumedo" puesto="Ing. CiberSeguridad" urlPhoto={infra1} onClickCV={() => handleDetails(17)} onClickProfile={() => handleDetails(17, 'infra1.png')} min={min} />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="holding-org__cti-cell holding-org__cti-cell--stacked">
+                                <div className="holding-org__cti-cell">
                                     <div className="holding-org__headed-slice holding-org__headed-slice--cards-cols-2">
                                         <div className="childrens-label-title holding-org__cti-cell-title" style={{ backgroundColor: AREA_COMERCIAL, textAlign: 'center', boxSizing: 'border-box' }}>
                                             Dirección comercial
@@ -304,6 +305,9 @@ const DiagramOrgTree = ({ xy: _xy, min }) => {
                                             <UserProfileCard color={AREA_COMERCIAL} name="Jaime García Ángel" puesto="Dirección Comercial" urlPhoto={CV_DC1} onClickCV={() => handleDetails(28)} onClickProfile={() => handleDetails(28, 'CV_DC1.png')} min={min} />
                                         </div>
                                     </div>
+                                </div>
+
+                                <div className="holding-org__cti-cell">
                                     <div className="holding-org__headed-slice holding-org__headed-slice--cards-cols-2">
                                         <div className="childrens-label-title holding-org__cti-cell-title" style={{ backgroundColor: AREA_SAP, textAlign: 'center', boxSizing: 'border-box' }}>
                                             SAP

@@ -500,11 +500,17 @@
   --holding-org-card-gap: 14px;
   --holding-org-cti-col-w: calc(2 * var(--holding-org-card-w) + var(--holding-org-card-gap));
   --holding-org-cti-col-gap: 10px;
+  --holding-org-cti-cols: 7;
+  --holding-org-cti-block-w: calc(
+    (var(--holding-org-cti-cols) - 1) * var(--holding-org-cti-col-w) +
+    var(--holding-org-card-w) +
+    (var(--holding-org-cti-cols) - 1) * var(--holding-org-cti-col-gap)
+  );
   display: block;
   position: relative;
   box-sizing: border-box;
   padding: 8px 8px 20px;
-  width: max(100%, 2280px);
+  width: max(100%, var(--holding-org-cti-block-w));
   max-width: none;
 }
 
@@ -656,7 +662,7 @@
   max-width: 96px !important;
 }
 
-/* CTI: bloque al ancho exacto de las 5 columnas (franja azul = mismo borde) */
+/* CTI: bloque al ancho exacto de las 7 columnas (franja azul = Tecnología → SAP) */
 .holding-org__cti-block {
   display: flex;
   flex-direction: column;
@@ -683,7 +689,7 @@
   max-width: 100%;
 }
 
-/* CTI: 5 áreas en fila; IA/Infra y Comercial/SAP apilados en su columna */
+/* CTI: 7 áreas en una fila */
 .holding-org__cti-panel {
   gap: 8px;
 }
@@ -705,7 +711,10 @@
 }
 
 .holding-org__cti-row--primary {
-  grid-template-columns: repeat(5, var(--holding-org-cti-col-w));
+  grid-template-columns:
+    repeat(4, var(--holding-org-cti-col-w))
+    var(--holding-org-card-w)
+    repeat(2, var(--holding-org-cti-col-w));
   column-gap: var(--holding-org-cti-col-gap);
   justify-content: center;
 }
@@ -713,6 +722,15 @@
 .holding-org__cti-block .holding-org__cti-cell {
   width: var(--holding-org-cti-col-w);
   max-width: var(--holding-org-cti-col-w);
+}
+
+.holding-org__cti-block .holding-org__cti-cell--single {
+  width: var(--holding-org-card-w);
+  max-width: var(--holding-org-card-w);
+}
+
+.holding-org__cti-block .holding-org__cti-cell--single .holding-org__headed-slice--cards-cols-1 {
+  width: var(--holding-org-card-w);
 }
 
 .holding-org__cti-block .holding-org__headed-slice--cards-cols-2 {
@@ -758,8 +776,13 @@
 }
 
 .holding-org .holding-org__cti-matrix .holding-org__cti-card-grid.holding-org__cti-card-grid--single {
-  grid-template-columns: 186px !important;
+  grid-template-columns: var(--holding-org-card-w) !important;
+  width: var(--holding-org-card-w) !important;
   justify-content: center !important;
+}
+
+.holding-org__cti-cell--single .holding-org__cti-cell-title {
+  width: 100%;
 }
 
 .holding-org .holding-org__cti-matrix .holding-org__cti-card-grid.holding-org__cti-card-grid--single > .org-tree-exec-span2 {
@@ -985,6 +1008,21 @@
   }
 
   .holding-org__corporate > .holding-org__panel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .holding-org__cti-block {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .holding-org__cti-block .holding-org__cti-row--primary {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .holding-org__cti-block .holding-org__cti-cell {
     width: 100%;
     max-width: 100%;
   }
