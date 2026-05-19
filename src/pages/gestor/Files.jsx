@@ -38,6 +38,19 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { ColorRing } from 'react-loader-spinner'
 import { Document, Page, pdfjs } from "react-pdf";
+import {
+    countStaticCvDocumentsForDepartment,
+    getCurriculosDepartmentFolders,
+    getStaticCvDocumentsForDepartment,
+    isCurriculosCtiProject,
+} from '../../lib/cvStaticDocuments';
+
+const formatPreviewDate = (value) => {
+    if (!value) return '—';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return format(date, "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm');
+};
 
 const DocumentManager = () => {
     const information_user = useSelector(state => state.login.information_user);
@@ -272,11 +285,34 @@ const DocumentManager = () => {
         } else if (targetLevel === 1) setSelectedDepartment(null);
     };
 
+    const sameId = (a, b) => a != null && b != null && String(a) === String(b);
+
     const filteredDocumentsForLevel = () => {
-        if (level === 0) return documents.filter(doc => doc.project_id === null && doc.department_id === null);
-        if (level === 1) return documents.filter(doc => doc.project_id === selectedProject?.id && doc.department_id === null);
-        if (level === 2) return documents.filter(doc => doc.project_id === selectedProject?.id && doc.department_id === selectedDepartment?.id);
+        if (level === 0) {
+            return documents.filter((doc) => doc.project_id == null && doc.department_id == null);
+        }
+        if (level === 1) {
+            // Incluir todos los CV/archivos del proyecto (también los de cada departamento)
+            return documents.filter((doc) => sameId(doc.project_id, selectedProject?.id));
+        }
+        if (level === 2) {
+            return documents.filter(
+                (doc) =>
+                    sameId(doc.project_id, selectedProject?.id) &&
+                    sameId(doc.department_id, selectedDepartment?.id)
+            );
+        }
         return [];
+    };
+
+    const useStaticCurriculos = isCurriculosCtiProject(selectedProject);
+
+    const getDocumentsForLevel = () => {
+        if (useStaticCurriculos) {
+            if (level === 2) return getStaticCvDocumentsForDepartment(departments, selectedDepartment);
+            return [];
+        }
+        return filteredDocumentsForLevel();
     };
 
     const handleButtonClick = () => {
@@ -400,19 +436,22 @@ const DocumentManager = () => {
             </div>
     };
 
-    const DepartmentList_ = ({ isLoading, departments, documents, project_id, selectedProject, department_id, onDepartmentSelect }) => {
-        /*if (departments.every(folder => !selectedProject?.departments_ids.includes(folder.id))) {
-            return
-        }*/
+    const DepartmentList_ = ({ isLoading, departments, documents, project_id, selectedProject, department_id, onDepartmentSelect, useStaticCurriculos }) => {
+        const foldersToShow = useStaticCurriculos
+            ? getCurriculosDepartmentFolders(departments, selectedProject)
+            : departments.filter((folder) => selectedProject?.departments_ids.includes(folder?.id));
+
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
                 <h2 className="text-sm font-semibold text-gray-800 mb-3">Departamentos</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
-                    {departments.map((folder, index) => {
-                        const linkedDocs = documents.filter((doc) => doc.department_id === folder.id && doc.project_id === project_id).length || null;
-                        const isSelected = selectedProject?.departments_ids.includes(folder?.id);
+                    {foldersToShow.map((folder, index) => {
+                        const linkedDocs = useStaticCurriculos
+                            ? countStaticCvDocumentsForDepartment(departments, folder)
+                            : documents.filter((doc) => doc.department_id === folder.id && doc.project_id === project_id).length || null;
+                        const folderColor = folder?.isStaticDepartment ? folder.color : '#008080';
 
-                        return isSelected && (
+                        return (
                             <div
                                 key={`files-departaments-${folder.id}-${index}`}
                                 className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer flex items-center p-3 "
@@ -421,16 +460,16 @@ const DocumentManager = () => {
                                 onDoubleClick={() => onDepartmentSelect(folder)}
                             >
                                 <div className="flex flex-row items-center space-x-2">
-                                    <FaFolder style={{ fontSize: 18, color: '#008080' }} />
+                                    <FaFolder style={{ fontSize: 18, color: folderColor }} />
                                     <div>
                                         <h3 className="font-normal text-sm text-gray-800 line-clamp-1 pb-0">{folder?.name}</h3>
-                                        {linkedDocs && <p className="text-sm text-gray-500 pb-0 line-clamp-1">{linkedDocs} elementos</p>}
+                                        {linkedDocs > 0 && <p className="text-sm text-gray-500 pb-0 line-clamp-1">{linkedDocs} elementos</p>}
                                     </div>
                                 </div>
                             </div>
                         );
                     })}
-                    {(selectedProject?.departments_ids.length !== departments.length && role != 'lector') &&
+                    {(!useStaticCurriculos && selectedProject?.departments_ids.length !== departments.length && role != 'lector') &&
                         <div
                             className="flex items-center p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             style={{ backgroundColor: color?.bgFiles }}
@@ -474,6 +513,10 @@ const DocumentManager = () => {
     }, [handleFilePreview]);
 
     const handleDocs = async (file) => {
+        if (file?.isStaticCv && file?.staticUrl) {
+            window.open(file.staticUrl, '_blank');
+            return;
+        }
         try {
             const pdf = await indexDocumentsByID({ id: file?.id, blob: false });
             console.log("🚀 ~ handleDocs ~ pdf:", pdf)
@@ -619,9 +662,10 @@ const DocumentManager = () => {
             </div>;
     };*/
 
-    const DocumentList = ({ isLoading, documents }) => {
+    const DocumentList = ({ isLoading, documents, sectionTitle = 'Documentos', emptyHint }) => {
         const selectedDocuments = documents.filter((file) => {
-            const isSelected = !role.startsWith('admin') ? file?.users_ids.includes(user_id) : true;
+            if (file?.isStaticCv) return true;
+            const isSelected = !role.startsWith('admin') ? file?.users_ids?.includes(user_id) : true;
             return isSelected;
         });
 
@@ -646,7 +690,7 @@ const DocumentManager = () => {
                     </div>
                 ) : (
                     <div>
-                        <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
+                        <h2 className="text-sm font-semibold text-gray-800 my-3">{sectionTitle}</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 pb-24">
                             {selectedDocuments.map((file, index) => (
                                 <div
@@ -677,7 +721,7 @@ const DocumentManager = () => {
                                                 </MenuButton>
                                                 <MenuList>
                                                     <MenuItem icon={<FiEye />} onClick={() => onDoubleClick_(file, index, true)}>Abrir</MenuItem>
-                                                    {role !== 'lector' && (
+                                                    {!file?.isStaticCv && role !== 'lector' && (
                                                         <>
                                                             <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
                                                             <MenuItem icon={<RiFolderSharedLine />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
@@ -986,16 +1030,22 @@ const DocumentManager = () => {
         );
     };
 
-    const PDFLoader = ({ id }) => {
+    const PDFLoader = ({ id, staticUrl }) => {
         const [imageUrl, setImageUrl] = useState(null);
         useEffect(() => {
             const loadURL = async () => {
+                if (staticUrl) {
+                    const response = await fetch(staticUrl);
+                    const pdf = await response.blob();
+                    setImageUrl(pdf);
+                    return;
+                }
                 const pdf = await indexDocumentsByID({ id, blob: true });
                 console.log("🚀 ~ loadURL ~ pdf:", pdf)
                 setImageUrl(pdf);
             };
             loadURL()
-        }, [id]);
+        }, [id, staticUrl]);
         if (!imageUrl) return <LoaderPDF />
         else return <PdfViewer pdfBlob={imageUrl} />
     };
@@ -1189,16 +1239,22 @@ const DocumentManager = () => {
                             {level === 0 && (
                                 <>
                                     <ProjectList isLoading={isLoading} projects={projects} onProjectSelect={handleProjectSelect} project_id={selectedProject?.id} />
-                                    <DocumentList isLoading={isLoading} documents={filteredDocumentsForLevel()} />
+                                    <DocumentList isLoading={isLoading} documents={getDocumentsForLevel()} />
                                 </>
                             )}
                             {level === 1 && (
-                                <>
-                                    <DepartmentList_ isLoading={isLoading} departments={departments} documents={documents} department_id={selectedDepartment?.id} project_id={selectedProject?.id} selectedProject={selectedProject} onDepartmentSelect={handleDepartmentSelect} />
-                                    <DocumentList isLoading={isLoading} documents={filteredDocumentsForLevel()} />
-                                </>
+                                <DepartmentList_ isLoading={isLoading} departments={departments} documents={documents} department_id={selectedDepartment?.id} project_id={selectedProject?.id} selectedProject={selectedProject} onDepartmentSelect={handleDepartmentSelect} useStaticCurriculos={useStaticCurriculos} />
                             )}
-                            {level === 2 && <DocumentList isLoading={isLoading} documents={filteredDocumentsForLevel()} />}
+                            {level === 1 && !useStaticCurriculos && (
+                                <DocumentList isLoading={isLoading} documents={filteredDocumentsForLevel()} />
+                            )}
+                            {level === 2 && (
+                                <DocumentList
+                                    isLoading={isLoading}
+                                    documents={getDocumentsForLevel()}
+                                    sectionTitle="Currículums del departamento"
+                                />
+                            )}
                         </Box>
                     </div>
                 </div>
@@ -1249,12 +1305,12 @@ const DocumentManager = () => {
                                 }
                                 <p className="font-small">
                                     <span className='font-semibold'>Creado</span>  <br />
-                                    {format(new Date(previewFile.created_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
+                                    {formatPreviewDate(previewFile.created_at)}
                                 </p>
                                 <p className="font-small">
                                     <span className='font-semibold'>Modificado</span>
                                     <div className='flex flex-row items-center gap-1'>
-                                        {format(new Date(previewFile.updated_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
+                                        {formatPreviewDate(previewFile.updated_at)}
                                         <FaClockRotateLeft style={{ fontSize: 15 }} color="gray" />
                                     </div>
                                 </p>
@@ -1341,7 +1397,9 @@ const DocumentManager = () => {
                                 </button>}
                             <div className={`relative w-full flex ${!selectedImage?.type.endsWith('pdf') && 'items-center'} justify-center`}>
                                 {selectedImage?.type.startsWith('image') && <ImageLoader style={{ transform: `scale(${zoom / 100})` }} id={selectedImage?.id} className="max-w-[70%] max-h-[70%] object-contain transition-transform duration-300 ease-in-out shadow-xl" />}
-                                {selectedImage?.type.endsWith('pdf') && <PDFLoader id={selectedImage?.id} />}
+                                {selectedImage?.type.endsWith('pdf') && (
+                                    <PDFLoader id={selectedImage?.id} staticUrl={selectedImage?.staticUrl} />
+                                )}
                                 {selectedImage?.type.startsWith('image') &&
                                     <div className={`absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4 p-3 rounded-full bg-black bg-opacity-50 position-fixed-50`}>
                                         <button
