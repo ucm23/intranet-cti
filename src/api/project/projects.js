@@ -35,6 +35,25 @@ export const createProjects = async ({ data }) => {
     }
 }
 
+export const updateProjects = async ({ id, data }) => {
+    let response = { status: false }
+    try {
+        
+        const fetch = await Fetcher({
+            method: 'PUT',
+            url: `/projects/${id}`,
+            data: JSON.stringify(data)
+        })
+        if (fetch.status == 200 || fetch.status == 201) {
+            response = { data: fetch?.data, status: true }
+        }
+    } catch (error) {
+        console.error("TCL: indexProjects -> error", error)
+    } finally {
+        return response;
+    }
+}
+
 export const indexActivities = async ({ id }) => {
     let response = { status: false }
     try {

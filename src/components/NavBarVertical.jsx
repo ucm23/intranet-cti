@@ -128,44 +128,6 @@ const NavBarVertical = ({ children, menu }) => {
     const [error, setError] = useState(null);
     const [previewPhoto, setPreviewPhoto] = useState(null);
 
-
-    // Función para registrar el check en Supabase (usando RPC)
-    const registrarCheck = async (checkData) => {
-        console.log('Enviando a Supabase:', {
-            p_user_id: checkData.id,
-            p_photo_base64: checkData.photoBase64 ? 'BASE64_PRESENTE' : 'NO_HAY_FOTO',
-            p_latitude: checkData.latitude,
-            p_longitude: checkData.longitude,
-            p_accuracy: checkData.accuracy,
-            p_ip_address: checkData.ipAddress,
-            p_user_agent: checkData.userAgent
-        });
-
-        try {
-            const response = await fetch(`${SUPABASE_REST_URL}/rpc/registrar_check`, {
-                method: 'POST',
-                headers: supabaseHeaders,
-                body: JSON.stringify({
-                    p_user_id: checkData.id,
-                    p_photo_base64: checkData.photoBase64,
-                    p_latitude: checkData.latitude,
-                    p_longitude: checkData.longitude,
-                    p_accuracy: checkData.accuracy,
-                    p_ip_address: checkData.ipAddress,
-                    p_user_agent: checkData.userAgent
-                })
-            });
-
-            const data = await response.json();
-            console.log('Respuesta del servidor:', data);
-            return data;
-
-        } catch (error) {
-            console.error('Error en registrarCheck:', error);
-            throw error;
-        }
-    };
-
     // Obtener coordenadas GPS
     const getCoordinates = () => {
         return new Promise((resolve, reject) => {
@@ -220,8 +182,8 @@ const NavBarVertical = ({ children, menu }) => {
             // 2. Tomar la foto
             //const photoBase64 = webcamRef.current.getScreenshot();
             const photoBase64 = webcamRef.current.getScreenshot({
-                quality: 0.3, // Reduce calidad (0-1)
-                width: 500    // Reduce resolución
+                quality: 0.2, // Reduce calidad (0-1)
+                width: 300    // Reduce resolución
             });
             if (!photoBase64) {
                 throw new Error('No se pudo capturar la foto');

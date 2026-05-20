@@ -6,6 +6,23 @@ import { get_daily_checks, indexUsers } from '../../api/users/users';
 import moment from "moment/moment";
 import { AiOutlineClose } from "react-icons/ai";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { ChakraProvider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea, Portal } from '@chakra-ui/react'
+import { Calendar as BigCalendar, dateFnsLocalizer } from 'react-big-calendar';
+import { format, parse, startOfWeek, getDay } from 'date-fns';
+import es from 'date-fns/locale/es';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+// Configura el localizer
+const locales = { es };
+
+
+const localizer = dateFnsLocalizer({
+    format: (date, formatString) => format(date, formatString, { locale: es }),
+    parse: (dateString, formatString) => parse(dateString, formatString, new Date(), { locale: es }),
+    startOfWeek: () => startOfWeek(new Date(), { locale: es }),
+    getDay: (date) => getDay(date),
+    locales,
+});
 
 const AttendanceLogs = () => {
     const [checks, setChecks] = useState([]);
@@ -15,18 +32,12 @@ const AttendanceLogs = () => {
     const [users, setUsers] = useState([]);
     const [selectedCheck, setSelectedCheck] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
-    const pageSize = 10; // Siempre 2 como solicitaste
+    const pageSize = 50;
 
     const getUsers = async () => {
         const { status, data } = await indexUsers({});
-        console.log("🚀 ~ getUsers ~ data:", data);
         if (status) setUsers(data);
     };
-
-    useEffect(() => {
-        getUsers();
-    }, []);
 
     const loadChecks = async (pageNum = 1) => {
         setLoading(false);
@@ -46,10 +57,50 @@ const AttendanceLogs = () => {
         }
     };
 
+    const [checksUser, setChecksUser] = useState([]);
+    const [loadingUser, setLoadingUser] = useState(false);
+
+    const getDailysByUser = async (user_id) => {
+        setLoadingUser(false);
+        try {
+            let response = await get_daily_checks({ user_id });
+            console.log("🚀 ~ loadChecks ~ response:", response);
+            setChecksUser(response?.data?.data || []);
+        } catch (error) {
+            console.error('Error loading checks:', error);
+        } finally {
+            setLoadingUser(true);
+            onOpenCalendar();
+        }
+    };
+
+    const { isOpen: isOpenCalendar, onOpen: onOpenCalendar, onClose: onCloseCalendar } = useDisclosure();
+
+    // Convierte los checksUser a eventos del calendario
+    const calendarEvents = checksUser.map(check => ({
+        title: ``,
+        start: new Date(check?.check_time),
+        end: new Date(check?.check_time),
+        allDay: false,
+        resource: check
+    }));
+
+    // Función para manejar click en evento
+    const handleEventClick = (event) => {
+        console.log("Evento clickeado:", event);
+        // Aquí puedes mostrar un modal con más detalles
+    };
+
+    // Función para manejar selección de slot
+    const handleSlotSelect = ({ start, end }) => {
+        console.log("Slot seleccionado:", { start, end });
+    };
+
     // Calcular total de páginas basado en totalRecords y pageSize
     const totalPages = Math.ceil(totalRecords / pageSize);
 
     useEffect(() => {
+        getUsers();
         loadChecks(page);
     }, [page]);
 
@@ -78,17 +129,32 @@ const AttendanceLogs = () => {
         return users.find(user => user?.id === userId);
     };
 
+    const getChecks = (id) => {
+        return checks.find(user => user?.user_id === id);
+    };
+
     // Formatear hora con AM/PM
     const formatTimeWithAmPm = (timestamp) => {
-        if (!timestamp) return '—';
+        if (!timestamp) return null;
         return moment(timestamp).format('hh:mm A');
     };
 
     // Formatear fecha
     const formatDate = (timestamp) => {
-        if (!timestamp) return '—';
+        if (!timestamp) return null;
         return moment(timestamp).format('DD-MM-YYYY');
     };
+
+    const [selectedFilter, setSelectedFilter] = useState(0);
+
+    const todayChecks = checks.filter(check => {
+        const checkDate = moment(check?.check_date).format('YYYY-MM-DD');
+        const today = moment().format('YYYY-MM-DD');
+        return checkDate === today;
+    });
+
+    const today = moment.utc().format('YYYY-MM-DD');
+
 
     return (
         <div className="mx-auto min-h-screen bg-white content-scroll-auto">
@@ -100,30 +166,77 @@ const AttendanceLogs = () => {
                             <p className="font-body-md text-body-md text-on-surface-variant">Gestionar y monitorear los registros de acceso de los usuarios</p>
                         </div>
                     </div>
-                    <div className="flex bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex-col h-full">
+                    <div className="flex bg-surface-container-lowest flex-col h-full">
                         <div className="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low/30 flex-shrink-0">
-                            <p className="text-sm text-on-surface-variant">
-                                Mostrando <span className="font-semibold text-on-surface">{startRecord}</span> a <span className="font-semibold text-on-surface">{endRecord}</span> de <span className="font-semibold text-on-surface">{totalRecords}</span> registros
-                            </p>
-                            <div className="flex gap-2">
+
+                            <div className="inline-flex h-11 w-auto items-center justify-center rounded-sm bg-slate-200  p-1">
                                 <button
-                                    onClick={() => handlePageChange(page - 1)}
-                                    disabled={page === 1}
-                                    className="px-3 py-1.5 border border-outline-variant/50 rounded-lg text-sm font-medium hover:bg-surface-container-high transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                                    onClick={() => setSelectedFilter(0)}
+                                    className={`flex-1 h-full items-center justify-center rounded-sm transition-all duration-200 px-3 ${selectedFilter == 0
+                                        ? 'bg-white shadow-sm'
+                                        : 'bg-transparent hover:bg-slate-300/50'
+                                        }`}
                                 >
-                                    <LeftOutlined className="text-xs" /> Anterior
+                                    <span className={`text-sm font-semibold whitespace-nowrap ${selectedFilter == 0
+                                        ? 'text-blue-600'
+                                        : 'text-slate-600'
+                                        }`}>
+                                        LISTA
+                                    </span>
                                 </button>
-                                <span className="px-3 py-1.5 text-sm font-medium">
-                                    Página {page} de {totalPages || 1}
-                                </span>
+
                                 <button
-                                    onClick={() => handlePageChange(page + 1)}
-                                    disabled={page === totalPages || totalPages === 0}
-                                    className="px-3 py-1.5 bg-primary text-on-primary rounded-lg text-sm font-medium hover:bg-primary-container transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                                    onClick={() => setSelectedFilter(1)}
+                                    className={`flex-1 h-full items-center justify-center rounded-sm transition-all duration-200 px-3 ${selectedFilter == 1
+                                        ? 'bg-white shadow-sm'
+                                        : 'bg-transparent hover:bg-slate-300/50'
+                                        }`}
                                 >
-                                    Siguiente <RightOutlined className="text-xs" />
+                                    <span className={`text-sm font-semibold whitespace-nowrap ${selectedFilter == 1
+                                        ? 'text-blue-600'
+                                        : 'text-slate-600'
+                                        }`}>
+                                        HOY
+                                    </span>
+                                </button>
+
+                                <button
+                                    onClick={() => setSelectedFilter(2)}
+                                    className={`flex-1 h-full items-center justify-center rounded-sm transition-all duration-200 px-3 ${selectedFilter == 2
+                                        ? 'bg-white shadow-sm'
+                                        : 'bg-transparent hover:bg-slate-300/50'
+                                        }`}
+                                >
+                                    <span className={`text-sm font-semibold whitespace-nowrap ${selectedFilter == 2
+                                        ? 'text-blue-600'
+                                        : 'text-slate-600'
+                                        }`}>
+                                        POR USUARIOS
+                                    </span>
                                 </button>
                             </div>
+                            {selectedFilter == 0 &&
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => handlePageChange(page - 1)}
+                                        disabled={page === 1}
+                                        className="px-3 py-1.5 border border-outline-variant/50 rounded-lg text-sm font-medium hover:bg-surface-container-high transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                                    >
+                                        <LeftOutlined className="text-xs" /> Anterior
+                                    </button>
+                                    <span className="px-3 py-1.5 text-sm font-medium">
+                                        Página {page} de {totalPages || 1}
+                                    </span>
+                                    <button
+                                        onClick={() => handlePageChange(page + 1)}
+                                        disabled={page === totalPages || totalPages === 0}
+                                        className="px-3 py-1.5 bg-primary text-on-primary rounded-lg text-sm font-medium hover:bg-primary-container transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                                    >
+                                        Siguiente <RightOutlined className="text-xs" />
+                                    </button>
+                                </div>
+                            }
+
                         </div>
 
                         <div className="flex-1 overflow-y-auto min-h-0">
@@ -134,12 +247,13 @@ const AttendanceLogs = () => {
                                         <th className="px-6 py-4 font-semibold text-xs text-outline uppercase tracking-wider">Correo</th>
                                         <th className="px-6 py-4 font-semibold text-xs text-outline uppercase tracking-wider">Rol</th>
                                         <th className="px-6 py-4 font-semibold text-xs text-outline uppercase tracking-wider">Fecha</th>
-                                        <th className="px-6 py-4 font-semibold text-xs text-outline uppercase tracking-wider">Hora</th>
+                                        {selectedFilter != 2 &&
+                                            <th className="px-6 py-4 font-semibold text-xs text-outline uppercase tracking-wider">Hora</th>}
                                     </tr>
                                 </thead>
-                                {loading && checks.length > 0 ? (
+                                {loading && (checks.length > 0 && users.length > 0) ? (
                                     <tbody className="divide-y divide-outline-variant/20">
-                                        {checks.map((check, index) => {
+                                        {selectedFilter == 0 && checks.map((check, index) => {
                                             const user = getUserInfo(check?.user_id);
                                             return (
                                                 <tr
@@ -185,6 +299,102 @@ const AttendanceLogs = () => {
                                                 </tr>
                                             );
                                         })}
+
+
+                                        {selectedFilter == 1 && checks
+                                            .filter(check => {
+                                                return moment.utc(check?.check_date).format('YYYY-MM-DD') === today;
+                                            })
+                                            .map((check, index) => {
+                                                const user = getUserInfo(check?.user_id);
+                                                return (
+                                                    <tr
+                                                        className="hover:bg-surface-container-low transition-colors group cursor-pointer"
+                                                        key={`key-logs-${check?.id}`}
+                                                        onClick={() => handleRowClick(check)}
+                                                    >
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex items-center gap-3">
+                                                                <img
+                                                                    src={check?.photo_url || './img/default-user.png'}
+                                                                    alt={user?.first_name}
+                                                                    className="w-10 h-10 rounded-full object-cover bg-surface-container"
+                                                                    onError={(e) => e.target.src = './img/default-user.png'}
+                                                                    loading='lazy'
+                                                                />
+                                                                <span className="font-medium text-on-surface">
+                                                                    {user ? `${user.first_name}` : 'Usuario no encontrado'}
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-sm text-on-surface-variant">
+                                                            {user?.email || '—'}
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <span className="text-xs font-semibold bg-primary/10 text-primary py-1">
+                                                                {user?.role?.toUpperCase() || '—'}
+                                                            </span>
+                                                            <div className="flex text-xs font-medium text-green-600 mt-1">
+                                                                {user?.position?.toUpperCase() || '—'}
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex items-center gap-1.5 text-xs font-medium">
+                                                                {formatDate(check?.check_time)}
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex items-center gap-1.5 text-xs font-medium">
+                                                                {formatTimeWithAmPm(check?.check_time)}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                        }
+
+                                        {selectedFilter == 2 && users.map((item, index) => {
+                                            const check = getChecks(item?.id);
+                                            return (
+                                                <tr
+                                                    className="hover:bg-surface-container-low transition-colors group cursor-pointer"
+                                                    key={`key-logs-${item?.id}`}
+                                                    onClick={() => getDailysByUser(item?.id)}
+                                                >
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex items-center gap-3">
+                                                            <img
+                                                                src={check?.photo_url || './img/default-user.png'}
+                                                                alt={item?.first_name}
+                                                                className="w-10 h-10 rounded-full object-cover bg-surface-container"
+                                                                onError={(e) => e.target.src = './img/default-user.png'}
+                                                                loading='lazy'
+                                                            />
+                                                            <span className="font-medium text-on-surface">
+                                                                {item.first_name}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-sm text-on-surface-variant">
+                                                        {item?.email || '—'}
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <span className="text-xs font-semibold bg-primary/10 text-primary py-1">
+                                                            {item?.role?.toUpperCase() || '—'}
+                                                        </span>
+                                                        <div className="flex text-xs font-medium text-green-600 mt-1">
+                                                            {item?.position?.toUpperCase() || '—'}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className={`flex items-center gap-1.5 text-xs font-medium ${moment.utc(check?.check_date).format('YYYY-MM-DD') === today ? 'text-green-600' : 'text-on-surface'}`}>
+                                                            {formatDate(check?.check_time)}  {formatTimeWithAmPm(check?.check_time)}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+
                                     </tbody>
                                 ) : loading && checks.length === 0 ? (
                                     <tbody>
@@ -209,7 +419,6 @@ const AttendanceLogs = () => {
                 </div>
             </div>
 
-            {/* Modal con información detallada */}
             {showModal && selectedCheck && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={closeModal}>
                     <div className=" rounded-sm max-w-2xl w-full max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
@@ -300,6 +509,51 @@ const AttendanceLogs = () => {
                     </div>
                 </div>
             )}
+
+            <Modal closeOnOverlayClick={false} isOpen={isOpenCalendar} onClose={onCloseCalendar} isCentered scrollBehavior={'outside'} size={'2xl'}>
+                <ModalOverlay />
+                <ModalContent maxW="900px">
+                    <ModalHeader>
+                        Registros de {users.find(u => u.id === checksUser[0]?.user_id)?.first_name || 'Usuario'}
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Box height="500px" width="100%">
+                            <BigCalendar
+                                selectable
+                                localizer={localizer}
+                                events={calendarEvents}
+                                startAccessor="start"
+                                endAccessor="end"
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    fontSize: '11px'
+                                }}
+                                defaultView="month"
+                                onSelectSlot={handleSlotSelect}
+                                onSelectEvent={handleEventClick}
+                                views={['month', ]}
+                                messages={{
+                                    today: 'Hoy',
+                                    previous: 'Anterior',
+                                    next: 'Siguiente',
+                                    month: 'Mes',
+                                    week: 'Semana',
+                                    day: 'Día',
+                                    agenda: 'Agenda',
+                                    date: 'Fecha',
+                                    time: 'Hora',
+                                    event: 'Evento',
+                                    noEventsInRange: 'No hay eventos en este rango.',
+                                }}
+                                className="custom-calendar"
+                            />
+                        </Box>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+
         </div>
     );
 };
