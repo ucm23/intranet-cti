@@ -9,9 +9,9 @@ const Chip = ({ charAt, label, color, onDelete, onClick, disabled = false }) => 
 			<span className="text-xs mr-1 ml-2">{label}</span>}
 			{(!disabled) && <button onClick={onDelete} className="mr-1.5 transition-colors duration-200 focus:outline-none">⊗</button>}
 		</div>*/
-		<Tooltip title={`${label}`}>
-			<Avatar style={{ background: color }}>{label.charAt(0)}{label.split(" ")[1][0]}</Avatar>
-		</Tooltip>
+			<Tooltip title={`${label}`}>
+				<Avatar style={{ background: color }}>{label.charAt(0)}{label.split(" ")[1][0]}</Avatar>
+			</Tooltip>
 	);
 };
 

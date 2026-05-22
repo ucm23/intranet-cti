@@ -182,8 +182,7 @@ const NavBarVertical = ({ children, menu }) => {
             // 2. Tomar la foto
             //const photoBase64 = webcamRef.current.getScreenshot();
             const photoBase64 = webcamRef.current.getScreenshot({
-                quality: 0.2, // Reduce calidad (0-1)
-                width: 300    // Reduce resolución
+                quality: 0.2,
             });
             if (!photoBase64) {
                 throw new Error('No se pudo capturar la foto');
@@ -377,8 +376,8 @@ const NavBarVertical = ({ children, menu }) => {
                                                 screenshotFormat="image/jpeg"
                                                 screenshotQuality={0.8}
                                                 videoConstraints={{
-                                                    width: 500,
-                                                    height: 400,
+                                                    width: 250,
+                                                    height: 250,
                                                     facingMode: "user"
                                                 }}
                                                 onUserMedia={handleUserMedia}

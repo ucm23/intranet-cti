@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 const LabelProfile = ({ collapsed, signOut }) => {
     const information_user = useSelector(state => state.login.information_user);
     const { first_name, email, position } = information_user;
+    const isMac = navigator.platform.toUpperCase().includes('MAC');
 
     useEffect(() => {
         //console.log("🚀 ~ LabelProfile ~ information_user:", information_user)
@@ -14,7 +15,13 @@ const LabelProfile = ({ collapsed, signOut }) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
-    const handleKeyDown = (event) => event.shiftKey && event.key === 'E' && signOut();
+    const handleKeyDown = (event) => {
+        const commandOrCtrl = isMac ? event.metaKey : event.ctrlKey;
+        if (commandOrCtrl && event.key.toLowerCase() === 'e') {
+            event.preventDefault();
+            signOut();
+        }
+    };
 
     const renderItem = () => (
         <List.Item>
@@ -43,7 +50,7 @@ const LabelProfile = ({ collapsed, signOut }) => {
                     <h1 style={{ fontSize: 11 }}>{email}</h1>
                 </div>
                 <MenuDivider />
-                <MenuItem /*href='#'*/ onClick={() => signOut()} icon={<LogoutOutlined />} command='⇧E'>
+                <MenuItem /*href='#'*/ onClick={() => signOut()} icon={<LogoutOutlined />} command={isMac ? '⌘E' : 'Ctrl+E'}>
                     Salir
                 </MenuItem>
             </MenuList>

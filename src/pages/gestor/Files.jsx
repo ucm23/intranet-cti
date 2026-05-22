@@ -1,24 +1,26 @@
 import React, { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import { FaFolder, FaSpinner } from "react-icons/fa";
 import { AiOutlineDelete, AiOutlineClose, AiOutlineZoomIn, AiOutlineZoomOut, AiOutlineLeft, AiOutlineRight, AiOutlineShareAlt } from "react-icons/ai";
-import { FaArrowLeft, FaArrowRight, FaPlus, FaMinus, FaReply, FaTimes, FaRegFolderOpen } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaPlus, FaMinus, FaReply, FaTimes, FaRegFolderOpen, FaShareAlt } from "react-icons/fa";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { CiCircleCheck, CiCirclePlus } from "react-icons/ci";
 import { VscError } from "react-icons/vsc";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoChevronForwardSharp, IoDocumentTextOutline } from "react-icons/io5";
+import { IoChevronForwardSharp, IoDocumentTextOutline, IoTrashOutline } from "react-icons/io5";
+import { IoChevronForward, IoChevronDownOutline } from "react-icons/io5";
 import { FloatButton } from 'antd';
-import { FiMaximize2, FiMinimize2, FiEye } from "react-icons/fi";
 import { IoMdArrowDropdown, IoMdAdd } from "react-icons/io";
 import color from '../../color';
-import { RiFolderSharedLine, RiUpload2Line, RiStickyNoteLine } from "react-icons/ri";
-import { FaFilePdf } from "react-icons/fa";
-import { FiPlus, FiX } from "react-icons/fi";
-import { FaPlusCircle } from "react-icons/fa";
+import { RiFolderSharedLine, RiUpload2Line, RiStickyNoteLine, RiEdit2Fill } from "react-icons/ri";
+import { FaFilePdf, FaPlusCircle } from "react-icons/fa";
+import { FiPlus, FiX, FiMaximize2, FiMinimize2, FiEye } from "react-icons/fi";
+
 import { Icon } from '@chakra-ui/react'
 import { ChakraProvider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Button, Box, useDisclosure, FormControl, FormLabel, Input, Textarea, Portal } from '@chakra-ui/react'
 import { Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow } from '@chakra-ui/react'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Code, Text } from "@chakra-ui/react";
 import { CloseOutlined } from '@ant-design/icons';
+import { Button as ButtonAnt } from 'antd';
 import { LuUserPlus2 } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import { MultiSelect } from "react-multi-select-component";
@@ -26,13 +28,13 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { createDocs, deleteDocuments, indexDocsImgs, indexDocuments, indexDocumentsByID, updateDoc } from '../../api/docs/docs';
 import { createDepartments, indexDepartments } from '../../api/departamentos/departments';
 import Chip from '../../components/Chip'
-import { createProjects, indexProjects } from '../../api/project/projects';
+import { createProjects, delProject, indexProjects, updateProjects } from '../../api/project/projects';
 import { useImageCache } from '../../redux/ImageCacheProvider';
 import { usePreviewFile } from '../../redux/PreviewFileContext';
 import es from 'date-fns/locale/es';
 import { format } from 'date-fns';
 import { baseURL, formats_, icons, modules_, openNotificationWithIcon, types } from '../../libs/main';
-import { notification, Tooltip, Avatar, List, Empty, Typography, } from 'antd';
+import { notification, Tooltip, Avatar, List, Empty, Typography, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { indexUsers } from '../../api/users/users';
 import ReactQuill from 'react-quill';
@@ -45,6 +47,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import { id, is } from 'date-fns/locale';
 
 const DocumentManager = () => {
     const information_user = useSelector(state => state.login.information_user);
@@ -59,13 +62,17 @@ const DocumentManager = () => {
     const [uploadResults, setUploadResults] = useState([]);
     const { isOpen: isOpenProject, onOpen: onOpenProject, onClose: onCloseProject } = useDisclosure()
     const { isOpen: isOpenShare, onOpen: onOpenShare, onClose: onCloseShare } = useDisclosure()
+    const { isOpen: isOpenShareProject, onOpen: onOpenShareProject, onClose: onCloseShareProject } = useDisclosure()
     const { isOpen: isOpenMove, onOpen: onOpenMove, onClose: onCloseMove } = useDisclosure()
     const { isOpen: isOpenNote, onOpen: onOpenNote, onClose: onCloseNote } = useDisclosure()
+    const { isOpen: isOpenName, onOpen: onOpenName, onClose: onCloseName } = useDisclosure()
+    const { isOpen: isDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useDisclosure()
     const today = new Date();
     const tomorrow = new Date();
     //const modalRef = useRef(null);
     const [api, contextHolder] = notification.useNotification();
     const openNotification = (type, description) => openNotificationWithIcon(api, type, description)
+    const [messageApi, contextHolderMessage] = message.useMessage();
     const [colors, setColor] = useState({});
     const [minEndDate, setMinEndDate] = useState('');
     const [selected, setSelected] = useState([]);
@@ -84,10 +91,11 @@ const DocumentManager = () => {
         e.preventDefault();
         setMenuProjects({
             visible: true,
-            x: e.clientX-110,
-            y: e.clientY-220,
+            x: e.clientX - 110,
+            y: e.clientY - 220,
             folder: folder
         });
+        handleFilePreview(folder, true);
     };
 
     const closeMenu = () => {
@@ -118,6 +126,12 @@ const DocumentManager = () => {
         end_date: tomorrow.toISOString().split('T')[0],
     });
 
+    const [dataForm, setdataForm] = useState({
+        id: null,
+        name: '',
+        description: ''
+    });
+
     const handleStartDateChange = (e) => {
         const selectedStartDate = e.target.value;
         console.log("🚀 ~ handleStartDateChange ~ selectedStartDate:", selectedStartDate)
@@ -141,6 +155,14 @@ const DocumentManager = () => {
         }));
     };
 
+    const handleChangeName = (e) => {
+        const { name, value } = e.target;
+        setdataForm((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
     const selectedDepartmentIds = selected.map(dep => dep.id);
 
     const filteredUsers = users.filter(user =>
@@ -155,11 +177,115 @@ const DocumentManager = () => {
         );
     }, [selected]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, mode) => {
         e.preventDefault();
+         if (mode === "name") {
+            try {
+                console.log("🚀 ~ handleSubmit ~ data:", dataForm);
+                let id = dataForm?.id;
+                const projectName2 = dataForm.name?.trim().toLowerCase();
+                if (!projectName2) {
+                    openNotification('warning', 'Añada un nombre al proyecto');
+                    return;
+                }
+                const projectExists2 = projects.some(item =>
+                    item?.id !== id &&
+                    item?.name.trim().toLowerCase() === projectName2
+                );
+                if (projectExists2) {
+                    openNotification('warning', 'Ya existe un proyecto con el mismo nombre');
+                    return;
+                }
+                setIsLoading(true);
+                let data = {
+                    name: dataForm?.name
+                }
+                if (dataForm.description) data.description = dataForm.description;
+                const response = await updateProjects({ id, data });
+                console.log("🚀 ~ handleSubmit ~ response:", response);
+                await getProjects()
+                setPreviewFile(null)
+                onCloseName();
+            } catch (error) {
+                console.error("🚀 ~ handleSubmit ~ error:", error);
+            } finally {
+                setIsLoading(false);
+            }
+            return;
+        }
+        if (mode === "name") {
+            try {
+                console.log("🚀 ~ handleSubmit ~ data:", dataForm);
+                let id = dataForm?.id;
+                const projectName2 = dataForm.name?.trim().toLowerCase();
+                if (!projectName2) {
+                    openNotification('warning', 'Añada un nombre al proyecto');
+                    return;
+                }
+                const projectExists2 = projects.some(item =>
+                    item?.id !== id &&
+                    item?.name.trim().toLowerCase() === projectName2
+                );
+                if (projectExists2) {
+                    openNotification('warning', 'Ya existe un proyecto con el mismo nombre');
+                    return;
+                }
+                setIsLoading(true);
+                let data = {
+                    name: dataForm?.name
+                }
+                if (dataForm.description) data.description = dataForm.description;
+                const response = await updateProjects({ id, data });
+                console.log("🚀 ~ handleSubmit ~ response:", response);
+                await getProjects()
+                setPreviewFile(null)
+                onCloseName();
+            } catch (error) {
+                console.error("🚀 ~ handleSubmit ~ error:", error);
+            } finally {
+                setIsLoading(false);
+            }
+            return;
+        }
+        if (mode === "access") {
+
+            try {
+                const departmentIds = shareSelectedDepts.map(dept => dept.id);
+                const userIds = shareSelectedUsers.map(user => user.id);
+
+                if (departmentIds.length === 0) {
+                    openNotification('warning', 'Añada al menos un departamento al proyecto');
+                    return;
+                }
+                if (userIds.length === 0) {
+                    openNotification('warning', 'Añada al menos un usuario al proyecto');
+                    return;
+                }
+
+                setIsLoading(true);
+
+                const dataToSend = {
+                    departments_ids: departmentIds,
+                    users_ids: userIds
+                };
+
+                const response = await updateProjects({ id: previewFile?.id, data: dataToSend });
+                console.log("🚀 ~ handleSubmit ~ response:", response);
+                await getProjects()
+                setPreviewFile(null)
+                onCloseShareProject();
+            } catch (error) {
+                console.error("🚀 ~ handleSubmit ~ error:", error);
+            } finally {
+                setIsLoading(false);
+            }
+            return;
+        }
         const projectName = formDataProjects.name?.trim();
+        console.log("🚀 ~ handleSubmit ~ projectName:", projectName)
+
         if (!projectName) {
-            openNotification('warning', 'Añada un nombre');
+            openNotification('warning', 'Añada un nombre al proyecto');
             return;
         }
         const projectExists = projects.some(item => item?.name.trim().toLowerCase() === projectName.toLowerCase());
@@ -173,6 +299,7 @@ const DocumentManager = () => {
             );
             return;
         }
+
         const startDate = new Date(formDataProjects?.start_date);
         const endDate = new Date(formDataProjects?.end_date);
         if (level < 1 && startDate >= endDate) {
@@ -205,18 +332,17 @@ const DocumentManager = () => {
             openNotification('warning', "Debe seleccionar al menos un usuario.");
             return;
         } else {
-            data.users_ids = filteredUsers.map(item => item?.id)
+            data.users_ids = selectedUsers.map(item => item?.id)
         }
         try {
             setIsLoading(true);
             console.log("🚀 ~ handleSubmit ~ data:", data);
             //selectedUsers
             console.log("🚀 ~ handleSubmit ~ selectedUsers:", selectedUsers.map(item => item?.id))
-
-            //const response = level < 1 ? await createProjects({ data }) : await createDepartments({ data });
-            //console.log("🚀 ~ handleSubmit ~ response:", response);
-            //await (level < 1 ? getProjects() : getDepartments());
-            //defaultModal();
+            const response = level < 1 ? await createProjects({ data }) : await createDepartments({ data });
+            console.log("🚀 ~ handleSubmit ~ response:", response);
+            await (level < 1 ? getProjects() : getDepartments());
+            defaultModal();
         } catch (error) {
             console.error("🚀 ~ handleSubmit ~ error:", error);
         } finally {
@@ -224,14 +350,33 @@ const DocumentManager = () => {
         }
     };
 
-    const deleteItem = async ({ id }) => {
+    const deleteItem = async ({ id, type }) => {
         try {
-            let response = await deleteDocuments({ id })
-            if (response?.status) await getDocuments()
+            if (type == 'file') {
+                let response = await deleteDocuments({ id })
+                if (response?.status) {
+                    await getDocuments()
+                    messageApi.info('Archivo eliminado correctamente');
+                }
+            } else if (type == 'project') {
+                const documentIds = documents
+                    ?.filter(doc => doc?.project_id === id)
+                    ?.map(doc => doc?.id) || [];
+                console.log("🚀 ~ deleteItem ~ type:", documentIds)
+                await Promise.all(documentIds.map(id => deleteDocuments({ id })));
+                let response = await delProject({ id })
+                if (response?.status) {
+                    await getProjects()
+                    await getDocuments()
+                    messageApi.info('Proyecto eliminado correctamente');
+                }
+            }
         } catch (error) {
             console.error("🚀 ~ deleteItem ~ error:", error);
         } finally {
             setPreviewFile(null)
+            clearForm()
+            onCloseDelete();
         }
     };
 
@@ -451,47 +596,61 @@ const DocumentManager = () => {
         );
     };
 
+    const [isOpen, setIsOpen] = useState(true);
+    const toggleSection = () => setIsOpen(!isOpen);
+
+    const [isOpenDocs, setIsOpenDocs] = useState(true);
+    const toggleSectionDocs = () => setIsOpenDocs(!isOpenDocs);
+
+    const [isOpenDepas, setIsOpenDepas] = useState(true);
+    const toggleSectionDepas = () => setIsOpenDepas(!isOpenDepas);
+
+
     const ProjectList = ({ isLoading, projects, onProjectSelect, project_id }) => {
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
-                <h2 className="text-sm font-semibold text-gray-800 mb-3">Proyectos</h2>
+                {projects.length > 0 &&
+                    //<h2 className="text-sm font-semibold text-gray-800 mb-3">Proyectos</h2>
+                    <div className="flex flex-row gap-2 py-2 group focus:outline-none">
+                        <ButtonAnt type="text" shape="round" icon={isOpen ? <IoChevronForward /> : <IoChevronDownOutline />} onClick={toggleSection}
+                            className="text-sm font-semibold text-gray-800"
+                        >
+                            Proyectos
+                        </ButtonAnt>
+                    </div>
+                }
                 {menuProjects.visible && (
-
                     <Menu isOpen>
                         <MenuButton position='absolute' />
-                        <MenuList
-                            position="fixed"
-                            top={`${menuProjects.y}px`}
-                            left={`${menuProjects.x}px`}
-                            zIndex={9999}
-                        >
+                        <MenuList position="fixed" top={`${menuProjects.y}px`} left={`${menuProjects.x}px`} zIndex={9999}>
                             <MenuItem icon={<FaRegFolderOpen />} onClick={() => { handleFilePreview(menuProjects?.folder, true); onProjectSelect(menuProjects?.folder) }}> Abrir </MenuItem>
-                            <MenuDivider />
-
-                            <MenuItem> Cambiar nombre </MenuItem>
-                             <MenuItem> Cambiar nombre </MenuItem>
-
-                            <MenuItem color="red.500">
-                                Eliminar
-                            </MenuItem>
-
+                            {role !== 'lector' &&
+                                <>
+                                    <MenuDivider />
+                                    <MenuItem icon={<FaShareAlt />} onClick={() => updateProject(menuProjects?.folder, 'access')}> Modificar acceso </MenuItem>
+                                    <MenuItem icon={<RiEdit2Fill />} onClick={() => updateProject(menuProjects?.folder, 'name')}> Cambiar nombre </MenuItem>
+                                    <MenuItem icon={<IoTrashOutline />} color="red.500" onClick={() => updateProject(menuProjects?.folder, 'delete')}> Eliminar </MenuItem>
+                                </>}
                         </MenuList>
-
                     </Menu>
-
                 )}
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 max-[900px]:grid-cols-1 lg:grid-cols-3 gap-2.5">
+
+                <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 max-[900px]:grid-cols-1 lg:grid-cols-3 gap-2.5 transition-all duration-300 ${isOpen ? 'block' : 'hidden'}`}>
                     {projects.map((folder, index) => (
                         <div
                             key={`files-projects-${folder.id}-${index}`}
-                            className="p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
-                            style={{ backgroundColor: color?.bgFiles }}
+                            //className="p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer m-2"
+                            //style={{ backgroundColor: color?.bgFiles }}
+                            className={`p-3 rounded hover:shadow-md transition-all duration-200 cursor-pointer ${previewFile?.id == folder?.id
+                                ? 'bg-blue-500/20 border-2 border-blue-500 shadow-md'
+                                : 'bg-[#eaeaea] border-2 border-transparent hover:bg-surface-container-high'
+                                }`}
                             onClick={() => handleFilePreview(folder, true)}
                             onDoubleClick={() => {
                                 //handleFilePreview({ ...folder, type: 'folder_projs' })
                                 onProjectSelect(folder)
                             }}
-                            onContextMenu={(e) => handleContextMenu(e, folder)}
+                            onContextMenu={(e) => { handleContextMenu(e, folder); }}
                         >
                             <div className="flex items-center space-x-2">
                                 <FaFolder className="text-yellow-400 text-[16px] flex-shrink-0" />
@@ -512,8 +671,15 @@ const DocumentManager = () => {
         }*/
         return isLoading ? <div className="flex justify-center items-center height-icon-500"> <FaSpinner style={{ fontSize: 25 }} className="animate-spin text-blue-400" /> </div> :
             <div>
-                <h2 className="text-sm font-semibold text-gray-800 mb-3">Departamentos</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 max-[900px]:grid-cols-1 lg:grid-cols-3 gap-2.5">
+                <div className="flex flex-row gap-2 py-2 group focus:outline-none">
+                    <ButtonAnt type="text" shape="round" icon={isOpenDepas ? <IoChevronForward /> : <IoChevronDownOutline />} onClick={toggleSectionDepas}
+                        className="text-sm font-semibold text-gray-800"
+                    >
+                        Departamentos
+                    </ButtonAnt>
+                </div>
+
+                <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 max-[900px]:grid-cols-1 lg:grid-cols-3 gap-2.5 transition-all duration-300 ${isOpenDepas ? 'block' : 'hidden'}`}>
                     {departments.map((folder, index) => {
                         const linkedDocs = documents.filter((doc) => doc.department_id === folder.id && doc.project_id === project_id).length || null;
                         const isSelected = selectedProject?.departments_ids.includes(folder?.id);
@@ -540,11 +706,11 @@ const DocumentManager = () => {
                         <div
                             className="flex items-center p-3 rounded hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             style={{ backgroundColor: color?.bgFiles }}
-                            onClick={() => addDepa(selectedProject)}
+                            onClick={() => updateProject(selectedProject, 'access')}
                         >
                             <div className="flex items-center space-x-2">
                                 <FaPlusCircle style={{ fontSize: 30, color: color.blueWord }} />
-                                <h3 style={{ color: color.blueWord }} className="text-sm text-gray-800 pb-0 font-semibold">Agregar departamento</h3>
+                                <h3 style={{ color: color.blueWord }} className="text-sm text-gray-800 pb-0 font-semibold">Modificar acceso</h3>
                             </div>
                         </div>
                     }
@@ -552,10 +718,147 @@ const DocumentManager = () => {
             </div>
     };
 
-    const addDepa = (folder) => {
-        console.log("🚀 ~ addDepa ~ folder:", folder)
+    const [ownerProject, setOwnerProject] = useState(null);
+    const [shareSelectedDeptIds, setShareSelectedDeptIds] = useState([]);
+    const [shareLockedDeptIds, setShareLockedDeptIds] = useState([]);
+    const [shareSelectedUserIds, setShareSelectedUserIds] = useState([]);
+    const [shareProjectOwner, setShareProjectOwner] = useState(null);
 
+    const [shareSelectedDepts, setShareSelectedDepts] = useState([]);  // Array de objetos de departamentos
+    const [shareLockedDepts, setShareLockedDepts] = useState([]);      // Array de objetos de departamentos bloqueados
+    // Para el modal de compartir
+    const [shareSelectedUsers, setShareSelectedUsers] = useState([]);   // Array de objetos de usuarios seleccionados
+    const [shareLockedUserIds, setShareLockedUserIds] = useState([]);   // IDs de usuarios que no se pueden quitar (propietario)
+
+    const updateProject = (folder, mode) => {
+        console.log("🚀 ~ updateProject ~ folder:", folder)
+        if (folder?.file_name && folder?.type && mode == 'delete') {
+            //deleteItem({ id: folder?.id })
+            setdataForm({ file: folder?.file_name, id: folder?.id })
+            onOpenDelete()
+            return;
+        }
+        setdataForm(folder)
+
+        if (mode == 'access') {
+            let user = users.find(item => item?.id == folder?.user_id)
+            setOwnerProject(user)
+            setShareProjectOwner(user)
+            console.log("🚀 ~ modificar compartir")
+            let select = departments.filter(item => folder?.departments_ids?.includes(item?.id)).map(item => ({ ...item, disabled: true }))
+            //setSelectedDepartemntByProject(select)
+            const lockedDeptIds = folder?.departments_ids || [];
+            console.log("🚀 ~ updateProject ~ lockedDeptIds:", select)
+            //setShareLockedDeptIds(select);
+            // IDs seleccionados inicialmente (los bloqueados)
+            //setShareSelectedDeptIds([...select]);
+
+            setShareLockedDepts(select);
+            // Los departamentos seleccionados inicialmente son los bloqueados
+            setShareSelectedDepts([...select]);
+
+            const ownerId = folder?.user_id;
+            setShareLockedUserIds([ownerId]);
+
+            // Obtener los usuarios completos que están en users_ids
+            let existingUsers = users.filter(item => folder?.users_ids?.includes(item?.id));
+            setShareSelectedUsers(existingUsers);
+
+            onOpenShareProject()
+            return;
+        }
+        if (mode == 'name') {
+            onOpenName()
+            return;
+        }
+        if (mode == 'delete') {
+            onOpenDelete()
+            return;
+        }
     }
+
+    const handleShareDeptChange = (newSelectedDepts) => {
+        // Los departamentos bloqueados siempre deben estar presentes
+        const allSelectedDepts = [...shareLockedDepts];
+
+        // Agregar los nuevos departamentos que no sean bloqueados
+        newSelectedDepts.forEach(newDept => {
+            const isLocked = shareLockedDepts.some(locked => locked.id === newDept.id);
+            if (!isLocked) {
+                allSelectedDepts.push(newDept);
+            }
+        });
+
+        setShareSelectedDepts(allSelectedDepts);
+    };
+
+    const handleShareUserChange = (newSelectedUsers) => {
+        // Asegurar que el propietario siempre esté presente
+        const ownerUser = users.find(u => shareLockedUserIds.includes(u.id));
+
+        if (ownerUser) {
+            // Verificar si el owner ya está en newSelectedUsers
+            const hasOwner = newSelectedUsers.some(u => u.id === ownerUser.id);
+
+            if (!hasOwner) {
+                // Si intentan quitar al owner, lo agregamos de nuevo
+                setShareSelectedUsers([ownerUser, ...newSelectedUsers]);
+            } else {
+                setShareSelectedUsers(newSelectedUsers);
+            }
+        } else {
+            setShareSelectedUsers(newSelectedUsers);
+        }
+    };
+
+    const shareDeptOptions = useMemo(() => {
+        return departments.map(dept => {
+            const isLocked = shareLockedDepts.some(locked => locked.id === dept.id);
+            return {
+                ...dept,
+                disabled: isLocked
+            };
+        });
+    }, [departments, shareLockedDepts]);
+
+    const shareAvailableUsers = useMemo(() => {
+        if (!users || !shareSelectedDepts.length) return [];
+
+        // Obtener los IDs de los departamentos seleccionados
+        const selectedDeptIds = shareSelectedDepts.map(dept => dept.id);
+
+        // Filtrar usuarios que pertenezcan a esos departamentos
+        let availableUsers = users.filter(user =>
+            selectedDeptIds.includes(user.department_id)
+        );
+
+        // Marcar como disabled al propietario
+        return availableUsers.map(user => ({
+            ...user,
+            disabled: shareLockedUserIds.includes(user.id)
+        }));
+    }, [users, shareSelectedDepts, shareLockedUserIds]);
+
+    useEffect(() => {
+        if (shareSelectedUsers.length > 0 && shareAvailableUsers.length > 0) {
+            // Mantener solo los usuarios que aún pertenecen a departamentos seleccionados
+            const validUserIds = new Set(shareAvailableUsers.map(u => u.id));
+            const filteredUsers = shareSelectedUsers.filter(user => validUserIds.has(user.id));
+
+            // Asegurar que el propietario siempre esté presente
+            const ownerUser = users.find(u => shareLockedUserIds.includes(u.id));
+            if (ownerUser && !filteredUsers.some(u => u.id === ownerUser.id)) {
+                setShareSelectedUsers([ownerUser, ...filteredUsers]);
+            } else {
+                setShareSelectedUsers(filteredUsers);
+            }
+        } else if (shareAvailableUsers.length === 0) {
+            // Si no hay usuarios disponibles, solo mantener al propietario si existe
+            const ownerUser = users.find(u => shareLockedUserIds.includes(u.id));
+            setShareSelectedUsers(ownerUser ? [ownerUser] : []);
+        }
+    }, [shareSelectedDepts, shareAvailableUsers, shareLockedUserIds]);
+
 
     const { previewFile, setPreviewFile } = usePreviewFile()
     const handleFilePreview = (file) => {
@@ -760,13 +1063,27 @@ const DocumentManager = () => {
                     </div>
                 ) : (
                     <div>
-                        <h2 className="text-sm font-semibold text-gray-800 my-3">Documentos</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 pb-24">
+                        {selectedDocuments.length > 0 &&
+                            //<h2 className="text-sm font-semibold text-gray-800 mb-3">Proyectos</h2>
+                            <div className="flex flex-row gap-2 py-2 group focus:outline-none" >
+                                <ButtonAnt type="text" shape="round" icon={isOpenDocs ? <IoChevronForward /> : <IoChevronDownOutline />} onClick={toggleSectionDocs}
+                                    className="text-sm font-semibold text-gray-800"
+                                >
+                                    Documentos
+                                </ButtonAnt>
+                            </div>
+                        }
+
+                        <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 pb-24 ${isOpenDocs ? 'block' : 'hidden'}`}>
                             {selectedDocuments.map((file, index) => (
                                 <div
                                     key={`files-docs-${file?.id}-${index}`}
-                                    className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
+                                    //className="rounded hover:shadow-md transition-shadow duration-200 cursor-pointer overflow-hidden"
                                     style={{ backgroundColor: color?.bgFiles }}
+                                    className={`rounded hover:shadow-md transition-all duration-200 cursor-pointer overflow-hidden ${previewFile?.id == file?.id
+                                        ? 'bg-blue-500/20 border-2 border-blue-500 shadow-md'
+                                        : 'bg-[#eaeaea] border-2 border-transparent hover:bg-surface-container-high'
+                                        }`}
                                 >
                                     <div
                                         className="p-3 pb-0"
@@ -795,7 +1112,7 @@ const DocumentManager = () => {
                                                         <>
                                                             <MenuItem icon={<LuUserPlus2 />} onClick={() => onDoubleClick_(file, index, true, true)}>Compartir</MenuItem>
                                                             <MenuItem icon={<RiFolderSharedLine />} onClick={() => onDoubleClick_(file, index, true, false, true)}>Mover</MenuItem>
-                                                            <MenuItem icon={<MdDeleteOutline />} onClick={() => deleteItem({ id: file?.id })}>Eliminar</MenuItem>
+                                                            <MenuItem icon={<MdDeleteOutline />} onClick={() => updateProject(file, 'delete') /*deleteItem({ id: file?.id })*/}>Eliminar</MenuItem>
                                                         </>
                                                     )}
                                                 </MenuList>
@@ -818,7 +1135,7 @@ const DocumentManager = () => {
         });
 
         return (
-            <div className='space-y-0 mt-0 pb-10'>
+            <div className='space-y-0 mt-0 pb-20'>
                 {selectedDocuments.map((file, index) => (
                     <div
                         key={`files-docs-${file?.id}-${index}`}
@@ -1234,10 +1551,20 @@ const DocumentManager = () => {
     const handleMouseUp = () => setDragging(false);
 
     const defaultModal = () => {
+        clearForm()
+        onCloseProject();
+    }
+
+    const clearForm = () => {
         setPosition({ x: 0, y: 0 });
         setDragging(false);
         setInitialMousePos({ x: 0, y: 0 });
-        onCloseProject();
+        setFormDataProjects({
+            name: '',
+            description: '',
+        });
+        setSelected([])
+        setSelectedUsers([])
     }
 
     const [maximize, setMaximize] = useState(false);
@@ -1304,6 +1631,7 @@ const DocumentManager = () => {
     return (
         <div className="mx-auto pb-8 bgwhite">
             {contextHolder}
+            {contextHolderMessage}
             <div className="flex" style={{ width: '100%' }}>
                 <div className="mx-auto pb-8 content-scroll-auto" style={{ flex: '1' }}>
                     <div className="flex justify-between items-center mb-2 pl-6 mt-8">
@@ -1359,7 +1687,8 @@ const DocumentManager = () => {
                             </div>
                             <div className="space-y-3">
                                 <p className="font-small">
-                                    <span className='font-semibold'>Nombre</span> <br />{previewFile?.file_name || previewFile?.name}
+                                    <span className='font-semibold'>{previewFile?.file_name || previewFile?.name}</span>
+                                    <br /> {previewFile?.description || null}
                                 </p>
                                 <p className="font-small">
                                     <span className='font-semibold'>Tipo</span>  <br />
@@ -1372,9 +1701,14 @@ const DocumentManager = () => {
                                     <p className="font-small">
                                         <span className='font-semibold'>Usuarios con acceso</span>  <br />
                                         <Avatar.Group>
-                                            {selectedShare.map((item_, index) =>
+                                            {selectedShare.slice(0, 5).map((item_, index) =>
                                                 <Tooltip key={`selectedUsers-${item_?.id}-${index}`} title={`${item_?.label}`}>
                                                     <Avatar style={{ background: item_?.last_name }}>{item_?.label.charAt(0)}</Avatar>
+                                                </Tooltip>
+                                            )}
+                                            {selectedShare.length > 5 && (
+                                                <Tooltip title={`+${selectedShare.length - 5} más`}>
+                                                    <Avatar style={{ background: '#163350' }}>+{selectedShare.length - 5}</Avatar>
                                                 </Tooltip>
                                             )}
                                             {(selectedShare.length !== users.length && role.startsWith('admin')) &&
@@ -1384,6 +1718,23 @@ const DocumentManager = () => {
                                         </Avatar.Group>
                                     </p>
                                 }
+                                {/*<p className="font-small">
+                                    <span className='font-semibold'>Usuarios con acceso</span><br />
+                                    <div className="flex flex-wrap gap-1 mt-1">
+                                        <Avatar.Group>
+                                            {selectedShare.slice(0, 5).map((item_, index) =>
+                                                <Tooltip key={`selectedUsers-${item_?.id}-${index}`} title={`${item_?.label}`}>
+                                                    <Avatar style={{ background: item_?.last_name }}>{item_?.label.charAt(0)}</Avatar>
+                                                </Tooltip>
+                                            )}
+                                            
+                                            {(selectedShare.length !== users.length && role.startsWith('admin')) &&
+                                                <Tooltip title={`Añadir más`}>
+                                                    <Avatar onClick={() => onDoubleClick_(previewFile, true, false, true, false, true)} style={{ background: '#163350' }}>+</Avatar>
+                                                </Tooltip>}
+                                        </Avatar.Group>
+                                    </div>
+                                </p>*/}
                                 <p className="font-small">
                                     <span className='font-semibold'>Creado</span>  <br />
                                     {format(new Date(previewFile.created_at), "d 'de' MMMM yyyy h:mm aa", { locale: es }).replace('AM', 'am').replace('PM', 'pm')}
@@ -1397,13 +1748,15 @@ const DocumentManager = () => {
                                 </p>*/}
                                 {(Object.hasOwn(previewFile, 'departments_ids') && level == 0) && //max-h-[300px] overflow-y-auto
                                     <p className="font-small flex flex-col">
-                                        <span className='font-semibold'>Vista previa del contenido</span>
-                                        <div className="flex flex-row items-center space-x-2" onClick={() => addDepa(previewFile)}>
-                                            <FaPlus style={{ fontSize: 14, color: '#008080' }} />
-                                            <div>
-                                                <h3 className="font-normal text-sm text-gray line-clamp-1 pb-0">Agregar departamento</h3>
-                                            </div>
+                                        <span className='font-semibold'>Acceso</span>
+                                        <div
+                                            className="inline-flex flex-row items-center space-x-2 cursor-pointer hover:bg-gray-100 border border-gray-300 rounded-full transition-all duration-200 px-4 py-1.5 w-auto"
+                                            onClick={() => updateProject(previewFile, 'access')}>
+                                            <FaShareAlt style={{ fontSize: 14, color: '#008080' }} />
+                                            <span className="font-normal text-sm text-gray-700">Modificar acceso</span>
                                         </div>
+
+                                        <span className='font-semibold'>Vista previa del contenido</span>
                                         {departments.map((folder, index) => {
                                             const isSelected = previewFile?.departments_ids.includes(folder?.id);
                                             return isSelected && (
@@ -1541,6 +1894,7 @@ const DocumentManager = () => {
                                 </button>}
                         </div>
                     </div>
+
                 </div>
             )}
             <Modal closeOnOverlayClick={false} isOpen={isOpenProject} onClose={defaultModal} isCentered>
@@ -1555,7 +1909,7 @@ const DocumentManager = () => {
                 //onMouseUp={handleMouseUp}
                 >
                     <ModalHeader>
-                        {!level == 1 ? 'Proyecto' : 'Departamento'} nuevo
+                        {level == 0 ? 'Proyecto' : 'Departamento'} nuevo
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
@@ -1662,8 +2016,103 @@ const DocumentManager = () => {
                         <Button variant='ghost' onClick={defaultModal}>
                             Cancelar
                         </Button>
-                        <Button variant='solid' onClick={handleSubmit}>
+                        <Button variant='solid' onClick={(e) => handleSubmit(e, "project")} style={{ backgroundColor: color?.blueWord, color: 'white' }} rounded="full">
                             Guardar
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            <Modal closeOnOverlayClick={false} isOpen={isOpenName} onClose={onCloseName} isCentered>
+                <ModalOverlay />
+                <ModalContent maxW="500px">
+                    <ModalHeader>
+                        Cambiar nombre
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <div className='space-y-2'>
+                            <FormControl id="name" isRequired>
+                                <Input
+                                    name="name"
+                                    value={dataForm?.name}
+                                    onChange={handleChangeName}
+                                    placeholder="Introduce el nombre"
+                                />
+                            </FormControl>
+                            <FormControl id="description">
+                                <Textarea
+                                    name="description"
+                                    value={dataForm?.description}
+                                    onChange={handleChangeName}
+                                    placeholder="Introduce la descripción"
+                                />
+                            </FormControl>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter className='gap-2 align-right justify-end '>
+                        <div className="flex-1"></div>
+                        <Button variant='ghost' onClick={onCloseName}>
+                            Cancelar
+                        </Button>
+                        <Button
+                            variant='solid' style={{ backgroundColor: color?.blueWord, color: 'white' }} rounded="full"
+                            onClick={(e) => handleSubmit(e, "name")}>
+                            Guardar
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            <Modal closeOnOverlayClick={false} isOpen={isDelete} onClose={onCloseDelete} isCentered>
+                <ModalOverlay />
+                <ModalContent maxW="700px">
+                    <ModalHeader>
+                        <span className="font-light text-2xl">Eliminar {dataForm?.file ? dataForm?.file : 'proyecto'} </span>
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <div className='space-y-2'>
+                            <span className="font-light">Se borrará <span className="font-bold">"{dataForm?.file || dataForm?.name}"</span> definitivamente. </span>
+                            <span className="font-bold">{dataForm?.file ? 'Esta acción no se puede deshacer.' : 'Esta acción borrará los siguientes archivos:'}</span>
+                            {!dataForm?.file &&
+                                <div className="max-h-48 overflow-y-auto">
+                                    {documents?.filter(doc => doc?.project_id === dataForm?.id).length > 0 ? (
+                                        documents
+                                            .filter(doc => doc?.project_id === dataForm?.id)
+                                            .map((doc, index) => (
+                                                <div
+                                                    key={`delete-project-doc-${doc.id}-${index}`}
+                                                    className="flex flex-row items-center gap-2 py-2 px-2 hover:bg-gray-100 rounded transition-colors duration-150"
+                                                >
+                                                    <span className="text-gray-500">📄 </span>
+                                                    <span className="font-light text-gray-700 text-sm truncate flex-1">
+                                                        {index + 1}. {doc.id} {doc.file_name}
+                                                    </span>
+                                                </div>
+                                            ))
+                                    ) : (
+                                        <div className="text-center py-4 text-gray-400 text-sm">
+                                            No hay documentos en este proyecto
+                                        </div>
+                                    )}
+                                </div>
+                            }
+
+                        </div>
+                    </ModalBody>
+                    <ModalFooter className='gap-3 align-right justify-end '>
+                        <div className="flex-1"></div>
+                        <Button variant="unstyled" onClick={onCloseDelete} style={{ color: color?.primary }}>
+                            Cancelar
+                        </Button>
+                        <Button
+                            variant='solid' style={{ backgroundColor: "#b3261e", color: 'white' }} rounded="full"
+                            //onClick={(e) => handleSubmit(e, "name")}
+                            onClick={() => deleteItem({ type: dataForm?.file ? 'file' : 'project', id: dataForm?.id })}
+                        >
+
+                            {dataForm?.file ? 'Borrar' : 'Si, borrar proyecto y archivos ligados'}
                         </Button>
                     </ModalFooter>
                 </ModalContent>
@@ -1685,7 +2134,7 @@ const DocumentManager = () => {
                                     options={users/*.filter(item => item?.id !== user_id)*/}
                                     value={selectedShare}
                                     onChange={setSelectedShare}
-                                    labelledBy="name"
+                                    labelledBy="label"
                                     className='input-multi-text-form-files px-4 pt-3.5'
                                     hasSelectAll={true}
                                     style={{ fontSize: 18 }}
@@ -1725,6 +2174,93 @@ const DocumentManager = () => {
                             Cancelar
                         </Button>
                         <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={() => updateDocs({ id: previewFile?.id, share: true })}>
+                            Compartir
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            <Modal closeOnOverlayClick={false} isOpen={isOpenShareProject} onClose={onCloseShareProject} isCentered scrollBehavior={'outside'} size={'2xl'}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>
+                        <div className='font-normal w-[9/10] pt-3.5'>
+                            Compartir "{dataForm?.name}"
+                        </div>
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody className='p-0 m-0'>
+                        <div className='space-y-2'>
+                            <div className='flex flex-col gap-y-1.5'>
+                                <p className='pb-0 px-4 pt-2 font-medium'>Departamentos del proyecto</p>
+                                <MultiSelect
+                                    options={shareDeptOptions}
+                                    value={shareSelectedDepts}
+                                    onChange={handleShareDeptChange}
+                                    labelledBy="name"
+                                    className='input-multi-text-form-files px-4 pt-3.5'
+                                    hasSelectAll={true}
+                                    style={{ fontSize: 18 }}
+                                    overrideStrings={{
+                                        "selectSomeItems": "Seleccionar departamentos",
+                                        "allItemsAreSelected": "Todos los departamentos ligados",
+                                        "search": "Buscar",
+                                        "clearSearch": "Limpiar búsqueda",
+                                        "clearSelected": "Limpiar seleccionados",
+                                        "noOptions": "No hay opciones disponibles",
+                                        "selectAll": "Seleccionar todo",
+                                    }}
+                                />
+
+                                {shareSelectedDepts.length > 0 && shareAvailableUsers.length > 0 && (
+                                    <div className='input-multi-text-form-files mt-3'>
+                                        <p className='pb-0 px-4 pt-2 font-medium'>Personas que tienen acceso</p>
+                                        <MultiSelect
+                                            options={shareAvailableUsers}
+                                            value={shareSelectedUsers}
+                                            onChange={handleShareUserChange}
+                                            labelledBy="name"
+                                            className='input-multi-text-form-files px-4 pt-3.5'
+                                            hasSelectAll={true}
+                                            style={{ fontSize: 18 }}
+                                            overrideStrings={{
+                                                "selectSomeItems": "Seleccionar usuarios con acceso",
+                                                "allItemsAreSelected": "Todos los usuarios con acceso",
+                                                "search": "Escribe un nombre",
+                                                "clearSearch": "Limpiar búsqueda",
+                                                "clearSelected": "Limpiar seleccionados",
+                                                "noOptions": "No hay opciones disponibles",
+                                                "selectAll": "Seleccionar todo",
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                <List
+                                    style={{ height: 300, maxHeight: 300, overflowY: 'auto' }}
+                                    dataSource={[...[shareProjectOwner], ...shareSelectedUsers.filter(u => u.id !== shareProjectOwner?.id)]}
+                                    renderItem={(item, index) => (
+                                        <List.Item
+                                            key={`selectedShare-${item?.id}-${index}`}
+                                            actions={item?.id === shareProjectOwner?.id && [<div className="pr-2">Propietario</div>]}
+                                        >
+                                            <List.Item.Meta
+                                                avatar={<Avatar style={{ background: item?.last_name }}>{item?.label && item?.label.charAt(0)}</Avatar>}
+                                                title={`${item?.label}`}
+                                                description={item?.email}
+                                                className='flex flex-row items-center pl-5'
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter className='gap-1 border-t-1 flex justify-between'>
+                        <Button variant='ghost' rounded={100} onClick={onCloseShareProject}>
+                            Cancelar
+                        </Button>
+                        <Button variant='solid' rounded={100} bgColor={color?.primary} color={'white'} onClick={(e) => handleSubmit(e, "access")}>
                             Compartir
                         </Button>
                     </ModalFooter>
@@ -1858,15 +2394,17 @@ const DocumentManager = () => {
                                             </Popover>
                                         </div>
                                         <div className='flex flex-row flex-wrap gap-1'>
-                                            {selectedShare.map((chip) => (
-                                                <Chip
-                                                    key={chip?.id}
-                                                    label={chip?.label}
-                                                    color={chip?.last_name}
-                                                    disabled={chip?.disabled}
-                                                    onDelete={() => handleDelete_(chip)}
-                                                />
-                                            ))}
+                                            <Avatar.Group>
+                                                {selectedShare.map((chip) => (
+                                                    <Chip
+                                                        key={chip?.id}
+                                                        label={chip?.label}
+                                                        color={chip?.last_name}
+                                                        disabled={chip?.disabled}
+                                                        onDelete={() => handleDelete_(chip)}
+                                                    />
+                                                ))}
+                                            </Avatar.Group>
                                         </div>
                                     </div>
                                     <div className="relative">
@@ -1893,6 +2431,14 @@ const DocumentManager = () => {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
+
+            {(previewFile?.status && level == 0) && <Box mt={2} width="full" position={'absolute'} left={10}>
+                <div className='fixed bottom-0 left-0 bg-slate-200 w-full p-1 pb-0'>
+                    <Text fontSize="xs" fontWeight="thin" color="gray.600" className=''>
+                        <Code fontWeight="bold" colorScheme='blackAlpha'>Click derecho</Code> para proyectos
+                    </Text>
+                </div>
+            </Box>}
         </div>
     );
 };

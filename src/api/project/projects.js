@@ -70,3 +70,22 @@ export const indexActivities = async ({ id }) => {
         return response;
     }
 }
+
+export const delProject = async ({ id }) => {
+    let response = { status: false }
+    try {
+        const fetch = await Fetcher({
+            method: 'DELETE',
+            url: `/projects/${id}`
+        })
+
+        console.log("🚀 ~ indexProject ~ fetch?.status:", fetch?.status)
+        if (fetch?.status == 200) {
+            response = { status: true }
+        }
+    } catch (error) {
+        console.error("🚀 ~ indeProject ~ error:", error)
+    } finally {
+        return response;
+    }
+}
